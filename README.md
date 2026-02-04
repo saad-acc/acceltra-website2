@@ -10,6 +10,21 @@ This repository contains the static website for Acceltra, ready to be hosted on 
 ├── impressum.html      # Imprint/Legal page
 ├── tos.html           # Terms of Service
 ├── privacy.html       # Privacy Policy
+├── services/          # Service pages
+│   ├── digital-strategy.html
+│   ├── agile-transformation.html
+│   ├── cloud.html
+│   ├── devops-consulting.html
+│   ├── sre-consulting.html
+│   ├── cyber-security.html
+│   ├── software-development.html
+│   ├── data-science.html
+│   ├── artificial-intelligence.html
+│   └── technology-solutions.html
+├── solutions/         # Solution pages
+│   ├── bestmodal.html
+│   ├── cargoflo.html
+│   └── storylob.html
 ├── css/               # Stylesheets
 ├── js/                # JavaScript files
 ├── images/            # Image assets
@@ -52,10 +67,24 @@ To view the website locally:
 ## Notes
 
 - All external URLs have been converted to relative paths for GitHub Pages compatibility
+- All internal links have been updated to work with GitHub Pages structure
 - The website uses Webflow-generated HTML/CSS/JS
 - Images and assets are stored locally in the repository
 - External fonts (Google Fonts) are loaded from CDN
 - The cookie consent script has been removed (you can add it back if needed)
+
+## To-Do / Future Improvements
+
+- [ ] **Form Handler:** Set up a form submission handler for the contact form (consider Formspree, Netlify Forms, or similar)
+- [ ] **Cookie Consent:** Re-implement cookie consent functionality if needed for GDPR compliance
+- [ ] **Blog Integration:** Add blog functionality (as mentioned, this will be handled separately)
+- [ ] **SEO Optimization:** Add meta descriptions, Open Graph tags, and structured data
+- [ ] **Performance:** Optimize images (compress, use WebP format where possible)
+- [ ] **Analytics:** Add Google Analytics or similar tracking if needed
+- [ ] **404 Page:** Create a custom 404.html page for GitHub Pages
+- [ ] **Testing:** Test all internal links and navigation on GitHub Pages
+- [ ] **Mobile Testing:** Verify responsive design works correctly on all devices
+- [ ] **Accessibility:** Run accessibility audit and fix any issues
 
 ## Customization
 
