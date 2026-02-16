@@ -1,0 +1,19 @@
+# macOS
+.DS_Store
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*_raw.html
+convert_urls.py
+
+# Logs
+*.log
+
+# Playwright
+.playwright-mcp/
