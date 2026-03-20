@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -167,7 +168,7 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
     <div class="feature-card"><span class="feature-icon">🌐</span><h4>Language-Agnostic</h4><p>Works with any technology stack. Reference in Python, portable to C++ and others.</p></div>
     <div class="feature-card"><span class="feature-icon">⚡</span><h4>Kilobyte Footprint</h4><p>Minimal in size. No external runtime dependencies. Zero bloat to your systems.</p></div>
     <div class="feature-card"><span class="feature-icon">🔀</span><h4>Dual Deployment</h4><p>In-process (embedded SDK) or sidecar (external component). Both validated in testing.</p></div>
-    <div class="feature-card"><span class="feature-icon">🛡️</span><h4>Zero Disruption</h4><p>No changes to business logic. No new dependencies. Toggle on/off instantly.</p></div>
+    <div class="feature-card"><span class="feature-icon">🛡️</span><h4>Minimal Disruption</h4><p>No changes to business logic. No new dependencies. Lightweight integration with minimal deployment risk.</p></div>
   </div>
 </div>
 
@@ -179,8 +180,8 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
     <div class="metric-card"><div class="metric-value">+43–44%</div><div class="metric-label">Transaction Throughput</div><div class="metric-desc">More useful work completed with the same hardware.</div></div>
     <div class="metric-card"><div class="metric-value">−29–32%</div><div class="metric-label">Average Response Time</div><div class="metric-desc">Customer-facing latency drops by nearly a third.</div></div>
     <div class="metric-card"><div class="metric-value">−80%</div><div class="metric-label">Slow Requests (p95)</div><div class="metric-desc">The slowest 5% of requests virtually eliminated.</div></div>
-    <div class="metric-card"><div class="metric-value">−100%</div><div class="metric-label">System Failures</div><div class="metric-desc">All observed request failures eliminated during testing.</div></div>
-    <div class="metric-card"><div class="metric-value">−83%</div><div class="metric-label">Performance Jitter</div><div class="metric-desc">Highly predictable, consistent system behavior.</div></div>
+    <!-- TODO: Jitter metric card — awaiting updated measurement data -->
+    <!-- TODO: Failure rate metric card — awaiting extended test data -->
     <div class="metric-card"><div class="metric-value">−18–19%</div><div class="metric-label">Request Backlog</div><div class="metric-desc">Queue buildup significantly reduced under load.</div></div>
   </div>
   <div class="callout green anim d4"><strong>All improvements achieved without adding any hardware.</strong> TWS enhances how existing resources are utilized.</div>
@@ -190,7 +191,7 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
   <div class="slide-label anim">Part I — Business Executives</div>
   <h2 class="section-title anim d1">Business Value Proposition</h2>
   <div class="cols-3 anim d2">
-    <div><h3 class="sub" style="color:var(--efficiency-green-dark)">💰 Cost Impact</h3><ul class="dl"><li><strong>Infrastructure savings:</strong> Defer or eliminate capacity expansions — potential 6–7 figure annual savings</li><li><strong>Incident costs:</strong> Eliminate failures and reduce on-call burden</li><li><strong>SLA compliance:</strong> Predictable performance reduces contractual penalty risk</li></ul></div>
+    <div><h3 class="sub" style="color:var(--efficiency-green-dark)">💰 Cost Impact</h3><ul class="dl"><li><strong>Infrastructure savings:</strong> Defer or eliminate capacity expansions — potential 6–7 figure annual savings. <em>Results depend on IT landscape assessment including IT expenditures, and architecture review.</em></li><li><strong>Incident costs:</strong> Reduce tail latency impact and lower on-call burden</li><li><strong>SLA compliance:</strong> Predictable performance reduces contractual penalty risk</li></ul></div>
     <div><h3 class="sub" style="color:var(--energy-orange-dark)">📈 Revenue Growth</h3><ul class="dl"><li><strong>Conversion rates:</strong> Faster responses directly improve user experience and sales</li><li><strong>Peak confidence:</strong> Handle launches and seasonal spikes without degradation</li><li><strong>Scale without cost:</strong> Grow workloads without proportional infra spend</li></ul></div>
     <div><h3 class="sub">🎯 Strategic Edge</h3><ul class="dl"><li><strong>No vendor lock-in:</strong> Works across any technology stack</li><li><strong>Minimal risk:</strong> KB footprint, zero deps, both models validated</li><li><strong>Clear ROI:</strong> Quantifiable, auditable, traceable to business metrics</li></ul></div>
   </div>
@@ -216,11 +217,11 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
       <tr><td>Processed RPS</td><td>550.6</td><td class="hl">789.0 (+43.3%)</td><td class="hl">795.1 (+44.4%)</td></tr>
       <tr><td>Avg Latency (ms)</td><td>298.8</td><td class="hl">212.4 (−28.9%)</td><td class="hl">202.3 (−32.3%)</td></tr>
       <tr><td>p95 Latency (ms)</td><td>640</td><td class="hl">130 (−79.7%)</td><td class="hl">120 (−81.3%)</td></tr>
-      <tr><td>p99 Latency (ms)</td><td>1500</td><td>1600 (+6.7%)</td><td>1500 (0%)</td></tr>
+      <tr><td>p99 Latency (ms)</td><td>1500</td><td><em style="color:var(--text-muted)">[TODO]</em></td><td><em style="color:var(--text-muted)">[TODO]</em></td></tr>
       <tr><td>Queue Depth (avg)</td><td>35,941</td><td class="hl">29,051 (−19.2%)</td><td class="hl">29,648 (−17.5%)</td></tr>
-      <tr><td>Failures</td><td>4</td><td class="hl">0 (−100%)</td><td class="hl">0 (−100%)</td></tr>
       <tr><td>CPU Avg (%)</td><td>43.5</td><td>47.3 (+8.8%)</td><td>48.3 (+11.1%)</td></tr>
-      <tr><td>Jitter (p95−p50)</td><td>570</td><td class="hl">99 (−82.6%)</td><td class="hl">89 (−84.4%)</td></tr>
+      <!-- TODO: Jitter row — awaiting updated measurement data -->
+      <!-- TODO: Failures row — awaiting extended test data -->
     </tbody>
   </table>
   <div class="callout anim d3">CPU utilization increase (+8–11%) reflects <strong>more productive use of compute</strong> — idle/wasted cycles converted into useful work. Tested with Locust from isolated environment using identical request patterns.</div>
@@ -250,7 +251,7 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
   <p class="body anim d2" style="margin-bottom:16px">TWS delivers measurable value across <strong>11 engineering disciplines</strong>. Each team leverages different aspects of the technology.</p>
   <div class="team-grid anim d3">
     <div class="team-card"><div class="tc-icon">🏗️</div><h4>Platform / Infrastructure</h4><p>Capacity planning, resource utilization, platform primitives</p></div>
-    <div class="team-card"><div class="tc-icon">⚙️</div><h4>Backend / Application</h4><p>Latency predictability, error elimination, simpler code</p></div>
+    <div class="team-card"><div class="tc-icon">⚙️</div><h4>Backend / Application</h4><p>Latency predictability, error reduction, simpler code</p></div>
     <div class="team-card"><div class="tc-icon">🔧</div><h4>SRE / Operations</h4><p>SLO compliance, incident reduction, observability</p></div>
     <div class="team-card"><div class="tc-icon">🚀</div><h4>DevOps / CI/CD</h4><p>Deployment simplicity, rollback safety, pipeline gates</p></div>
     <div class="team-card"><div class="tc-icon">📊</div><h4>Performance Engineering</h4><p>Bottleneck resolution, capacity modeling, tail latency</p></div>
@@ -267,14 +268,14 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
   <div class="slide-label anim">Teams 1–2 of 11</div>
   <div class="cols anim d1">
     <div><h3 class="sub">🏗️ Platform / Infrastructure</h3><ul class="dl"><li><strong>Capacity Planning:</strong> +43–44% throughput defers procurement cycles and reduces cloud spend</li><li><strong>Resource Utilization:</strong> CPU becomes more productive (+8–11%), closing the provisioned vs. effective gap</li><li><strong>Queue Management:</strong> −17–19% queue depth reduces backpressure on LBs, brokers, ingress controllers</li><li><strong>Standardization:</strong> Deploy as a platform primitive — opt-in for any service team</li></ul></div>
-    <div><h3 class="sub">⚙️ Backend / Application</h3><ul class="dl"><li><strong>Latency Predictability:</strong> Avg −29–32%, p95 −80% — easier to set realistic timeouts</li><li><strong>Error Elimination:</strong> −100% failures = fewer retries, cleaner error budgets</li><li><strong>Simpler Code:</strong> No custom throttling or circuit-breaking needed at request level</li><li><strong>Zero Logic Changes:</strong> Operates at execution timing layer — no endpoint changes required</li></ul></div>
+    <div><h3 class="sub">⚙️ Backend / Application</h3><ul class="dl"><li><strong>Latency Predictability:</strong> Avg −29–32%, p95 −80% — easier to set realistic timeouts</li><li><strong>Error Reduction:</strong> Significant failure reduction = fewer retries, cleaner error budgets</li><li><strong>Simpler Code:</strong> No custom throttling or circuit-breaking needed at request level</li><li><strong>Zero Logic Changes:</strong> Operates at execution timing layer — no endpoint changes required</li></ul></div>
   </div>
 </div>
 
 <div class="slide" data-title="SRE & DevOps" data-section="Part II: Engineering Teams">
   <div class="slide-label anim">Teams 3–4 of 11</div>
   <div class="cols anim d1">
-    <div><h3 class="sub">🔧 SRE / Operations</h3><ul class="dl"><li><strong>SLO Compliance:</strong> −83% jitter and −80% p95 make SLO attainment substantially more reliable</li><li><strong>Incident Reduction:</strong> Failure elimination and burst-smoothing directly reduces pages</li><li><strong>Observability:</strong> Clearer signals for capacity alerting and anomaly detection</li><li><strong>Runbook Simplification:</strong> Fewer burst-induced anomalies, lighter on-call rotations</li></ul></div>
+    <div><h3 class="sub">🔧 SRE / Operations</h3><ul class="dl"><li><strong>SLO Compliance:</strong> 80% p95 latency reduction makes SLO attainment substantially more reliable</li><li><strong>Incident Reduction:</strong> Burst-smoothing directly reduces the frequency and severity of pages</li><li><strong>Observability:</strong> Clearer signals for capacity alerting and anomaly detection</li><li><strong>Runbook Simplification:</strong> Fewer burst-induced anomalies, lighter on-call rotations</li></ul></div>
     <div><h3 class="sub">🚀 DevOps / CI/CD</h3><ul class="dl"><li><strong>Deployment Simplicity:</strong> SDK import (A) or container addition (B) — automatable via Helm/Terraform</li><li><strong>Performance Gates:</strong> Locust-based, ISO-aligned benchmark template for CI/CD</li><li><strong>Rollback Safety:</strong> Stateless — toggle on/off with zero data migration</li><li><strong>Container Optimization:</strong> KB footprint = negligible image size and cold-start impact</li></ul></div>
   </div>
 </div>
@@ -282,8 +283,8 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
 <div class="slide" data-title="Performance & ML" data-section="Part II: Engineering Teams">
   <div class="slide-label anim">Teams 5–6 of 11</div>
   <div class="cols anim d1">
-    <div><h3 class="sub">📊 Performance Engineering</h3><ul class="dl"><li><strong>Bottleneck Resolution:</strong> Addresses burst-driven contention — hardest pattern to fix at app level</li><li><strong>Benchmarking:</strong> Comprehensive metric set (p50/p95/p99, RPS, queue, jitter) as standard framework</li><li><strong>Capacity Modeling:</strong> +43–44% throughput fundamentally changes capacity models</li><li><strong>Tail Latency:</strong> −80% p95 and −83% jitter for percentile-based SLOs</li></ul></div>
-    <div><h3 class="sub">🤖 Data / ML Engineering</h3><ul class="dl"><li><strong>Inference Serving:</strong> Smooth bursty inference patterns, reduce GPU idle/spike cycles</li><li><strong>Pipeline Throughput:</strong> +43–44% improvement directly reduces pipeline completion times</li><li><strong>GPU Efficiency:</strong> Burst-smoothing reduces need for over-provisioned GPU instances</li><li><strong>Real-Time Serving:</strong> −80% p95 and minimal jitter for strict latency budgets</li></ul></div>
+    <div><h3 class="sub">📊 Performance Engineering</h3><ul class="dl"><li><strong>Bottleneck Resolution:</strong> Addresses burst-driven contention — hardest pattern to fix at app level</li><li><strong>Benchmarking:</strong> Comprehensive metric set (p50/p95/p99, RPS, queue depth, CPU/memory) as standard framework</li><li><strong>Capacity Modeling:</strong> +43–44% throughput fundamentally changes capacity models</li><li><strong>Tail Latency:</strong> −80% p95 is a key data point for percentile-based SLOs</li></ul></div>
+    <div><h3 class="sub">🤖 Data / ML Engineering</h3><ul class="dl"><li><strong>Inference Serving:</strong> Smooth bursty inference patterns, reduce GPU idle/spike cycles</li><li><strong>Pipeline Throughput:</strong> +43–44% improvement directly reduces pipeline completion times</li><li><strong>GPU Efficiency:</strong> Burst-smoothing reduces need for over-provisioned GPU instances</li><li><strong>Real-Time Serving:</strong> −80% p95 latency reduction benefits strict latency budgets</li></ul></div>
   </div>
 </div>
 
@@ -291,16 +292,16 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
   <div class="slide-label anim">Teams 7–8 of 11</div>
   <div class="cols anim d1">
     <div><h3 class="sub">🔒 Security Engineering</h3><ul class="dl"><li><strong>Minimal Attack Surface:</strong> Zero dependencies, KB codebase — fully auditable</li><li><strong>DDoS Resilience:</strong> Burst-smoothing adds resilience against volumetric attacks</li><li><strong>Compliance:</strong> ISO/IEC 25010 &amp; 29119 aligned evaluation supports regulated environments</li><li><strong>Sidecar Isolation:</strong> Option B provides complete process isolation from app memory</li></ul></div>
-    <div><h3 class="sub">✅ QA / Test Engineering</h3><ul class="dl"><li><strong>Performance Baselines:</strong> Before/after Locust data for regression test suites</li><li><strong>Stability Validation:</strong> −83% jitter and −100% failures as testable assertions</li><li><strong>Environment Parity:</strong> Lightweight = runs in staging without special infrastructure</li><li><strong>A/B Testing:</strong> On/off toggling enables automated CI/CD quality gates</li></ul></div>
+    <div><h3 class="sub">✅ QA / Test Engineering</h3><ul class="dl"><li><strong>Performance Baselines:</strong> Before/after Locust data for regression test suites</li><li><strong>Stability Validation:</strong> Throughput and latency improvements are directly testable assertions</li><li><strong>Environment Parity:</strong> Lightweight = runs in staging without special infrastructure</li><li><strong>A/B Testing:</strong> On/off toggling enables automated CI/CD quality gates</li></ul></div>
   </div>
 </div>
 
 <div class="slide" data-title="Cloud, IoT & Frontend" data-section="Part II: Engineering Teams">
   <div class="slide-label anim">Teams 9–11 of 11</div>
   <div class="cols-3 anim d1">
-    <div><h3 class="sub">☁️ Cloud / FinOps</h3><ul class="dl"><li><strong>Right-Sizing:</strong> +43–44% throughput informs downsizing decisions</li><li><strong>Autoscaling:</strong> −83% jitter = react to real demand, not burst noise</li><li><strong>Reserved Capacity:</strong> Predictable utilization enables confident commitments</li><li><strong>Cost-Per-Tx:</strong> Same infra, 43% more transactions</li></ul></div>
-    <div><h3 class="sub">📡 Embedded / IoT</h3><ul class="dl"><li><strong>Edge Deploy:</strong> KB footprint runs on constrained edge nodes</li><li><strong>C++ Portable:</strong> Compiles for RTOS and bare-metal targets</li><li><strong>Deterministic:</strong> −83% jitter for timing-critical environments</li><li><strong>Gateway:</strong> Bursty sensor data benefits from +43% throughput</li></ul></div>
-    <div><h3 class="sub">🖥️ Frontend / Full-Stack</h3><ul class="dl"><li><strong>API Speed:</strong> −29–32% latency = better Core Web Vitals</li><li><strong>Fewer Retries:</strong> Zero failures simplifies client error handling</li><li><strong>Timeout Budgets:</strong> Predictable backend = tighter, confident timeouts</li><li><strong>UX Consistency:</strong> −83% jitter across all sessions</li></ul></div>
+    <div><h3 class="sub">☁️ Cloud / FinOps</h3><ul class="dl"><li><strong>Right-Sizing:</strong> +43–44% throughput informs downsizing decisions</li><li><strong>Autoscaling:</strong> Smoother load patterns = react to real demand, not burst noise</li><li><strong>Reserved Capacity:</strong> Predictable utilization enables confident commitments</li><li><strong>Cost-Per-Tx:</strong> Same infra, 43% more transactions</li></ul></div>
+    <div><h3 class="sub">📡 Embedded / IoT</h3><ul class="dl"><li><strong>Edge Deploy:</strong> KB footprint runs on constrained edge nodes</li><li><strong>C++ Portable:</strong> Compiles for RTOS and bare-metal targets</li><li><strong>Deterministic:</strong> Reduced latency variability for timing-critical environments</li><li><strong>Gateway:</strong> Bursty sensor data benefits from +43% throughput</li></ul></div>
+    <div><h3 class="sub">🖥️ Frontend / Full-Stack</h3><ul class="dl"><li><strong>API Speed:</strong> −29–32% latency = better Core Web Vitals</li><li><strong>Fewer Retries:</strong> Reduced failures simplifies client error handling</li><li><strong>Timeout Budgets:</strong> Predictable backend = tighter, confident timeouts</li><li><strong>UX Consistency:</strong> Reduced latency variability across all sessions</li></ul></div>
   </div>
 </div>
 
@@ -310,8 +311,8 @@ ul.dl li strong{color:var(--deep-blue);font-weight:600}
   <div class="metrics-grid anim d2" style="max-width:720px">
     <div class="metric-card"><div class="metric-value">+43–44%</div><div class="metric-label">Throughput</div></div>
     <div class="metric-card"><div class="metric-value">−80%</div><div class="metric-label">Tail Latency (p95)</div></div>
-    <div class="metric-card"><div class="metric-value">−100%</div><div class="metric-label">Failures</div></div>
-    <div class="metric-card"><div class="metric-value">−83%</div><div class="metric-label">Jitter</div></div>
+    <div class="metric-card"><div class="metric-value">−18–19%</div><div class="metric-label">Queue Depth</div></div>
+    <!-- TODO: Jitter and Failure cards — awaiting updated data -->
   </div>
   <p class="body anim d3" style="margin-top:16px">All improvements achieved <strong>without additional hardware</strong>. TWS enhances how existing compute resources are utilized — delivering higher throughput, faster responses, and more predictable behavior across the entire engineering organization.</p>
   <div class="divider anim d4"></div>
