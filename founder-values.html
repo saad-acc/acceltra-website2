@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Founder Partnership Handbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,400&family=JetBrains+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1613;
+    --ink-soft: #3d342d;
+    --paper: #f4ede1;
+    --paper-deep: #ebe0cc;
+    --rule: #1a1613;
+    --accent: #a8321f;
+    --accent-deep: #7a2414;
+    --gold: #a88534;
+    --muted: #6b5d50;
+    --shadow: rgba(26, 22, 19, 0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 400;
+    line-height: 1.6;
+    font-size: 18px;
+    background-image:
+      radial-gradient(ellipse at top left, rgba(168, 133, 52, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(168, 50, 31, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+
+  /* subtle paper grain */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    z-index: 1;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.08  0 0 0 0 0.07  0 0 0 0.08 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 80px 40px 120px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ============ MASTHEAD ============ */
+  .masthead {
+    border-top: 3px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 24px 0 20px;
+    margin-bottom: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'Inter Tight', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .masthead .issue { color: var(--muted); }
+  .masthead .section { color: var(--accent); font-weight: 600; }
+
+  /* ============ HEADER ============ */
+  .header {
+    text-align: center;
+    margin-bottom: 100px;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    display: inline-block;
+    padding: 6px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+  }
+
+  h1.title {
+    font-size: clamp(52px, 9vw, 96px);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    font-variation-settings: "opsz" 144;
+  }
+
+  h1.title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.4;
+  }
+
+  .divider-ornate {
+    margin: 60px auto 0;
+    width: 120px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .divider-ornate::before,
+  .divider-ornate::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ink);
+  }
+
+  .divider-ornate span {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: var(--ink);
+  }
+
+  /* ============ INTRO ============ */
+  .intro {
+    font-size: 22px;
+    line-height: 1.5;
+    margin-bottom: 100px;
+    color: var(--ink-soft);
+    position: relative;
+    padding-left: 40px;
+    border-left: 3px solid var(--accent);
+  }
+
+  .intro .dropcap {
+    font-family: 'Fraunces', serif;
+    font-size: 80px;
+    font-weight: 600;
+    line-height: 0.8;
+    float: left;
+    margin: 6px 12px 0 0;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  /* ============ TABLE OF CONTENTS ============ */
+  .toc {
+    background: var(--paper-deep);
+    border: 1px solid var(--ink);
+    padding: 40px 48px;
+    margin-bottom: 100px;
+    position: relative;
+  }
+
+  .toc::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border: 1px solid var(--ink);
+    transform: translate(6px, 6px);
+    z-index: -1;
+    background: var(--gold);
+    opacity: 0.2;
+  }
+
+  .toc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .toc-title {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    margin-bottom: 28px;
+    color: var(--ink);
+  }
+
+  .toc ol {
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(26, 22, 19, 0.2);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-size: 17px;
+  }
+
+  .toc li:last-child { border-bottom: none; }
+
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    min-width: 28px;
+  }
+
+  .toc li a {
+    color: var(--ink);
+    text-decoration: none;
+    flex: 1;
+    transition: color 0.2s;
+  }
+
+  .toc li a:hover { color: var(--accent); }
+
+  /* ============ ASPECT SECTIONS ============ */
+  .aspect {
+    margin-bottom: 96px;
+    scroll-margin-top: 40px;
+  }
+
+  .aspect-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .aspect h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: var(--ink);
+    font-variation-settings: "opsz" 144;
+  }
+
+  .aspect h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .aspect .lead {
+    font-size: 20px;
+    line-height: 1.55;
+    font-weight: 400;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  .aspect p {
+    margin-bottom: 18px;
+    line-height: 1.7;
+  }
+
+  .why-it-matters {
+    background: rgba(168, 133, 52, 0.12);
+    border-left: 3px solid var(--gold);
+    padding: 20px 24px;
+    margin: 28px 0;
+    font-size: 16.5px;
+    line-height: 1.6;
+  }
+
+  .why-it-matters strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  /* Components list inside each aspect */
+  .components {
+    margin: 28px 0;
+  }
+
+  .components-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .components ul {
+    list-style: none;
+  }
+
+  .components li {
+    padding: 10px 0 10px 28px;
+    position: relative;
+    border-bottom: 1px dotted rgba(26, 22, 19, 0.15);
+    font-size: 16.5px;
+    line-height: 1.5;
+  }
+
+  .components li::before {
+    content: '§';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    color: var(--accent);
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-style: italic;
+  }
+
+  .components li strong {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .components li:last-child { border-bottom: none; }
+
+  /* Pull quote */
+  .pull-quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 28px;
+    line-height: 1.3;
+    text-align: center;
+    margin: 48px 0;
+    padding: 32px 20px;
+    color: var(--ink);
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-weight: 300;
+  }
+
+  .pull-quote::before,
+  .pull-quote::after {
+    content: '"';
+    font-size: 60px;
+    color: var(--accent);
+    line-height: 0;
+    vertical-align: -20px;
+    opacity: 0.5;
+  }
+
+  .pull-quote::before { margin-right: 8px; }
+  .pull-quote::after { margin-left: 8px; }
+
+  /* ============ CHECKLISTS ============ */
+  .checklist-section {
+    margin-top: 140px;
+    padding-top: 60px;
+    border-top: 3px solid var(--ink);
+    position: relative;
+  }
+
+  .checklist-section::before {
+    content: '※';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--paper);
+    padding: 0 16px;
+    font-size: 24px;
+    color: var(--accent);
+  }
+
+  .checklist-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    text-align: center;
+    display: block;
+  }
+
+  .checklist-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(40px, 6vw, 56px);
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .checklist-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .checklist-subtitle {
+    text-align: center;
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 18px;
+    margin-bottom: 56px;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .checklist {
+    list-style: none;
+  }
+
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 18px 20px;
+    margin-bottom: 10px;
+    background: var(--paper-deep);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .checklist li:hover {
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .checklist li.checked {
+    background: rgba(168, 133, 52, 0.15);
+    border-color: var(--gold);
+  }
+
+  .checklist li.checked .check-text {
+    text-decoration: line-through;
+    text-decoration-color: var(--accent);
+    text-decoration-thickness: 1.5px;
+    color: var(--muted);
+  }
+
+  .checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--ink);
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--paper);
+    transition: all 0.2s;
+    margin-top: 2px;
+  }
+
+  .checklist li.checked .checkbox {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .checkbox svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .checklist li.checked .checkbox svg {
+    opacity: 1;
+  }
+
+  .check-text {
+    flex: 1;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .check-text strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+
+  .check-text span {
+    color: var(--ink-soft);
+    font-size: 15.5px;
+    font-style: italic;
+  }
+
+  /* ============ FOOTER ============ */
+  .colophon {
+    margin-top: 140px;
+    padding-top: 40px;
+    border-top: 1px solid var(--ink);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .colophon .ornament {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .container { padding: 40px 20px 80px; }
+    .toc { padding: 28px 24px; }
+    .intro { padding-left: 24px; font-size: 18px; }
+    .intro .dropcap { font-size: 60px; }
+    .pull-quote { font-size: 22px; padding: 24px 10px; }
+    .masthead { font-size: 9px; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .checklist li { break-inside: avoid; }
+    .aspect { break-inside: avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="masthead">
+    <span class="issue">Vol. I · The Partnership Issue</span>
+    <span class="section">A Handbook</span>
+    <span class="issue">For Founders</span>
+  </div>
+
+  <header class="header">
+    <span class="eyebrow">Read slowly · Re-read often</span>
+    <h1 class="title">On Building <em>Together</em></h1>
+    <p class="subtitle">A working handbook on the psychology, synergy, and business craft of founder partnerships that endure.</p>
+    <div class="divider-ornate"><span>❦</span></div>
+  </header>
+
+  <section class="intro">
+    <p><span class="dropcap">T</span>he company you're building is a product. The partnership you're building it with is also a product — often a more fragile one, and almost always the one you invest in least deliberately. What follows is a field guide to the aspects of that relationship that, taken together, decide whether your venture flourishes or quietly corrodes from the inside. Treat it as you would any serious architecture document: read it, mark it up, return to it.</p>
+  </section>
+
+  <nav class="toc">
+    <div class="toc-label">Contents</div>
+    <h2 class="toc-title">The Ten Aspects</h2>
+    <ol>
+      <li><a href="#aspect-1">Foundational Alignment</a></li>
+      <li><a href="#aspect-2">Role Clarity & Decision Rights</a></li>
+      <li><a href="#aspect-3">Complementary Skills Without Overlap Anxiety</a></li>
+      <li><a href="#aspect-4">Communication Cadence & Conflict Protocols</a></li>
+      <li><a href="#aspect-5">Psychological Safety Between Founders</a></li>
+      <li><a href="#aspect-6">Financial & Legal Hygiene</a></li>
+      <li><a href="#aspect-7">Ego Management</a></li>
+      <li><a href="#aspect-8">External Support Systems</a></li>
+      <li><a href="#aspect-9">Evolving the Relationship Over Time</a></li>
+      <li><a href="#aspect-10">Exit & Endgame Alignment</a></li>
+    </ol>
+  </nav>
+
+  <!-- ASPECT 1 -->
+  <article class="aspect" id="aspect-1">
+    <span class="aspect-number">Aspect № 01</span>
+    <h2>Foundational <em>Alignment</em></h2>
+    <p class="lead">Before anything tactical, you need agreement on the deeper stuff — the gravity that will pull every later decision into orbit.</p>
+    <p>Foundational alignment is the bedrock conversation most founders skip because it feels philosophical. It isn't. It determines whether, two years from now, one of you is optimizing for a quick exit while the other is quietly planning a twenty-year institution. Misalignment here doesn't announce itself — it leaks out, decision by decision, until one day the partnership no longer makes sense.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Every hard trade-off — hiring, fundraising, pricing, who gets fired, when to pivot — is a values decision in disguise. If you haven't named your values, you'll litigate them forever under the guise of "strategy."
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Shared vision.</strong> What are we actually building, and for whom? Can we both articulate it in one sentence without looking at each other?</li>
+        <li><strong>Scale of ambition.</strong> Lifestyle business, profitable mid-market company, or venture-scale bet? These demand different lives.</li>
+        <li><strong>Time horizon.</strong> Three years to exit, or twenty years to institution? Mismatch here is a slow-motion collision.</li>
+        <li><strong>Values under pressure.</strong> How will we treat employees when cash is tight? What money won't we take? What customer won't we serve?</li>
+        <li><strong>Personal stakes.</strong> Runway, family obligations, risk tolerance, what "winning" means to each of you beyond the company.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 2 -->
+  <article class="aspect" id="aspect-2">
+    <span class="aspect-number">Aspect № 02</span>
+    <h2>Role Clarity & <em>Decision Rights</em></h2>
+    <p class="lead">Ambiguity is corrosive. The healthiest founder pairs treat decision rights with the rigour engineers treat service ownership.</p>
+    <p>Most founder friction isn't about <em>what</em> to decide — it's about <em>who</em> gets to decide and <em>how</em>. When two people both feel responsible for the same call, you don't get twice the wisdom; you get resentment, delay, and contradictory signals to the team. Clarity here is a gift you give yourselves and everyone around you.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Unclear ownership scales the worst: by the time you have twenty employees, ambiguity between co-founders becomes organizational paralysis. Teams quietly learn whom to ask to get a "yes" — and that's when the partnership starts to fracture.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Domain ownership.</strong> Who owns product? Engineering? GTM? Finance? Even if you both contribute, one person holds the pen.</li>
+        <li><strong>Final-say protocol.</strong> When you genuinely disagree after discussion, who decides? "We'll figure it out" is not a protocol.</li>
+        <li><strong>Decision types.</strong> Distinguish <em>consultative</em> ("I'll hear you, then decide") from <em>consensus</em> ("we must both agree"). Most fights come from mismatched assumptions about which is which.</li>
+        <li><strong>Reversibility.</strong> Treat one-way-door decisions (fundraising terms, key hires, pricing model) with more ceremony than reversible ones.</li>
+        <li><strong>Escalation path.</strong> If you're stuck, what breaks the tie? A board member, an advisor, a coin flip — but something.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 3 -->
+  <article class="aspect" id="aspect-3">
+    <span class="aspect-number">Aspect № 03</span>
+    <h2>Complementary Skills, <em>No Overlap Anxiety</em></h2>
+    <p class="lead">The strongest pairings are genuinely different — and each side respects the other's craft as real work.</p>
+    <p>Complementarity is the cliché advice for co-founder fit, but the less-discussed part is the respect layer underneath it. A technical founder who secretly thinks sales is "just talking to people" will poison the partnership long before any skill gap does. A commercial founder who thinks engineering is "just typing" will do the same. The skills must differ; the respect cannot.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Startups lose by being bad at something, not by being brilliant at one thing. Complementary founders cover more of the surface area. But only if each one believes the other's surface area is worth covering.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Functional complementarity.</strong> Product/tech paired with commercial/GTM is the classic split. Two of the same makes you half a company.</li>
+        <li><strong>Cognitive complementarity.</strong> Visionary and operator. Optimist and realist. Generator and finisher. Different wiring, same direction.</li>
+        <li><strong>Genuine respect.</strong> Can you describe your co-founder's domain with admiration, not condescension?</li>
+        <li><strong>Clear handoff zones.</strong> Where does one person's turf end and the other's begin? Grey zones need to be named, not avoided.</li>
+        <li><strong>Shared literacy.</strong> You don't need to do each other's jobs, but you need to understand them well enough to be a good partner in cross-cutting decisions.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 4 -->
+  <article class="aspect" id="aspect-4">
+    <span class="aspect-number">Aspect № 04</span>
+    <h2>Communication Cadence & <em>Conflict Protocols</em></h2>
+    <p class="lead">Rhythms prevent rot. Protocols prevent explosion. Neither happens by accident.</p>
+    <p>Healthy founder pairs don't communicate more — they communicate on rhythm. Weekly 1:1s. Quarterly "state of us" reviews that are about the partnership, not the company. Honest post-mortems after big decisions. And crucially, a shared model for how to fight: hard in private, aligned in public, with no residue carried forward.</p>
+
+    <div class="pull-quote">The meta-skill is being able to say "I want to talk about us, not the company" — without it feeling like a crisis.</div>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Unspoken friction compounds. By the time "we should really talk" becomes "we need to talk," the conversation is already harder than it needed to be. Cadence is prevention.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Weekly 1:1.</strong> Short, regular, protected. Not a status meeting — a relationship meeting.</li>
+        <li><strong>Quarterly relationship review.</strong> How are <em>we</em> doing? What's working? What's quietly bothering either of us?</li>
+        <li><strong>Disagreement in private, alignment in public.</strong> The team must never be able to play you against each other.</li>
+        <li><strong>Conflict rules.</strong> No personal attacks. No bringing up old grievances. No silent treatment. Name one that fits your pair and commit to it.</li>
+        <li><strong>Repair rituals.</strong> When something goes wrong, how do you come back together? Waiting for it to pass is not a ritual.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 5 -->
+  <article class="aspect" id="aspect-5">
+    <span class="aspect-number">Aspect № 05</span>
+    <h2>Psychological Safety <em>Between Founders</em></h2>
+    <p class="lead">The single most underrated variable. Can you be scared, wrong, or uncertain — in front of your co-founder?</p>
+    <p>If you can't admit to your co-founder that you're burned out, doubting a decision you championed last quarter, or just plain afraid, then the relationship is already performing rather than partnering. Founder loneliness is almost always, at its core, founder <em>isolation from one's own co-founder</em>. This is the thing no one talks about at demo day, and it's the thing that ends more partnerships than any strategic disagreement.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      The weight of building something improbable is unbearable alone. If you've engineered a relationship where weakness can't be shown, you've engineered a relationship where one of you will eventually break in silence.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Admission space.</strong> Can you say "I don't know," "I was wrong," "I'm scared" without it becoming ammunition later?</li>
+        <li><strong>Non-transactional concern.</strong> Do you check in on each other as people, not just as co-executors of a plan?</li>
+        <li><strong>Permission to change your mind.</strong> If one of you championed a decision and now has doubts, is revisiting it safe or humiliating?</li>
+        <li><strong>No scorekeeping.</strong> Healthy partners forget who was right about what. Unhealthy ones keep a ledger.</li>
+        <li><strong>Vulnerability reciprocity.</strong> Safety is built by one person going first — repeatedly — and the other meeting them with care.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 6 -->
+  <article class="aspect" id="aspect-6">
+    <span class="aspect-number">Aspect № 06</span>
+    <h2>Financial & <em>Legal Hygiene</em></h2>
+    <p class="lead">Paperwork is not the opposite of trust. It's the scaffolding that lets trust survive hard moments.</p>
+    <p>The founders who say "we don't need a formal agreement, we trust each other" are the ones most likely to end up in a brutal, lawyered-up separation two years later. A proper founders' agreement isn't an act of suspicion — it's an act of foresight. You're protecting your future selves from decisions your present selves can't see yet.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Disputes about equity, IP, and exit mechanics — unresolved early — become existential later, usually at the exact moment the company is most vulnerable (a fundraise, an exit, a co-founder departure). Hygiene now prevents trauma then.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Equity split with vesting.</strong> Usually four years with a one-year cliff. Non-negotiable for serious ventures.</li>
+        <li><strong>IP assignment.</strong> Everything any founder has built for the company belongs to the company. Document it.</li>
+        <li><strong>Good leaver / bad leaver clauses.</strong> What happens to equity if someone leaves — and under what circumstances?</li>
+        <li><strong>Drag-along and tag-along rights.</strong> Protect both the majority and the minority in exit scenarios.</li>
+        <li><strong>Compensation philosophy.</strong> Equal salaries? Market-rate? Below-market with a plan to increase? Decide openly.</li>
+        <li><strong>Personal runway transparency.</strong> How long can each of you realistically go unpaid or underpaid? Hidden pressure here corrupts decisions.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 7 -->
+  <article class="aspect" id="aspect-7">
+    <span class="aspect-number">Aspect № 07</span>
+    <h2>Ego <em>Management</em></h2>
+    <p class="lead">Enough ego to believe you can build the improbable. Enough self-awareness not to let it destroy what you're building with.</p>
+    <p>Founders need ego — the pathological self-belief that you can bend reality. But ego unmanaged becomes the thing that poisons the partnership. It shows up as needing to be right, needing to take credit, needing to be the face. It shows up as small, dismissive body language in meetings. It shows up in the way you retell the origin story.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      Every team reads founder ego as a signal. If one of you is quietly performing for credit, the culture becomes one where everyone performs for credit. The quality of your partnership sets the ceiling on the quality of your culture.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Credit sharing.</strong> Can you let your co-founder take the stage while you step back — genuinely, not performatively?</li>
+        <li><strong>Public wrongness.</strong> Can you be wrong in front of the team without it feeling like a status loss?</li>
+        <li><strong>Celebrating their wins.</strong> Not through gritted teeth. Not keeping score.</li>
+        <li><strong>Identity separation.</strong> Are you a person who runs a company, or is the company your entire identity? The latter makes every disagreement feel like an attack on you.</li>
+        <li><strong>Coachability.</strong> When your co-founder gives you hard feedback, is your first reaction defense or curiosity?</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 8 -->
+  <article class="aspect" id="aspect-8">
+    <span class="aspect-number">Aspect № 08</span>
+    <h2>External <em>Support Systems</em></h2>
+    <p class="lead">If your co-founder is your only source of support, you will burn the partnership to the ground trying to get your needs met.</p>
+    <p>Founders who depend on each other for all emotional weight — all the processing, all the reassurance, all the vulnerability — are setting up their partnership to carry a load it was never designed for. Healthy pairs actively push each other toward coaches, therapists, peer groups, mentors, and lives that exist outside the company.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      A partnership carrying the full weight of two humans' psychological needs cannot also carry the weight of a company. Distribute the load. It's not disloyalty — it's load-balancing.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Executive coach or therapist.</strong> Ideally both, doing different jobs. Normalized, scheduled, not stigmatized.</li>
+        <li><strong>Peer founder group.</strong> Other people at your stage who understand the specific texture of what you're going through.</li>
+        <li><strong>Mentors.</strong> People five to ten years ahead who remember what this moment was like.</li>
+        <li><strong>Non-work relationships.</strong> Partners, friends, family — people who love you independent of whether the company works.</li>
+        <li><strong>Physical practice.</strong> Something — running, lifting, climbing, yoga — that regulates your nervous system outside the office.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 9 -->
+  <article class="aspect" id="aspect-9">
+    <span class="aspect-number">Aspect № 09</span>
+    <h2>Evolving the Relationship <em>Over Time</em></h2>
+    <p class="lead">The partnership that works at two people will not automatically work at two hundred. Relationships that can't evolve become liabilities.</p>
+    <p>In the early days, you do everything together. You share a brain. You're in every decision. At twenty people, the things you were both doing need to be owned by one of you. At two hundred, you're both doing jobs that didn't exist when you started. Founders who can't evolve — who insist on being in every decision the way they were on day one — become bottlenecks, then blockers, then eventually problems the company has to solve around.</p>
+
+    <div class="pull-quote">Who do I need to become for the next stage of this company?</div>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      The company will outgrow the version of you that founded it. The question is whether you'll outgrow that version with it — or hold it hostage to who you used to be.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>Stage-appropriate roles.</strong> What a CEO does at 5 people, 50, and 500 is not the same job. Same for every other role.</li>
+        <li><strong>Letting go.</strong> Can you release things you used to do and love, because the company needs you doing other things?</li>
+        <li><strong>Learning curves.</strong> What do you each need to learn to be useful at the next stage? Who's helping you learn it?</li>
+        <li><strong>Succession thinking.</strong> Someday you'll hire people better than you at your current job. Can you welcome that, or will you resist it?</li>
+        <li><strong>Hard conversations about fit.</strong> The honest "is this still the right role for you?" discussion — annually, mutually, without threat.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ASPECT 10 -->
+  <article class="aspect" id="aspect-10">
+    <span class="aspect-number">Aspect № 10</span>
+    <h2>Exit & <em>Endgame Alignment</em></h2>
+    <p class="lead">Many partnerships survive every hard moment except success. Know, early and often, what each of you actually wants from the end.</p>
+    <p>You don't need to talk about exit constantly. But you do need to talk about it explicitly, and you need to revisit it — because what you want at year two is often not what you want at year seven. Founders who've never had this conversation get blindsided by it at the worst possible moment: usually when an offer lands on the table, one wants to take it, and the other feels betrayed.</p>
+
+    <div class="why-it-matters">
+      <strong>Why it matters</strong>
+      The moment of success is the moment of maximum divergence-risk. If you've never talked about what success looks like for each of you, you'll discover your misalignment at the exact moment the stakes are highest.
+    </div>
+
+    <div class="components">
+      <div class="components-label">Components to examine</div>
+      <ul>
+        <li><strong>What each of you wants.</strong> Financial outcome? Legacy? Independence? The next thing? Name it.</li>
+        <li><strong>Acceptable exits.</strong> Would you sell at X? At Y? To whom would you never sell?</li>
+        <li><strong>Founder departures.</strong> What happens if one of you wants to leave before the other? Don't wait for the moment to figure it out.</li>
+        <li><strong>Succession.</strong> Are you both prepared to hand the keys to a professional CEO someday? Or is that a dealbreaker for one of you?</li>
+        <li><strong>Post-exit life.</strong> What do you want on the other side? The answer changes how you run the company today.</li>
+      </ul>
+    </div>
+  </article>
+
+  <!-- ============ CHECKLIST 1 ============ -->
+  <section class="checklist-section">
+    <span class="checklist-eyebrow">Checklist № 01 · Before You Sign</span>
+    <h2 class="checklist-title">Before Entering the <em>Partnership</em></h2>
+    <p class="checklist-subtitle">A set of conversations to have — ideally over several sessions, not one dramatic evening — before you commit.</p>
+
+    <ul class="checklist" id="before-list">
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have articulated the same vision in our own words</strong><span>And the two versions rhyme, without needing translation.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We agree on the scale and time horizon of the ambition</strong><span>Lifestyle vs. venture-scale. Three years vs. twenty. Named, not assumed.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have talked honestly about money, runway, and personal stakes</strong><span>Not approximations. Real numbers, real obligations, real pressures.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>Our skills are genuinely complementary</strong><span>And we both believe the other's domain is real work, not a lesser craft.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>Roles and decision rights are defined in writing</strong><span>Who owns what. Who decides what. What's consensus, what's consultative.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>A founders' agreement is drafted with vesting and IP assignment</strong><span>Four-year vesting with a one-year cliff is standard for a reason.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>Good leaver / bad leaver provisions are written and understood</strong><span>We have agreed what happens if one of us leaves — voluntarily or not.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have had at least one genuine conflict already</strong><span>And we can describe how we handled it — because it will happen again.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have agreed on an escalation path for stuck decisions</strong><span>Advisor, board member, or pre-decided tiebreaker rule. Something.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have talked about what each of us would consider "success"</strong><span>Financial, psychological, legacy. The answers don't need to match — but they need to coexist.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have discussed what would end the partnership</strong><span>Behaviors, situations, outcomes. Uncomfortable, but necessary.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I genuinely like and respect this person as a human</strong><span>Not just as a co-founder. Skill fit fades; character fit carries you through.</span></div></li>
+    </ul>
+  </section>
+
+  <!-- ============ CHECKLIST 2 ============ -->
+  <section class="checklist-section">
+    <span class="checklist-eyebrow">Checklist № 02 · Ongoing Reminders</span>
+    <h2 class="checklist-title">Once You Are <em>In It</em></h2>
+    <p class="checklist-subtitle">A recurring reminder. Return to this monthly. The partnership is a product — ship improvements to it, too.</p>
+
+    <ul class="checklist" id="during-list">
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We had our weekly 1:1 this week</strong><span>Not a status update. A relationship check-in.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I am disagreeing in private and aligning in public</strong><span>The team never sees a crack they can exploit or get caught inside.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I have told my co-founder something real about how I'm doing recently</strong><span>Not just how the company is doing. How I am.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I have admitted being wrong about something in the last month</strong><span>If the answer is no, either I'm perfect or I'm performing.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I am not keeping score</strong><span>Who was right, who worked harder, who sacrificed more. Burn the ledger.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I am letting my co-founder take credit when it belongs to them</strong><span>Publicly, genuinely, without hedging.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I have support systems outside this partnership</strong><span>A coach, a therapist, peer founders, friends who predate this company.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>We have a functioning conflict protocol, and we use it</strong><span>When something bothers me, I surface it within a week — not months later.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>Our quarterly relationship review is on the calendar</strong><span>Not "when we have time." Scheduled. Protected. Actually happening.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I am evolving with the stage of the company</strong><span>Doing the job that today requires — not the one I did a year ago.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I revisit our exit alignment at least once a year</strong><span>What we each want now. Not what we wanted when we started.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I treat this partnership as a first-class deliverable</strong><span>Not as scaffolding around "the real work." It is the work.</span></div></li>
+      <li><div class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8L7 12L13 4" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="check-text"><strong>I can still say: I would choose this person again</strong><span>If the answer changes, that is a signal to investigate — not to ignore.</span></div></li>
+    </ul>
+  </section>
+
+  <footer class="colophon">
+    <div class="ornament">❦</div>
+    <div>A Handbook for Founders</div>
+    <div>On Partnership · Endurance · Craft</div>
+    <div style="margin-top: 20px;">— Return often —</div>
+  </footer>
+
+</div>
+
+<script>
+  // Make checklists interactive
+  document.querySelectorAll('.checklist li').forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+    });
+  });
+
+  // Smooth scroll with slight offset for TOC links
+  document.querySelectorAll('.toc a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
