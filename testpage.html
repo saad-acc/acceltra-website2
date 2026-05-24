@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bowen Real Estate of Cape Cod | John Bowen, Broker</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d2237;
+    --navy-mid: #1a3a52;
+    --navy-light: #2c5f82;
+    --gold: #b8914a;
+    --gold-light: #d4ad72;
+    --sand: #f5ede0;
+    --cream: #faf7f2;
+    --white: #ffffff;
+    --text-dark: #1a1a2e;
+    --text-muted: #5a6a7a;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 60px;
+    background: transparent;
+    transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(13, 34, 55, 0.97);
+    padding: 14px 60px;
+    box-shadow: 0 2px 30px rgba(0,0,0,0.25);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--white);
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    line-height: 1.2;
+  }
+  .nav-logo span { color: var(--gold-light); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: var(--gold);
+    color: var(--white) !important;
+    padding: 9px 22px;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--navy) !important; }
+
+  /* ─── HERO ────────────────────────────────────────── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    background: var(--navy);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(165deg, rgba(13,34,55,0.72) 0%, rgba(13,34,55,0.45) 50%, rgba(44,95,130,0.6) 100%),
+      url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1800&q=80') center/cover no-repeat;
+    transform: scale(1.04);
+    animation: zoomIn 12s ease forwards;
+  }
+  @keyframes zoomIn { from { transform: scale(1.04); } to { transform: scale(1.0); } }
+
+  /* Decorative wave overlay */
+  .hero-wave {
+    position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 120px;
+  }
+  .hero-wave svg { width: 100%; height: 100%; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    padding: 120px 40px 80px;
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.2rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.08;
+    color: var(--white);
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-light);
+    display: block;
+  }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-ctas {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.9s forwards;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--white);
+    text-decoration: none;
+    padding: 16px 38px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    text-decoration: none;
+    padding: 15px 38px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 2px;
+    transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--gold-light); background: rgba(184,145,74,0.15); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute; bottom: 140px; left: 0; right: 0;
+    display: flex; justify-content: center; gap: 70px;
+    opacity: 0;
+    animation: fadeUp 0.9s 1.1s forwards;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+  }
+  .stat-divider { width: 1px; background: rgba(255,255,255,0.2); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── ABOUT ───────────────────────────────────────── */
+  #about {
+    background: var(--cream);
+    padding: 110px 60px;
+  }
+  .about-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center;
+  }
+  .about-photo-wrap {
+    position: relative;
+  }
+  .about-photo-frame {
+    position: relative;
+    padding: 16px 16px 0 0;
+  }
+  .about-photo-frame::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 88%; height: 88%;
+    border: 2px solid var(--gold);
+    border-radius: 2px;
+    z-index: 0;
+  }
+  .about-photo {
+    position: relative; z-index: 1;
+    width: 100%;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+    border-radius: 2px;
+    background: var(--navy-mid);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .about-photo-placeholder {
+    width: 100%; aspect-ratio: 4/5;
+    background: linear-gradient(145deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: 2px;
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  .about-photo-placeholder svg { opacity: 0.4; }
+  .about-badge {
+    position: absolute; bottom: -20px; left: -20px; z-index: 3;
+    background: var(--navy);
+    border: 2px solid var(--gold);
+    padding: 18px 22px;
+    border-radius: 2px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(13,34,55,0.25);
+  }
+  .about-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 700;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+  .about-badge-text {
+    font-size: 0.65rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    margin-top: 4px;
+  }
+
+  .section-eyebrow {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+  .section-title em { font-style: italic; color: var(--navy-light); }
+  .body-text {
+    font-size: 1rem; line-height: 1.78;
+    color: var(--text-muted); margin-bottom: 18px;
+  }
+  .about-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-style: italic;
+    color: var(--navy);
+    padding: 20px 0 20px 24px;
+    border-left: 3px solid var(--gold);
+    margin: 28px 0;
+    line-height: 1.4;
+  }
+  .credentials {
+    display: flex; gap: 28px; flex-wrap: wrap; margin-top: 32px;
+  }
+  .cred-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--navy); letter-spacing: 0.05em;
+  }
+  .cred-icon {
+    width: 32px; height: 32px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cred-icon svg { width: 14px; height: 14px; }
+
+  /* ─── SERVICES ────────────────────────────────────── */
+  #services {
+    background: var(--navy);
+    padding: 110px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  #services::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(44,95,130,0.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .services-header {
+    max-width: 1160px; margin: 0 auto 64px;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 24px;
+  }
+  .services-header .section-title { color: var(--white); margin-bottom: 0; }
+  .services-header .section-eyebrow { color: var(--gold-light); }
+  .services-header p { font-size: 0.95rem; color: rgba(255,255,255,0.55); max-width: 340px; line-height: 1.7; }
+  .services-grid {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  }
+  .service-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 52px 40px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s, transform 0.3s;
+    cursor: default;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.35s;
+  }
+  .service-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-4px); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem; font-weight: 300;
+    color: rgba(255,255,255,0.08);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+  .service-icon {
+    width: 52px; height: 52px;
+    background: rgba(184,145,74,0.15);
+    border: 1px solid rgba(184,145,74,0.35);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 28px;
+  }
+  .service-icon svg { width: 22px; height: 22px; stroke: var(--gold-light); }
+  .service-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem; font-weight: 400;
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .service-desc {
+    font-size: 0.88rem; line-height: 1.75;
+    color: rgba(255,255,255,0.55);
+  }
+  .service-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 28px;
+    font-size: 0.75rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold-light);
+    text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .service-link:hover { gap: 14px; }
+  .service-link svg { width: 14px; height: 14px; }
+
+  /* ─── COMMUNITIES ─────────────────────────────────── */
+  #communities {
+    padding: 110px 60px;
+    background: var(--sand);
+  }
+  .communities-header {
+    max-width: 1160px; margin: 0 auto 56px;
+    text-align: center;
+  }
+  .communities-grid {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .community-card {
+    position: relative; overflow: hidden;
+    border-radius: 3px;
+    aspect-ratio: 3/4;
+    cursor: default;
+  }
+  .community-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transition: transform 0.6s ease;
+  }
+  .community-card:hover .community-bg { transform: scale(1.07); }
+  .community-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,34,55,0.92) 0%, rgba(13,34,55,0.3) 55%, transparent 100%);
+  }
+  .community-content {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 36px 32px;
+  }
+  .community-tag {
+    font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 10px;
+  }
+  .community-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem; font-weight: 400;
+    color: var(--white); line-height: 1;
+    margin-bottom: 12px;
+  }
+  .community-desc {
+    font-size: 0.82rem; line-height: 1.65;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 24px;
+  }
+  .community-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold-light); text-decoration: none;
+    border-bottom: 1px solid rgba(184,145,74,0.4);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .community-link:hover { color: var(--white); border-color: var(--white); }
+
+  /* ─── TESTIMONIALS ───────────────────────────────── */
+  #testimonials {
+    background: var(--navy);
+    padding: 110px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  #testimonials::after {
+    content: '"';
+    position: absolute; top: -60px; right: 60px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28rem;
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonials-header {
+    max-width: 1160px; margin: 0 auto 64px;
+    text-align: center;
+  }
+  .testimonials-header .section-title { color: var(--white); }
+  .testimonials-header .section-eyebrow { color: var(--gold-light); }
+  .testimonials-grid {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .testimonial-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 3px;
+    padding: 44px 36px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .testimonial-card:hover { background: rgba(255,255,255,0.07); }
+  .testimonial-stars {
+    display: flex; gap: 4px; margin-bottom: 24px;
+  }
+  .star { color: var(--gold); font-size: 1rem; }
+  .testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7; margin-bottom: 28px;
+  }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .author-avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--navy-mid);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600;
+    color: var(--gold-light);
+    flex-shrink: 0;
+  }
+  .author-name {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--white);
+  }
+  .author-detail {
+    font-size: 0.72rem; color: rgba(255,255,255,0.45);
+    margin-top: 3px;
+  }
+
+  /* ─── CTA BAND ───────────────────────────────────── */
+  #cta-band {
+    background: var(--gold);
+    padding: 80px 60px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta-band::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(255,255,255,0.04) 40px, rgba(255,255,255,0.04) 80px
+    );
+  }
+  .cta-band-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .cta-band-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--navy);
+    margin-bottom: 14px;
+    line-height: 1.2;
+  }
+  .cta-band-sub {
+    font-size: 0.95rem; color: rgba(13,34,55,0.7);
+    margin-bottom: 36px; line-height: 1.65;
+  }
+  .cta-band-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-dark {
+    background: var(--navy);
+    color: var(--white);
+    text-decoration: none;
+    padding: 16px 38px;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.25s;
+    display: inline-block;
+  }
+  .btn-dark:hover { background: var(--navy-mid); }
+  .btn-ghost-dark {
+    background: transparent;
+    color: var(--navy);
+    text-decoration: none;
+    padding: 15px 38px;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border: 2px solid var(--navy);
+    border-radius: 2px;
+    transition: background 0.25s, color 0.25s;
+    display: inline-block;
+  }
+  .btn-ghost-dark:hover { background: var(--navy); color: var(--white); }
+
+  /* ─── CONTACT ────────────────────────────────────── */
+  #contact {
+    background: var(--cream);
+    padding: 110px 60px;
+  }
+  .contact-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-info .section-title { margin-bottom: 16px; }
+  .contact-info .body-text { margin-bottom: 40px; }
+  .contact-items { display: flex; flex-direction: column; gap: 22px; }
+  .contact-item {
+    display: flex; align-items: flex-start; gap: 18px;
+  }
+  .contact-icon {
+    width: 46px; height: 46px; flex-shrink: 0;
+    background: var(--navy);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .contact-icon svg { width: 18px; height: 18px; stroke: var(--gold-light); }
+  .contact-item-label {
+    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .contact-item-value {
+    font-size: 1rem; color: var(--navy);
+    font-weight: 500; line-height: 1.4;
+    text-decoration: none;
+  }
+  .contact-item-value:hover { color: var(--gold); }
+  .contact-item-sub {
+    font-size: 0.78rem; color: var(--text-muted); margin-top: 2px;
+  }
+
+  /* Contact Form */
+  .contact-form-wrap {
+    background: var(--white);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-radius: 3px;
+    padding: 50px 44px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.06);
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem; font-weight: 400;
+    color: var(--navy); margin-bottom: 8px;
+  }
+  .form-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 36px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-label {
+    display: block; font-size: 0.7rem;
+    font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid #e4ddd5;
+    border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.92rem; color: var(--navy);
+    background: var(--cream);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,145,74,0.12);
+  }
+  .form-textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    width: 100%; padding: 15px;
+    background: var(--navy); color: var(--white);
+    border: none; border-radius: 2px;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.25s;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--navy-light); }
+
+  /* ─── FOOTER ──────────────────────────────────────── */
+  footer {
+    background: #06141f;
+    padding: 60px 60px 40px;
+    color: rgba(255,255,255,0.5);
+  }
+  .footer-inner {
+    max-width: 1160px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 24px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 28px;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--white); text-decoration: none;
+  }
+  .footer-logo span { color: var(--gold-light); }
+  .footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .footer-links a {
+    font-size: 0.75rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(255,255,255,0.4);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+  .footer-bottom {
+    max-width: 1160px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+  }
+  .footer-copy { font-size: 0.75rem; }
+  .footer-lic { font-size: 0.72rem; }
+
+  /* ─── SCROLL REVEAL ───────────────────────────────── */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ─── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 960px) {
+    nav { padding: 18px 28px; }
+    nav.scrolled { padding: 12px 28px; }
+    .nav-links { display: none; }
+    #about, #services, #communities, #testimonials, #contact { padding: 80px 28px; }
+    .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+    .services-grid, .communities-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 32px; }
+    .stat-divider { display: none; }
+    #cta-band { padding: 60px 28px; }
+    footer { padding: 50px 28px 32px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a href="#hero" class="nav-logo">Bowen <span>Real Estate</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#communities">Communities</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#contact" class="nav-cta">Contact John</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ═══════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Cape Cod's Trusted Real Estate Expert</p>
+    <h1 class="hero-title">
+      Your Home on<em>Cape Cod</em>Awaits
+    </h1>
+    <p class="hero-sub">Buying, Selling &amp; Year-Round Rentals in Falmouth, Mashpee &amp; Bourne</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Work With John</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">2nd</div>
+      <div class="stat-label">Generation Realtor</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Cape Cod Communities</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat">
+      <div class="stat-num">★★★★★</div>
+      <div class="stat-label">5-Star Rated</div>
+    </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,60 C240,110 480,10 720,60 C960,110 1200,20 1440,60 L1440,120 L0,120 Z" fill="#f5ede0"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══════════════════════════════════════════ -->
+<section id="about">
+  <div class="about-inner">
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo-frame">
+        <div class="about-photo-placeholder">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.75rem;letter-spacing:0.12em;text-transform:uppercase;">John Bowen</span>
+        </div>
+        <div class="about-badge">
+          <div class="about-badge-num">Cape</div>
+          <div class="about-badge-text">Born &amp; Raised</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal reveal-delay-2">
+      <p class="section-eyebrow">Meet Your Broker</p>
+      <h2 class="section-title">John Bowen —<em>Work With Who Works</em></h2>
+      <p class="body-text">John Bowen is a Cape Codder born and raised in a family that has called this peninsula home for generations. As Broker and Owner of Bowen Real Estate of Cape Cod, he runs an independently owned agency built entirely around individual attention and expert guidance.</p>
+      <p class="body-text">A second-generation, award-winning Realtor, John's intimate knowledge of Cape Cod — particularly Falmouth, Mashpee, and Bourne — ensures that every client receives the personalized service they deserve, whether buying, selling, or renting.</p>
+      <blockquote class="about-tagline">"Work with who works is not just a mission statement — it's a proven fact."</blockquote>
+      <div class="credentials">
+        <div class="cred-item">
+          <div class="cred-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          Award-Winning Realtor
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          Independent Agency
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          Full-Time Professional
+        </div>
+        <div class="cred-item">
+          <div class="cred-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold-light)" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+          </div>
+          Written Service Pledge
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ════════════════════════════════════════ -->
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <p class="section-eyebrow">What We Offer</p>
+      <h2 class="section-title" style="color:var(--white);">Full-Service<em style="color:rgba(255,255,255,0.55);">Real Estate</em></h2>
+    </div>
+    <p>From your first home search to a seamless closing — and year-round rentals across the Cape's finest towns.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor"/></svg>
+      </div>
+      <h3 class="service-title">Buying a Home</h3>
+      <p class="service-desc">Expert guidance from neighborhood selection to contract negotiation. John's local expertise means you'll find the right Cape Cod home at the right price, with a smooth path to closing.</p>
+      <a href="#contact" class="service-link">
+        Start Your Search
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8" stroke="currentColor"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor"/></svg>
+      </div>
+      <h3 class="service-title">Selling Your Home</h3>
+      <p class="service-desc">A proven, strategic approach to maximizing your home's value — including a Comparative Market Analysis, targeted marketing, and skilled negotiation to ensure the best possible outcome.</p>
+      <a href="#contact" class="service-link">
+        Get a CMA
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" stroke="currentColor"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" stroke="currentColor"/></svg>
+      </div>
+      <h3 class="service-title">Year-Round Rentals</h3>
+      <p class="service-desc">Specializing in long-term rental homes across Falmouth, Mashpee, and Bourne. Whether you're a tenant searching for a year-round home or an owner seeking reliable tenants, John delivers.</p>
+      <a href="tel:5084664648" class="service-link">
+        Call (508) 466-4648
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMMUNITIES ══════════════════════════════════════ -->
+<section id="communities">
+  <div class="communities-header reveal">
+    <p class="section-eyebrow">Where We Work</p>
+    <h2 class="section-title">Cape Cod's <em>Finest Communities</em></h2>
+    <p class="body-text" style="max-width:560px;margin:0 auto;">Deep roots and intimate local knowledge in the three towns that define Cape Cod living.</p>
+  </div>
+  <div class="communities-grid">
+    <div class="community-card reveal reveal-delay-1">
+      <div class="community-bg" style="background-image:url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=800&q=80');"></div>
+      <div class="community-overlay"></div>
+      <div class="community-content">
+        <p class="community-tag">Barnstable County</p>
+        <h3 class="community-name">Falmouth</h3>
+        <p class="community-desc">Charming seaside villages, vibrant arts scene, and beloved beaches. One of the Cape's most sought-after towns.</p>
+        <a href="#contact" class="community-link">View Listings →</a>
+      </div>
+    </div>
+    <div class="community-card reveal reveal-delay-2">
+      <div class="community-bg" style="background-image:url('https://images.unsplash.com/photo-1519046904884-53103b34b206?w=800&q=80');"></div>
+      <div class="community-overlay"></div>
+      <div class="community-content">
+        <p class="community-tag">Barnstable County</p>
+        <h3 class="community-name">Mashpee</h3>
+        <p class="community-desc">Rich history, natural beauty, and Mashpee Commons — a welcoming community blending Cape tradition with modern amenities.</p>
+        <a href="#contact" class="community-link">View Listings →</a>
+      </div>
+    </div>
+    <div class="community-card reveal reveal-delay-3">
+      <div class="community-bg" style="background-image:url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=800&q=80');"></div>
+      <div class="community-overlay"></div>
+      <div class="community-content">
+        <p class="community-tag">Barnstable County</p>
+        <h3 class="community-name">Bourne</h3>
+        <p class="community-desc">Gateway to the Cape, home to the iconic Bourne Bridge. A gateway community offering waterfront living and easy mainland access.</p>
+        <a href="#contact" class="community-link">View Listings →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═════════════════════════════════════ -->
+<section id="testimonials">
+  <div class="testimonials-header reveal">
+    <p class="section-eyebrow">Client Stories</p>
+    <h2 class="section-title" style="color:var(--white);">What Clients Say About <em style="color:rgba(255,255,255,0.5);">John</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="testimonial-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">"He listed our East Falmouth property for way more than we ever thought we would get. Professional, knowledgeable, and truly had our best interests at heart."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">W</div>
+        <div>
+          <div class="author-name">Wilbur Lavoie</div>
+          <div class="author-detail">Home Seller · East Falmouth</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testimonial-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">"I've helped many of John's buyers with financing over the years and without fail his clients are always so well cared for. He's an exceptional advocate."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">M</div>
+        <div>
+          <div class="author-name">Meryl Watson</div>
+          <div class="author-detail">Mortgage Professional</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-3">
+      <div class="testimonial-stars">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+      </div>
+      <p class="testimonial-text">"John was exactly the realtor I needed for my home purchase. He did a great job negotiating and easing my purchase. I would highly recommend him."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar">N</div>
+        <div>
+          <div class="author-name">Nancy Tubbs</div>
+          <div class="author-detail">Home Buyer · Cape Cod</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA BAND ══════════════════════════════════════════ -->
+<section id="cta-band">
+  <div class="cta-band-inner reveal">
+    <h2 class="cta-band-title">Ready to Start Your Cape Cod Journey?</h2>
+    <p class="cta-band-sub">Whether you're buying your first Cape Cod home, listing a property, or searching for a year-round rental — John Bowen is your first call.</p>
+    <div class="cta-band-btns">
+      <a href="tel:5087762246" class="btn-dark">Call (508) 776-2246</a>
+      <a href="#contact" class="btn-ghost-dark">Send a Message</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <p class="section-eyebrow">Get In Touch</p>
+      <h2 class="section-title">Let's Talk <em>Cape Cod</em></h2>
+      <p class="body-text">No matter your real estate goals, John Bowen is here to guide you every step of the way — with the personalized attention of a true local expert.</p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor"/><circle cx="12" cy="10" r="3" stroke="currentColor"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Office Address</div>
+            <div class="contact-item-value">162 E Falmouth Hwy</div>
+            <div class="contact-item-sub">East Falmouth, MA 02536</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.59 1.22h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.97a16 16 0 0 0 6.29 6.29l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Main Phone</div>
+            <a href="tel:5087762246" class="contact-item-value">(508) 776-2246</a>
+            <div class="contact-item-sub">Rentals: (508) 466-4648</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor"/><polyline points="22,6 12,13 2,6" stroke="currentColor"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <a href="mailto:john@bowenre.com" class="contact-item-value">john@bowenre.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor"/><line x1="16" y1="2" x2="16" y2="6" stroke="currentColor"/><line x1="8" y1="2" x2="8" y2="6" stroke="currentColor"/><line x1="3" y1="10" x2="21" y2="10" stroke="currentColor"/></svg>
+          </div>
+          <div>
+            <div class="contact-item-label">Hours</div>
+            <div class="contact-item-value">Open Now</div>
+            <div class="contact-item-sub">Call or email anytime</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-wrap reveal reveal-delay-2">
+      <h3 class="form-title">Send John a Message</h3>
+      <p class="form-sub">Fill out the form and John will be in touch shortly.</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="jane@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="(508) 000-0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">I'm Interested In</label>
+        <select class="form-select">
+          <option>Buying a Home</option>
+          <option>Selling My Home</option>
+          <option>Year-Round Rental</option>
+          <option>General Inquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea class="form-textarea" placeholder="Tell John about your Cape Cod real estate goals..."></textarea>
+      </div>
+      <button class="form-submit">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <a href="#hero" class="footer-logo">Bowen <span>Real Estate</span> of Cape Cod</a>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#communities">Communities</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="https://yearroundrentalhomes.com" target="_blank">YR Rentals</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Bowen Real Estate of Cape Cod, Inc. All rights reserved.</span>
+    <span class="footer-lic">John Bowen, Broker · 162 E Falmouth Hwy, East Falmouth, MA 02536 · <a href="tel:5087762246" style="color:inherit;">(508) 776-2246</a></span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll behavior
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
