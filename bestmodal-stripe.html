@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BestModal – Pricing Engine for Transport Logistics</title>
+<meta name="description" content="BestModal is the pricing engine for transport logistics. Calculate, compare and optimize prices across all transport modes — FCL, LCL, FTL, LTL, Rail, Barge and Airfreight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ══ TOKENS ══════════════════════════════════════════════ */
+:root {
+  /* Core */
+  --purple:       #533afd;
+  --purple-light: #7f7dfc;
+  --purple-xlt:   #d6d9fc;
+  --purple-dim:   #4834db;
+  --navy:         #061b31;
+  --navy-mid:     #1a2c44;
+  --navy-soft:    #273951;
+  --navy-muted:   #3c4f69;
+  --bg:           #ffffff;
+  --surface:      #e5edf5;
+  --surface-2:    #f2f7fe;
+  --peach:        #ffe0d1;
+  --fg:           #000000;
+  --body-dark:    #101010;
+  --mid:          #50617a;
+  --muted:        #64748d;
+  --faint:        #7d8ba4;
+  --rule:         rgba(0,0,0,0.08);
+  --rule-light:   rgba(255,255,255,0.12);
+  /* Shadows */
+  --shadow-sm:    rgba(23,23,23,0.06) 0px 3px 6px 0px;
+  --shadow-md:    rgba(0,0,0,0.06) 0px 4px 24px 0px, rgba(0,0,0,0.03) 0px 1px 2px 0px;
+  --shadow-lg:    rgba(50,50,93,0.12) 0px 16px 32px 0px;
+  --shadow-xl:    rgba(23,23,23,0.08) 0px 15px 35px 0px;
+  /* Radii */
+  --r-xs:   1px;
+  --r-sm:   4px;
+  --r-md:   8px;
+  --r-lg:   16px;
+  --r-full: 100px;
+  /* Type */
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+/* ══ RESET ═══════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--body-dark);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none}
+img{display:block;max-width:100%}
+
+/* ══ TYPOGRAPHY ══════════════════════════════════════════ */
+h1{font-size:clamp(40px,5.5vw,56px);font-weight:300;line-height:1.03;letter-spacing:-.02em;color:var(--body-dark)}
+h2{font-size:clamp(32px,4vw,48px);font-weight:300;line-height:1.04;letter-spacing:-.02em;color:var(--body-dark)}
+h3{font-size:clamp(22px,3vw,32px);font-weight:300;line-height:1.1;letter-spacing:-.01em;color:var(--body-dark)}
+h4{font-size:20px;font-weight:400;line-height:1.3;color:var(--body-dark)}
+p{font-size:16px;line-height:1.65;color:var(--mid)}
+
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:500;
+  color:var(--purple);
+  background:rgba(83,58,253,0.08);
+  padding:5px 14px;border-radius:var(--r-full);
+  margin-bottom:20px;letter-spacing:.01em;
+}
+.kicker-dot{width:6px;height:6px;background:var(--purple);border-radius:50%;flex-shrink:0}
+.kicker-light{color:var(--purple-xlt);background:rgba(127,125,252,0.18)}
+.kicker-light .kicker-dot{background:var(--purple-xlt)}
+
+/* ══ BUTTONS ═════════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;
+  font-family:var(--sans);font-size:15px;font-weight:500;
+  border-radius:var(--r-full);
+  transition:transform .15s,box-shadow .15s,background .15s,color .15s;
+  white-space:nowrap;cursor:pointer;border:none;
+}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--purple);color:#fff}
+.btn-primary:hover{background:var(--purple-dim);box-shadow:var(--shadow-md)}
+.btn-white{background:#fff;color:var(--purple)}
+.btn-white:hover{box-shadow:var(--shadow-lg)}
+.btn-ghost-white{
+  background:transparent;color:#fff;
+  border:1px solid rgba(255,255,255,0.35);
+  backdrop-filter:blur(4px);
+}
+.btn-ghost-white:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.6)}
+.btn-ghost-purple{
+  background:transparent;color:var(--purple);
+  border:1.5px solid var(--purple);
+}
+.btn-ghost-purple:hover{background:rgba(83,58,253,0.06)}
+.btn-sm{padding:9px 20px;font-size:14px}
+
+/* ══ NAV ═════════════════════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+  box-shadow:var(--shadow-sm);
+}
+.nav-logo{
+  font-size:17px;font-weight:600;color:var(--body-dark);
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-mark{
+  width:28px;height:28px;
+  background:linear-gradient(135deg,var(--purple) 0%,var(--purple-light) 100%);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 8px rgba(83,58,253,0.35);
+}
+.nav-logo-mark svg{width:13px;height:13px}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-links a{
+  font-size:14px;font-weight:400;color:var(--mid);
+  padding:7px 14px;border-radius:var(--r-md);
+  transition:color .15s,background .15s;
+}
+.nav-links a:hover{color:var(--body-dark);background:var(--surface-2)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-lang{font-size:13px;color:var(--faint)}
+.nav-lang a{color:var(--faint);transition:color .15s;padding:4px 6px;border-radius:4px}
+.nav-lang a:hover{color:var(--body-dark)}
+.nav-lang .active{color:var(--body-dark);font-weight:500}
+
+/* ══ HERO ════════════════════════════════════════════════ */
+#hero{
+  padding-top:60px;
+  min-height:100vh;
+  background:var(--navy);
+  position:relative;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.hero-aurora{
+  position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 70% 20%, rgba(83,58,253,0.45) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(115,137,255,0.3) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 50% at 85% 75%, rgba(0,214,111,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 10% 15%, rgba(255,224,209,0.08) 0%, transparent 50%);
+}
+.hero-inner{
+  position:relative;z-index:1;
+  flex:1;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:80px 80px 60px;
+  gap:64px;
+  max-width:1400px;margin:0 auto;width:100%;
+}
+.hero-left{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.55);
+  border:1px solid rgba(255,255,255,0.15);
+  padding:6px 14px;border-radius:var(--r-full);
+  margin-bottom:32px;
+  backdrop-filter:blur(4px);
+}
+.hero-eyebrow span{width:6px;height:6px;background:#00d66f;border-radius:50%;flex-shrink:0}
+.hero-title{
+  font-size:clamp(40px,5.5vw,58px);font-weight:300;
+  line-height:1.04;letter-spacing:-.025em;
+  color:#fff;margin-bottom:24px;
+}
+.hero-title em{font-style:italic;color:var(--purple-xlt)}
+.hero-sub{
+  font-size:18px;line-height:1.65;
+  color:rgba(255,255,255,0.6);
+  max-width:46ch;margin-bottom:40px;
+}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:64px}
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:0;padding-top:40px;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+.hero-stat{padding-right:32px;border-right:1px solid rgba(255,255,255,0.1)}
+.hero-stat:last-child{border-right:none;padding-right:0;padding-left:32px}
+.hero-stat:nth-child(2){padding:0 32px}
+.hs-val{font-size:28px;font-weight:300;color:#fff;line-height:1;margin-bottom:6px;letter-spacing:-.015em}
+.hs-val em{font-style:normal;color:var(--purple-light)}
+.hs-lbl{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.4}
+
+.hero-right{}
+.hero-img-container{
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:rgba(0,0,0,0.4) 0px 32px 80px -12px, rgba(83,58,253,0.3) 0px 0px 0px 1px;
+  background:var(--navy-mid);
+}
+.hero-img-container img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+}
+.hero-img-caption{
+  padding:16px 20px;
+  background:rgba(255,255,255,0.04);
+  border-top:1px solid rgba(255,255,255,0.08);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.hero-img-caption span{font-size:12px;color:rgba(255,255,255,0.4);font-weight:400}
+.live-badge{
+  display:flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:500;color:#00d66f;
+  background:rgba(0,214,111,0.12);
+  padding:4px 10px;border-radius:var(--r-full);
+}
+.live-dot{width:5px;height:5px;background:#00d66f;border-radius:50%}
+
+/* Route cards inside hero */
+.route-stack{display:flex;flex-direction:column;gap:10px;padding:20px}
+.r-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--r-md);
+  padding:14px 18px;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background .2s,border-color .2s;
+}
+.r-card:hover{background:rgba(255,255,255,0.09);border-color:rgba(83,58,253,0.5)}
+.r-label{font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);margin-bottom:3px}
+.r-meta{font-size:11px;color:rgba(255,255,255,0.4)}
+.r-right{display:flex;align-items:center;gap:12px}
+.r-modes{display:flex;gap:5px}
+.r-mode{font-size:10px;padding:3px 8px;border-radius:var(--r-full);border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.5);font-weight:500}
+.r-mode.on{background:rgba(83,58,253,0.35);border-color:rgba(83,58,253,0.6);color:rgba(185,185,249,1)}
+.r-price{font-size:13px;font-weight:500;color:#fff}
+.r-best{font-size:10px;color:#00d66f;margin-left:6px;font-weight:600}
+
+/* ══ INTRO ═══════════════════════════════════════════════ */
+#intro{padding:100px 80px;background:var(--bg)}
+.intro-inner{max-width:1280px;margin:0 auto}
+.intro-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:64px}
+.intro-header h2{margin-bottom:0}
+.intro-header p{font-size:17px;color:var(--mid);line-height:1.7;margin-bottom:0}
+.intro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.intro-card{
+  background:var(--bg);
+  border:1px solid rgba(0,0,0,0.07);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+  box-shadow:var(--shadow-md);
+  transition:box-shadow .2s,transform .2s;
+}
+.intro-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.intro-icon{
+  width:48px;height:48px;
+  background:rgba(83,58,253,0.08);
+  border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.intro-icon svg{width:20px;height:20px;stroke:var(--purple)}
+.intro-card h4{font-size:16px;font-weight:600;margin-bottom:10px;color:var(--body-dark)}
+.intro-card p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* ══ PLATFORM ════════════════════════════════════════════ */
+#platform{padding:100px 80px;background:var(--surface)}
+.platform-inner{max-width:1280px;margin:0 auto}
+.platform-header{text-align:center;max-width:680px;margin:0 auto 64px}
+.platform-header h2{margin-bottom:16px}
+.platform-header p{font-size:17px;color:var(--mid);line-height:1.7}
+.platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.p-card{
+  background:var(--bg);
+  border-radius:var(--r-lg);
+  padding:40px 36px;
+  box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;
+  transition:box-shadow .2s,transform .2s;
+  border:1px solid rgba(0,0,0,0.04);
+}
+.p-card:hover{box-shadow:var(--shadow-xl);transform:translateY(-4px)}
+.p-card-num{
+  font-size:12px;font-weight:600;color:var(--purple);
+  letter-spacing:.08em;margin-bottom:28px;
+  opacity:0.7;
+}
+.p-card-icon{
+  width:48px;height:48px;
+  background:rgba(83,58,253,0.07);
+  border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.p-card-icon svg{width:22px;height:22px;stroke:var(--purple)}
+.p-card h3{font-size:20px;font-weight:500;margin-bottom:12px;color:var(--body-dark)}
+.p-card p{font-size:14px;color:var(--muted);line-height:1.65;flex:1}
+.p-card-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:28px;font-size:14px;font-weight:500;
+  color:var(--purple);
+  transition:gap .15s;
+}
+.p-card:hover .p-card-link{gap:10px}
+
+/* ══ COVERAGE ════════════════════════════════════════════ */
+#coverage{padding:100px 80px;background:var(--bg)}
+.coverage-inner{max-width:1280px;margin:0 auto}
+.coverage-header{max-width:720px;margin-bottom:64px}
+.coverage-header h2{margin-bottom:16px}
+.coverage-header p{font-size:17px;color:var(--mid);line-height:1.7}
+.modes-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-bottom:48px}
+.mode-card{
+  background:var(--bg);
+  border-radius:var(--r-lg);
+  border:1px solid rgba(0,0,0,0.07);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;
+  transition:box-shadow .2s,transform .2s;
+}
+.mode-card:hover{box-shadow:var(--shadow-xl);transform:translateY(-4px)}
+.mode-card-img{
+  aspect-ratio:4/3;overflow:hidden;position:relative;
+  background:linear-gradient(135deg,var(--surface) 0%,var(--surface-2) 100%);
+}
+.mode-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.mode-card:hover .mode-card-img img{transform:scale(1.05)}
+.mode-card-body{padding:28px 28px 32px}
+.mode-tag{
+  font-size:11px;font-weight:600;color:var(--purple);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;
+}
+.mode-card h3{font-size:20px;font-weight:500;margin-bottom:10px;color:var(--body-dark)}
+.mode-card p{font-size:13px;color:var(--muted);line-height:1.65}
+
+.coverage-bottom{
+  display:grid;grid-template-columns:1fr 1fr;gap:32px;
+  background:var(--surface);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.comp-left{padding:56px 52px}
+.comp-left h3{font-size:22px;font-weight:400;margin-bottom:32px;color:var(--body-dark)}
+.comp-items{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.comp-item{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 0;
+  border-top:1px solid rgba(0,0,0,0.07);
+  font-size:14px;color:var(--mid);
+}
+.comp-item:nth-child(odd){padding-right:20px}
+.comp-check{
+  width:18px;height:18px;flex-shrink:0;
+  background:rgba(83,58,253,0.1);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+}
+.comp-check svg{width:10px;height:10px;stroke:var(--purple);stroke-width:2.5}
+.comp-right{
+  padding:56px 52px;
+  background:linear-gradient(145deg,var(--navy) 0%,var(--navy-mid) 100%);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.comp-right h3{font-size:22px;font-weight:300;color:#fff;margin-bottom:16px}
+.comp-right p{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.7;margin-bottom:36px}
+.comp-stats{display:flex;flex-direction:column;gap:0}
+.comp-stat-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 0;
+  border-top:1px solid rgba(255,255,255,0.1);
+  font-size:14px;color:rgba(255,255,255,0.6);
+}
+.comp-stat-row:last-child{border-bottom:1px solid rgba(255,255,255,0.1)}
+.comp-stat-val{font-size:14px;font-weight:600;color:var(--purple-xlt)}
+
+/* ══ END-TO-END ══════════════════════════════════════════ */
+#end-to-end{
+  background:var(--navy);
+  padding:100px 80px;
+  position:relative;overflow:hidden;
+}
+.e2e-aurora{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 50%, rgba(83,58,253,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 35% at 90% 20%, rgba(115,137,255,0.15) 0%, transparent 60%);
+}
+.e2e-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.e2e-header{margin-bottom:56px}
+.e2e-header h2{color:#fff;margin-bottom:16px}
+.e2e-header p{color:rgba(255,255,255,0.55);font-size:17px;max-width:52ch;line-height:1.7}
+
+.e2e-banner{
+  border-radius:var(--r-lg);overflow:hidden;margin-bottom:48px;
+  box-shadow:rgba(0,0,0,0.4) 0px 20px 60px -10px;
+}
+.e2e-banner img{width:100%;aspect-ratio:21/6;object-fit:cover;display:block}
+
+.e2e-flow{display:grid;grid-template-columns:1fr 60px 1fr 60px 1fr;gap:0;align-items:stretch}
+.e2e-leg{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--r-lg);
+  padding:48px 40px;
+  display:flex;flex-direction:column;
+  transition:background .2s;
+}
+.e2e-leg:hover{background:rgba(255,255,255,0.07)}
+.e2e-connector{display:flex;align-items:center;justify-content:center}
+.e2e-arrow{
+  width:28px;height:28px;
+  background:rgba(83,58,253,0.2);
+  border-radius:var(--r-full);
+  display:flex;align-items:center;justify-content:center;
+}
+.e2e-arrow svg{width:14px;height:14px;stroke:var(--purple-light);stroke-width:2}
+.e2e-main-leg{
+  background:linear-gradient(145deg,rgba(83,58,253,0.3) 0%,rgba(72,52,219,0.25) 100%);
+  border:1px solid rgba(83,58,253,0.4);
+}
+.e2e-leg-tag{font-size:11px;font-weight:600;color:var(--purple-xlt);letter-spacing:.1em;text-transform:uppercase;margin-bottom:20px}
+.e2e-main-leg .e2e-leg-tag{color:rgba(185,185,249,0.8)}
+.e2e-leg h3{font-size:19px;font-weight:400;color:#fff;margin-bottom:24px}
+.e2e-items{display:flex;flex-direction:column;flex:1}
+.e2e-item{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 0;border-top:1px solid rgba(255,255,255,0.08);
+  font-size:14px;color:rgba(255,255,255,0.6);
+}
+.e2e-item-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--purple-light)}
+.e2e-main-leg .e2e-item-dot{background:rgba(185,185,249,0.8)}
+.e2e-note{
+  margin-top:24px;padding-top:20px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  font-size:12px;color:rgba(255,255,255,0.3);line-height:1.6;
+}
+
+/* ══ HOW IT WORKS ════════════════════════════════════════ */
+#how-it-works{padding:100px 80px;background:var(--surface-2)}
+.how-inner{max-width:1280px;margin:0 auto}
+.how-header{text-align:center;max-width:640px;margin:0 auto 72px}
+.how-header h2{margin-bottom:16px}
+.how-header p{font-size:17px;color:var(--mid);line-height:1.7}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.how-step{
+  background:var(--bg);
+  border-radius:var(--r-lg);
+  padding:40px 32px;
+  box-shadow:var(--shadow-md);
+  display:flex;flex-direction:column;
+  border:1px solid rgba(0,0,0,0.04);
+  transition:box-shadow .2s,transform .2s;
+}
+.how-step:hover{box-shadow:var(--shadow-xl);transform:translateY(-3px)}
+.step-num{
+  font-size:48px;font-weight:300;
+  color:var(--purple-xlt);
+  line-height:1;margin-bottom:28px;letter-spacing:-.02em;
+}
+.how-step h3{font-size:19px;font-weight:500;margin-bottom:12px;color:var(--body-dark)}
+.how-step p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* ══ USE CASES ═══════════════════════════════════════════ */
+#use-cases{padding:100px 80px;background:var(--bg)}
+.use-inner{max-width:1280px;margin:0 auto}
+.use-header{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;margin-bottom:64px}
+.use-header h2{margin-bottom:0}
+.use-header p{font-size:17px;color:var(--mid);line-height:1.7;margin-bottom:0}
+.use-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.use-card{
+  background:var(--surface-2);
+  border-radius:var(--r-lg);
+  padding:40px 36px;
+  border:1px solid rgba(0,0,0,0.05);
+  transition:box-shadow .2s,transform .2s,background .2s;
+  display:flex;flex-direction:column;
+}
+.use-card:hover{background:var(--bg);box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.use-tag{
+  font-size:11px;font-weight:600;color:var(--purple);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;
+}
+.use-card h3{font-size:20px;font-weight:500;margin-bottom:12px;color:var(--body-dark);line-height:1.2}
+.use-card p{font-size:14px;color:var(--muted);line-height:1.65;flex:1}
+
+/* ══ TECHNOLOGY ══════════════════════════════════════════ */
+#technology{
+  background:var(--navy);
+  padding:100px 80px;
+  position:relative;overflow:hidden;
+}
+.tech-aurora{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 55% 45% at 80% 25%, rgba(83,58,253,0.3) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 15% 70%, rgba(0,214,111,0.1) 0%, transparent 60%);
+}
+.tech-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1}
+.tech-header{max-width:720px;margin-bottom:56px}
+.tech-header h2{color:#fff;margin-bottom:16px}
+.tech-header p{font-size:17px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:52ch}
+
+.tech-banner{border-radius:var(--r-lg);overflow:hidden;margin-bottom:48px;box-shadow:rgba(0,0,0,0.4) 0px 20px 60px -10px}
+.tech-banner img{width:100%;aspect-ratio:21/6;object-fit:cover;display:block}
+
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:32px}
+.tech-card{
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+  transition:background .2s,border-color .2s;
+}
+.tech-card:hover{background:rgba(255,255,255,0.09);border-color:rgba(83,58,253,0.5)}
+.tech-card-icon{
+  width:44px;height:44px;
+  background:rgba(83,58,253,0.2);
+  border-radius:var(--r-md);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:24px;
+}
+.tech-card-icon svg{width:18px;height:18px;stroke:var(--purple-xlt)}
+.tech-card h4{font-size:16px;font-weight:500;color:#fff;margin-bottom:10px}
+.tech-card p{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.6}
+.tech-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tech-stat{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--r-lg);
+  padding:36px 32px;
+}
+.tech-stat-val{font-size:44px;font-weight:300;color:#fff;line-height:1;margin-bottom:8px;letter-spacing:-.02em}
+.tech-stat-val em{font-style:normal;color:var(--purple-light)}
+.tech-stat-lbl{font-size:14px;color:rgba(255,255,255,0.45)}
+
+/* ══ FAQ ═════════════════════════════════════════════════ */
+#faq{padding:100px 80px;background:var(--bg)}
+.faq-inner{max-width:1280px;margin:0 auto}
+.faq-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:80px;align-items:start}
+.faq-left h2{margin-bottom:20px}
+.faq-left p{font-size:16px;color:var(--mid);line-height:1.7;margin-bottom:32px}
+.faq-list{}
+.faq-item{border-bottom:1px solid rgba(0,0,0,0.08)}
+.faq-item:first-child{border-top:1px solid rgba(0,0,0,0.08)}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:22px 0;cursor:pointer;gap:16px;
+  font-size:16px;font-weight:500;color:var(--body-dark);
+  transition:color .15s;
+}
+.faq-q:hover{color:var(--purple)}
+.faq-icon{
+  width:28px;height:28px;flex-shrink:0;
+  border-radius:var(--r-full);
+  border:1.5px solid rgba(0,0,0,0.15);
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s;
+}
+.faq-item.open .faq-icon{background:var(--purple);border-color:var(--purple)}
+.faq-icon svg{width:10px;height:10px;stroke:var(--body-dark);transition:transform .25s,stroke .15s}
+.faq-item.open .faq-icon svg{transform:rotate(45deg);stroke:#fff}
+.faq-a{display:none;padding:0 40px 22px 0;font-size:15px;color:var(--mid);line-height:1.75}
+.faq-item.open .faq-a{display:block}
+
+/* ══ CONTACT ═════════════════════════════════════════════ */
+#contact{padding:0;background:var(--bg)}
+.contact-wrap{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow-xl);
+  margin:0 80px;
+  border:1px solid rgba(0,0,0,0.06);
+}
+.contact-left{
+  padding:72px 60px;
+  background:linear-gradient(160deg,var(--navy) 0%,var(--navy-mid) 100%);
+  position:relative;overflow:hidden;
+}
+.contact-aurora{
+  position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 80% 20%, rgba(83,58,253,0.4) 0%, transparent 65%),
+             radial-gradient(ellipse 40% 40% at 10% 80%, rgba(0,214,111,0.1) 0%, transparent 55%);
+}
+.contact-left-inner{position:relative;z-index:1}
+.contact-left h2{color:#fff;margin-bottom:20px;max-width:22ch}
+.contact-intro{font-size:15px;color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:48px}
+.why-list{display:flex;flex-direction:column;gap:0}
+.why-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 0;
+  border-top:1px solid rgba(255,255,255,0.1);
+  font-size:15px;color:rgba(255,255,255,0.75);line-height:1.5;
+}
+.why-item:last-child{border-bottom:1px solid rgba(255,255,255,0.1)}
+.why-bullet{
+  width:20px;height:20px;flex-shrink:0;margin-top:2px;
+  background:rgba(83,58,253,0.3);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+}
+.why-bullet svg{width:10px;height:10px;stroke:var(--purple-xlt);stroke-width:2.5}
+.contact-img{
+  width:100%;aspect-ratio:16/6;object-fit:cover;display:block;
+  margin-top:48px;border-radius:var(--r-md);
+  opacity:0.7;
+}
+
+.contact-right{padding:72px 60px;background:var(--bg)}
+.contact-right h3{font-size:26px;font-weight:300;color:var(--body-dark);margin-bottom:8px}
+.contact-sub{font-size:14px;color:var(--faint);margin-bottom:40px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+.form-label{
+  display:block;font-size:12px;font-weight:500;
+  color:var(--muted);margin-bottom:7px;letter-spacing:.01em;
+}
+.form-req{color:var(--purple)}
+.form-input,.form-textarea{
+  width:100%;padding:11px 14px;
+  font-family:var(--sans);font-size:15px;color:var(--body-dark);
+  background:var(--surface-2);
+  border:1.5px solid rgba(0,0,0,0.08);
+  border-radius:var(--r-md);
+  outline:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.form-input:focus,.form-textarea:focus{
+  border-color:var(--purple);
+  background:var(--bg);
+  box-shadow:0 0 0 3px rgba(83,58,253,0.1);
+}
+.form-textarea{resize:vertical;min-height:100px}
+.form-submit{
+  width:100%;padding:14px;
+  font-family:var(--sans);font-size:15px;font-weight:500;
+  background:var(--purple);color:#fff;
+  border:none;border-radius:var(--r-full);cursor:pointer;
+  margin-top:8px;
+  transition:background .15s,box-shadow .15s,transform .15s;
+  letter-spacing:.01em;
+}
+.form-submit:hover{background:var(--purple-dim);box-shadow:var(--shadow-md);transform:translateY(-1px)}
+
+/* ══ CONTACT SECTION WRAPPER ═════════════════════════════ */
+.contact-section-wrap{padding:100px 0;background:var(--surface)}
+
+/* ══ FOOTER ══════════════════════════════════════════════ */
+footer{
+  background:var(--navy);
+  padding:80px 80px 0;
+}
+.footer-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;padding-bottom:64px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.footer-brand-name{font-size:18px;font-weight:600;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.footer-brand-mark{
+  width:26px;height:26px;
+  background:linear-gradient(135deg,var(--purple) 0%,var(--purple-light) 100%);
+  border-radius:var(--r-sm);
+  display:flex;align-items:center;justify-content:center;
+}
+.footer-brand-mark svg{width:12px;height:12px}
+.footer-brand p{font-size:14px;color:rgba(255,255,255,0.4);line-height:1.65;max-width:30ch;margin-bottom:0}
+.footer-col h4{
+  font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:rgba(255,255,255,0.35);margin-bottom:20px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px}
+.footer-col li a{font-size:14px;color:rgba(255,255,255,0.5);transition:color .15s}
+.footer-col li a:hover{color:#fff}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:24px 0 32px;flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:13px;color:rgba(255,255,255,0.3)}
+
+/* ══ RESPONSIVE ══════════════════════════════════════════ */
+@media(max-width:1024px){
+  #nav{padding:0 24px}
+  .nav-links a:not(.btn){display:none}
+  #hero .hero-inner,.intro-inner,.platform-inner,.coverage-inner,.e2e-inner,
+  .how-inner,.use-inner,.tech-inner,.faq-inner{padding:0 24px}
+  #hero .hero-inner{grid-template-columns:1fr;padding:60px 24px;gap:48px}
+  .hero-right{display:none}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  #intro,#platform,#coverage,#end-to-end,#how-it-works,#use-cases,#technology,#faq{padding:72px 24px}
+  .intro-header,.use-header{grid-template-columns:1fr;gap:20px}
+  .intro-grid{grid-template-columns:1fr 1fr}
+  .platform-grid,.how-steps,.tech-grid,.tech-stats{grid-template-columns:1fr 1fr}
+  .modes-grid{grid-template-columns:1fr 1fr}
+  .coverage-bottom{grid-template-columns:1fr}
+  .e2e-flow{grid-template-columns:1fr}
+  .e2e-connector{display:none}
+  .e2e-leg,.e2e-main-leg{margin-bottom:16px}
+  .use-grid{grid-template-columns:1fr 1fr}
+  .faq-layout{grid-template-columns:1fr}
+  .contact-section-wrap{padding:60px 0}
+  .contact-wrap{margin:0 24px;grid-template-columns:1fr}
+  .contact-left{padding:60px 32px}
+  .contact-right{padding:60px 32px}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+  .footer-brand{grid-column:1/-1}
+  footer{padding:60px 24px 0}
+  .footer-bottom{padding:24px 0 28px}
+  .form-row{grid-template-columns:1fr}
+  .comp-left,.comp-right{padding:40px 32px}
+  .e2e-header p{max-width:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ════ NAV ═════════════════════════════════════════════ -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-mark">
+      <svg viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 L6.5 2 L11 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    BestModal
+  </a>
+  <div class="nav-links">
+    <a href="#platform">Platform</a>
+    <a href="#coverage">Coverage</a>
+    <a href="#end-to-end">End-to-End</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#use-cases">Use cases</a>
+    <a href="#technology">Technology</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="nav-right">
+    <span class="nav-lang"><a href="#" class="active">EN</a> · <a href="#">DE</a></span>
+    <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+  </div>
+</nav>
+
+<!-- ════ HERO ════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-aurora"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <span></span>
+        Pricing Engine for Transport Logistics
+      </div>
+      <h1 class="hero-title">
+        From Tariffs to<em>Real Prices Across All Transport Modes</em>
+      </h1>
+      <p class="hero-sub">Calculate, compare and optimize prices across FCL, LCL, FTL, LTL, Rail, Barge and Airfreight — including all surcharges, local charges, currency conversion and multimodal combinations.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-white">Request Demo</a>
+        <a href="#platform" class="btn btn-ghost-white">Explore Platform</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hs-val"><em>1</em></div>
+          <div class="hs-lbl">Unified pricing logic across all modes</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hs-val"><em>100</em>%</div>
+          <div class="hs-lbl">Complete cost transparency per route</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hs-val"><em>RFQ</em></div>
+          <div class="hs-lbl">Tender-ready workflows built in</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-container">
+        <img src="image-stripe-1.jpg" alt="Global transport pricing network — aerial logistics overview">
+        <div class="hero-img-caption">
+          <span>Live price comparison · All modes</span>
+          <div class="live-badge"><span class="live-dot"></span>Live</div>
+        </div>
+        <div class="route-stack">
+          <div class="r-card">
+            <div>
+              <div class="r-label">Hamburg → Shanghai</div>
+              <div class="r-meta">FCL 20' · 14 days · Ocean</div>
+            </div>
+            <div class="r-right">
+              <div class="r-modes">
+                <span class="r-mode on">Ocean</span>
+                <span class="r-mode on">BAF</span>
+                <span class="r-mode">THC</span>
+              </div>
+              <div class="r-price">€ 1,840<span class="r-best">BEST</span></div>
+            </div>
+          </div>
+          <div class="r-card">
+            <div>
+              <div class="r-label">Stuttgart → Warsaw</div>
+              <div class="r-meta">FTL · 2 days · via Berlin</div>
+            </div>
+            <div class="r-right">
+              <div class="r-modes">
+                <span class="r-mode on">Road</span>
+                <span class="r-mode">Toll</span>
+              </div>
+              <div class="r-price">€ 920<span class="r-best">BEST</span></div>
+            </div>
+          </div>
+          <div class="r-card">
+            <div>
+              <div class="r-label">Rotterdam → Duisburg</div>
+              <div class="r-meta">Barge · Rail combo · 3 days</div>
+            </div>
+            <div class="r-right">
+              <div class="r-modes">
+                <span class="r-mode on">Barge</span>
+                <span class="r-mode on">Rail</span>
+              </div>
+              <div class="r-price">€ 430<span class="r-best">BEST</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WHAT BESTMODAL DOES ══════════════════════════════ -->
+<section id="intro">
+  <div class="intro-inner">
+    <div class="intro-header">
+      <div>
+        <span class="kicker"><span class="kicker-dot"></span>What BestModal Does</span>
+        <h2>One Platform for All Pricing Complexity</h2>
+      </div>
+      <p>BestModal unifies fragmented tariff landscapes into a single, structured pricing engine — across every transport mode, every surcharge and every cost combination.</p>
+    </div>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <div class="intro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor"/><path d="M8 21h8M12 17v4" stroke="currentColor"/></svg>
+        </div>
+        <h4>Unify Tariffs</h4>
+        <p>Bring ocean, road, rail, barge and airfreight rates into one structure and one system of record.</p>
+      </div>
+      <div class="intro-card">
+        <div class="intro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor"/></svg>
+        </div>
+        <h4>Apply Full Cost Logic</h4>
+        <p>Automatically include fuel, BAF, THC, toll, handling, pickup, drop-off, LWS and all relevant surcharges.</p>
+      </div>
+      <div class="intro-card">
+        <div class="intro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M18 20V10M12 20V4M6 20v-6" stroke="currentColor"/></svg>
+        </div>
+        <h4>Compare Real Prices</h4>
+        <p>Benchmark complete transport options side by side — not isolated rate sheets from separate systems.</p>
+      </div>
+      <div class="intro-card">
+        <div class="intro-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M9 11l3 3L22 4" stroke="currentColor"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" stroke="currentColor"/></svg>
+        </div>
+        <h4>Power Sales, Procurement and RFQ</h4>
+        <p>Quote faster, buy smarter and launch tenders from one unified platform with one data foundation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PLATFORM ═════════════════════════════════════════ -->
+<section id="platform">
+  <div class="platform-inner">
+    <div class="platform-header">
+      <span class="kicker"><span class="kicker-dot"></span>Platform</span>
+      <h2>A Unified Pricing Engine for Transport Logistics</h2>
+      <p>BestModal does not just display tariffs. It calculates real transport prices — across all modes, all cost elements and all relevant pricing structures.</p>
+    </div>
+    <div class="platform-grid">
+      <div class="p-card">
+        <div class="p-card-num">01 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor"/></svg>
+        </div>
+        <h3>Unified Pricing Engine</h3>
+        <p>One pricing logic for FCL, LCL, FTL, LTL, Rail, Barge and Airfreight — all calculated in one coherent system.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-card-num">02 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="8" rx="2" stroke="currentColor"/><rect x="2" y="14" width="20" height="8" rx="2" stroke="currentColor"/><path d="M6 6h.01M6 18h.01" stroke="currentColor"/></svg>
+        </div>
+        <h3>Complete Cost Breakdown</h3>
+        <p>Include base rates, surcharges, local charges, handling, fuel, BAF, toll, LWS, terminal costs and currency conversion.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-card-num">03 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor"/></svg>
+        </div>
+        <h3>Combination Logic</h3>
+        <p>Combine different tariffs and transport legs into one valid, optimized option with one complete total price.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-card-num">04 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor"/><polyline points="14 2 14 8 20 8" stroke="currentColor"/><line x1="16" y1="13" x2="8" y2="13" stroke="currentColor"/><line x1="16" y1="17" x2="8" y2="17" stroke="currentColor"/><polyline points="10 9 9 9 8 9" stroke="currentColor"/></svg>
+        </div>
+        <h3>RFQ &amp; Tender Workflows</h3>
+        <p>Request rates, compare supplier offers and benchmark them against your existing tariff landscape in real time.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-card-num">05 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor"/><circle cx="9" cy="7" r="4" stroke="currentColor"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor"/></svg>
+        </div>
+        <h3>Marketplace &amp; Access Control</h3>
+        <p>Share tariffs selectively, publish offers on the marketplace and control exactly who can see your pricing data.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+      <div class="p-card">
+        <div class="p-card-num">06 / 06</div>
+        <div class="p-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" stroke="currentColor"/><path d="M13 2v7h7" stroke="currentColor"/></svg>
+        </div>
+        <h3>High-Degree Automation</h3>
+        <p>Automate recurring pricing logic, data imports and cost updates to reduce manual effort and accelerate decisions.</p>
+        <a href="#contact" class="p-card-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ COVERAGE ═════════════════════════════════════════ -->
+<section id="coverage">
+  <div class="coverage-inner">
+    <div class="coverage-header">
+      <span class="kicker"><span class="kicker-dot"></span>Coverage</span>
+      <h2>All Transport Modes. One Pricing Logic.</h2>
+      <p>BestModal connects pricing structures that usually live in separate spreadsheets, separate teams and separate systems — unified under a single calculation engine.</p>
+    </div>
+    <div class="modes-grid">
+      <div class="mode-card">
+        <div class="mode-card-img"><img src="image-stripe-2.jpg" alt="Ocean freight — shipping containers on vessel deck"></div>
+        <div class="mode-card-body">
+          <div class="mode-tag">01 · Ocean</div>
+          <h3>Ocean</h3>
+          <p>FCL and LCL pricing including all local charges and port-specific cost logic.</p>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-card-img"><img src="image-stripe-3.jpg" alt="Road freight — long-haul truck on motorway"></div>
+        <div class="mode-card-body">
+          <div class="mode-tag">02 · Road</div>
+          <h3>Road</h3>
+          <p>FTL and LTL rates including toll, fuel surcharges, and pickup and drop-off cost logic.</p>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-card-img"><img src="image-stripe-4.jpg" alt="Rail and barge freight — container barge on waterway"></div>
+        <div class="mode-card-body">
+          <div class="mode-tag">03 · Rail &amp; Barge</div>
+          <h3>Rail &amp; Barge</h3>
+          <p>Intermodal tariffs, combination legs and full terminal cost logic for inland waterway and rail.</p>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-card-img"><img src="image-stripe-5.jpg" alt="Airfreight — cargo aircraft on airport apron"></div>
+        <div class="mode-card-body">
+          <div class="mode-tag">04 · Airfreight</div>
+          <h3>Airfreight</h3>
+          <p>Airfreight rate structures including fuel surcharges, security fees and all comparable add-ons.</p>
+        </div>
+      </div>
+    </div>
+    <div class="coverage-bottom">
+      <div class="comp-left">
+        <h3>Included Pricing Components</h3>
+        <div class="comp-items">
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Base rates</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Fuel &amp; diesel</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>BAF / CAF / PSS</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>THC / local charges</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Toll &amp; distance logic</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Pickup / drop-off</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Terminal &amp; handling</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Low water surcharge</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Minimum prices</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>NAC / FAK / special rates</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Currency conversion</div>
+          <div class="comp-item"><span class="comp-check"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Customer-specific logic</div>
+        </div>
+      </div>
+      <div class="comp-right">
+        <h3>Why Complete Pricing Matters</h3>
+        <p>Comparing only base rates produces misleading results. BestModal calculates the full cost of each transport option — making comparisons accurate and decisions defensible.</p>
+        <div class="comp-stats">
+          <div class="comp-stat-row"><span>Transport modes supported</span><span class="comp-stat-val">7</span></div>
+          <div class="comp-stat-row"><span>Cost elements per route</span><span class="comp-stat-val">12+</span></div>
+          <div class="comp-stat-row"><span>Currency pairs</span><span class="comp-stat-val">All major</span></div>
+          <div class="comp-stat-row"><span>Combination logic</span><span class="comp-stat-val">Multimodal</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ END-TO-END ═══════════════════════════════════════ -->
+<section id="end-to-end">
+  <div class="e2e-aurora"></div>
+  <div class="e2e-inner">
+    <div class="e2e-header">
+      <span class="kicker kicker-light"><span class="kicker-dot"></span>End-to-End Coverage</span>
+      <h2>Full End-to-End Transport Chain Coverage</h2>
+      <p>BestModal does not calculate isolated rates — it builds complete transport chains. Connect origin, main carriage and destination pricing in one continuous logic.</p>
+    </div>
+    <div class="e2e-banner">
+      <img src="image-stripe-6.jpg" alt="Multimodal transport route illustration — A to B full chain">
+    </div>
+    <div class="e2e-flow">
+      <div class="e2e-leg">
+        <div class="e2e-leg-tag">A · Pre-Carriage</div>
+        <h3>Origin Costs</h3>
+        <div class="e2e-items">
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Pick-up costs</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Pre-carriage</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Pre-carriage surcharges</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Local charges origin</div>
+        </div>
+        <p class="e2e-note">All origin-side cost elements are calculated and included in the total price.</p>
+      </div>
+      <div class="e2e-connector">
+        <div class="e2e-arrow"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="e2e-leg e2e-main-leg">
+        <div class="e2e-leg-tag">Main Leg</div>
+        <h3>Main Carriage</h3>
+        <div class="e2e-items">
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Seafreight / Rail / Barge / Airfreight</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Base freight charge</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>BAF · CAF · PSS</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Mode-specific surcharges</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Combination legs</div>
+        </div>
+        <p class="e2e-note">Pre-carriage, main carriage and on-carriage are linked seamlessly across transport modes and cost elements.</p>
+      </div>
+      <div class="e2e-connector">
+        <div class="e2e-arrow"><svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="e2e-leg">
+        <div class="e2e-leg-tag">B · On-Carriage</div>
+        <h3>Destination Costs</h3>
+        <div class="e2e-items">
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Local charges destination</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>On-carriage</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>On-carriage surcharges</div>
+          <div class="e2e-item"><span class="e2e-item-dot"></span>Drop-off costs</div>
+        </div>
+        <p class="e2e-note">All destination-side cost elements are calculated and included in the total price.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ HOW IT WORKS ═════════════════════════════════════ -->
+<section id="how-it-works">
+  <div class="how-inner">
+    <div class="how-header">
+      <span class="kicker"><span class="kicker-dot"></span>How It Works</span>
+      <h2>From Tariff Data to Better Decisions</h2>
+      <p>BestModal structures pricing complexity into a clear four-step workflow — so teams can calculate, compare and act faster than ever before.</p>
+    </div>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="step-num">01</div>
+        <h3>Import or Maintain Tariffs</h3>
+        <p>Upload rate sheets or maintain tariffs directly in the platform — by mode, provider, region and customer-specific logic.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">02</div>
+        <h3>Apply Pricing Rules</h3>
+        <p>Add surcharges, local charges, access rules, currency conversion and all relevant pricing conditions automatically.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">03</div>
+        <h3>Run Queries or RFQs</h3>
+        <p>Search routes, compare complete options, quote customers or request fresh offers directly from the market.</p>
+      </div>
+      <div class="how-step">
+        <div class="step-num">04</div>
+        <h3>Decide with Full Transparency</h3>
+        <p>Get the best option instantly — with a complete cost breakdown, valid combinations and all alternatives in one view.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ USE CASES ════════════════════════════════════════ -->
+<section id="use-cases">
+  <div class="use-inner">
+    <div class="use-header">
+      <div>
+        <span class="kicker"><span class="kicker-dot"></span>Use Cases</span>
+        <h2>Built for Pricing Teams Across Logistics</h2>
+      </div>
+      <p>Whether teams buy transport, sell transport or provide transport capacity — BestModal delivers a faster and more transparent pricing process for every role.</p>
+    </div>
+    <div class="use-grid">
+      <div class="use-card">
+        <div class="use-tag">01 · Forwarding</div>
+        <h3>Freight Forwarders</h3>
+        <p>Quote faster across all transport modes and turn fragmented pricing data into structured, reliable and defensible offers.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-tag">02 · Procurement</div>
+        <h3>Procurement Teams</h3>
+        <p>Benchmark suppliers, compare complete transport options and identify the real best price — not just the cheapest base rate.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-tag">03 · Operations</div>
+        <h3>Rail, Barge &amp; Truck Operators</h3>
+        <p>Make tariffs visible, structured and comparable — and connect capacity directly with the right demand-side buyers.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-tag">04 · Sales</div>
+        <h3>Sales Teams</h3>
+        <p>Respond faster to spot requests, create transparent customer quotes and protect margin through complete pricing visibility.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-tag">05 · Tenders</div>
+        <h3>Tender Management</h3>
+        <p>Launch RFQs, collect offers and evaluate them in the context of existing tariff and provider networks — all in one place.</p>
+      </div>
+      <div class="use-card">
+        <div class="use-tag">06 · Platforms</div>
+        <h3>Platform Ecosystems</h3>
+        <p>Use marketplace and access-control logic to build controlled visibility between tariff owners and demand-side users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TECHNOLOGY ═══════════════════════════════════════ -->
+<section id="technology">
+  <div class="tech-aurora"></div>
+  <div class="tech-inner">
+    <div class="tech-header">
+      <span class="kicker kicker-light"><span class="kicker-dot"></span>Technology &amp; Security</span>
+      <h2>Enterprise-Ready for Operational Pricing</h2>
+      <p>BestModal is built for business-critical transport pricing workflows — secure, scalable and ready to integrate into existing operational processes.</p>
+    </div>
+    <div class="tech-banner">
+      <img src="image-stripe-7.jpg" alt="Enterprise infrastructure — secure server room for BestModal">
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" stroke="currentColor"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="currentColor"/></svg>
+        </div>
+        <h4>Web-Based Application</h4>
+        <p>No local installation required. Access all pricing workflows securely through a standard browser interface.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor"/></svg>
+        </div>
+        <h4>API Interfaces &amp; Data Import</h4>
+        <p>Connect external systems and import tariff data efficiently via API for scalable, automated maintenance workflows.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor"/></svg>
+        </div>
+        <h4>Role-Based Access Control</h4>
+        <p>Define exactly who can view, maintain, release or request pricing data — at a granular team and partner level.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor"/><path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor"/></svg>
+        </div>
+        <h4>GDPR-Aligned Hosting</h4>
+        <p>European hosting and security-conscious infrastructure designed for professional logistics enterprise use cases.</p>
+      </div>
+    </div>
+    <div class="tech-stats">
+      <div class="tech-stat">
+        <div class="tech-stat-val"><em>24</em>/7</div>
+        <div class="tech-stat-lbl">System monitoring &amp; uptime</div>
+      </div>
+      <div class="tech-stat">
+        <div class="tech-stat-val"><em>API</em></div>
+        <div class="tech-stat-lbl">Integration-ready architecture</div>
+      </div>
+      <div class="tech-stat">
+        <div class="tech-stat-val"><em>RBAC</em></div>
+        <div class="tech-stat-lbl">Granular rights and access logic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FAQ ══════════════════════════════════════════════ -->
+<section id="faq">
+  <div class="faq-inner">
+    <div class="faq-layout">
+      <div class="faq-left">
+        <span class="kicker"><span class="kicker-dot"></span>FAQ</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about how BestModal works, what it covers and how to get started with your pricing workflows.</p>
+        <a href="#contact" class="btn btn-primary">Request a Demo</a>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-q">Which transport modes can be managed in BestModal?<span class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div>
+          <div class="faq-a">BestModal supports all major transport modes: Ocean (FCL and LCL), Road (FTL and LTL), Rail, Barge and Airfreight. All modes are managed under one unified pricing logic, including their mode-specific surcharges, local charges and combination scenarios.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Does BestModal calculate only tariffs or complete prices?<span class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div>
+          <div class="faq-a">BestModal calculates complete transport prices — not just base tariffs. Every price includes all relevant cost elements: base rates, fuel surcharges, BAF, THC, local charges, toll, terminal fees, currency conversion and more. The result is a total price per transport option, ready for comparison and decision-making.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can BestModal be used for both procurement and sales?<span class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div>
+          <div class="faq-a">Yes. BestModal is built for both sides of the pricing process. Procurement teams use it to benchmark suppliers and identify the real best price. Sales teams use it to quote faster, create transparent offers and protect margin through better pricing visibility. Both use cases run from the same platform and the same data.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can providers share tariffs selectively with specific partners?<span class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div>
+          <div class="faq-a">Yes. BestModal includes marketplace and access-control logic that allows tariff owners to share pricing selectively — with specific partners, customer segments or internal teams. Providers decide exactly who can see and use their tariff data at all times.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How are tariffs and surcharges maintained in the platform?<span class="faq-icon"><svg viewBox="0 0 12 12" fill="none" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></span></div>
+          <div class="faq-a">Tariffs can be uploaded as rate sheets or maintained directly in the platform by mode, provider, region and customer logic. Surcharges, local charges and pricing conditions are applied as rules. BestModal supports automated imports via API for high-volume or frequently updated rate structures.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ══════════════════════════════════════════ -->
+<div class="contact-section-wrap">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <div class="contact-aurora"></div>
+      <div class="contact-left-inner">
+        <span class="kicker kicker-light"><span class="kicker-dot"></span>Request a Demo</span>
+        <h2>See How BestModal Fits Your Pricing Process</h2>
+        <p class="contact-intro">Request a demo and explore how BestModal can structure complex tariff landscapes, automate price logic and improve commercial decisions across your organization.</p>
+        <div class="why-list">
+          <div class="why-item"><span class="why-bullet"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Replace Excel-based pricing with one structured system</div>
+          <div class="why-item"><span class="why-bullet"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Compare complete prices instead of isolated tariffs</div>
+          <div class="why-item"><span class="why-bullet"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Increase transparency for sales, procurement and operations</div>
+          <div class="why-item"><span class="why-bullet"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="currentColor"/></svg></span>Scale tariff maintenance, RFQ workflows and provider access</div>
+        </div>
+        <img src="image-stripe-8.jpg" alt="Logistics team collaborating on transport pricing strategy" class="contact-img">
+      </div>
+    </div>
+    <div class="p-card">
+      <div class="contact-right" id="contact">
+        <h3>Request a Demo</h3>
+        <p class="contact-sub">We will contact you shortly after receiving your request.</p>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name <span class="form-req">*</span></label>
+            <input type="text" class="form-input" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company <span class="form-req">*</span></label>
+            <input type="text" class="form-input" placeholder="Company GmbH">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-Mail <span class="form-req">*</span></label>
+          <input type="email" class="form-input" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone</label>
+          <input type="tel" class="form-input" placeholder="+49 000 000000">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Website</label>
+          <input type="url" class="form-input" placeholder="https://company.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell us about your pricing challenges…"></textarea>
+        </div>
+        <button class="form-submit">Send Request</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════ FOOTER ═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-name">
+        <span class="footer-brand-mark">
+          <svg viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8 L6.5 2 L11 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        BestModal
+      </div>
+      <p>One platform for pricing complexity across all transport logistics modes.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#platform">Pricing engine</a></li>
+        <li><a href="#platform">Cost breakdown</a></li>
+        <li><a href="#platform">Combination logic</a></li>
+        <li><a href="#platform">RFQ &amp; tenders</a></li>
+        <li><a href="#platform">Marketplace</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Coverage</h4>
+      <ul>
+        <li><a href="#coverage">Ocean FCL / LCL</a></li>
+        <li><a href="#coverage">Road FTL / LTL</a></li>
+        <li><a href="#coverage">Rail &amp; Barge</a></li>
+        <li><a href="#coverage">Airfreight</a></li>
+        <li><a href="#end-to-end">End-to-End</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#use-cases">Use cases</a></li>
+        <li><a href="#technology">Technology</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#">Imprint</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 BestModal. All rights reserved.</span>
+    <span class="footer-copy">Pricing engine for transport logistics.</span>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  });
+});
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.closest('.faq-item');
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen)item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
