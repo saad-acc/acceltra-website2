@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BestModal — Investor Research Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0B1D2E; --ink2:#0F2740; --ink3:#132F4C;
+  --paper:#EAF2F8; --steel:#8CA3B8; --faint:#5A7288;
+  --line:rgba(234,242,248,.12); --line2:rgba(234,242,248,.07);
+  --signal:#FF6B2C; --teal:#35C4A8; --blue:#5B9BD5; --amber:#F0B23E; --risk:#FF5D5D;
+  --disp:"Barlow Condensed",Impact,"Arial Narrow",sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--ink);color:var(--paper);font-family:var(--body);
+  font-size:15px;line-height:1.5;overflow:hidden;
+  background-image:radial-gradient(rgba(234,242,248,.045) 1px,transparent 1px);
+  background-size:26px 26px;
+}
+::selection{background:rgba(255,107,44,.35)}
+a{color:var(--teal)}
+/* ---------- deck chrome ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--signal),var(--teal));width:0%;z-index:60;transition:width .35s ease}
+#brand{position:fixed;top:14px;left:20px;z-index:55;font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--steel)}
+#brand b{color:var(--paper);font-weight:600}
+#topright{position:fixed;top:10px;right:16px;z-index:55;display:flex;gap:8px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--paper);
+  background:rgba(234,242,248,.06);border:1px solid var(--line);border-radius:6px;
+  padding:7px 12px;cursor:pointer;transition:background .2s,border-color .2s}
+.btn:hover{background:rgba(234,242,248,.12)}
+.btn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+#bottombar{position:fixed;left:0;right:0;bottom:0;z-index:55;display:flex;align-items:center;
+  justify-content:space-between;padding:10px 20px;pointer-events:none}
+#sectlabel{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase}
+#navpad{display:flex;align-items:center;gap:10px;pointer-events:auto}
+#counter{font-family:var(--mono);font-size:11px;color:var(--steel);letter-spacing:.1em;min-width:64px;text-align:center}
+.navbtn{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);
+  border-radius:8px;background:rgba(234,242,248,.05);color:var(--paper);cursor:pointer;font-size:15px;
+  transition:background .2s}
+.navbtn:hover{background:rgba(255,107,44,.18);border-color:rgba(255,107,44,.5)}
+.navbtn:focus-visible{outline:2px solid var(--signal);outline-offset:2px}
+/* ---------- slides ---------- */
+#deck{position:fixed;inset:0}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;transform:translateY(16px);
+  transition:opacity .45s ease,transform .45s ease,visibility 0s linear .45s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease}
+.inner{max-width:1240px;height:100%;margin:0 auto;padding:64px clamp(20px,4vw,60px) 64px;
+  display:flex;flex-direction:column;justify-content:center;overflow-y:auto;scrollbar-width:thin}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--signal);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:14px;height:14px;flex:0 0 14px;
+  background:linear-gradient(135deg,var(--signal) 50%,rgba(255,107,44,.25) 50%);border-radius:2px}
+h1{font-family:var(--disp);font-weight:700;text-transform:uppercase;line-height:.96;
+  font-size:clamp(46px,7.5vw,96px);letter-spacing:.005em}
+h2{font-family:var(--disp);font-weight:600;text-transform:uppercase;line-height:1;
+  font-size:clamp(30px,4.4vw,52px);letter-spacing:.01em;margin-bottom:16px}
+h3{font-family:var(--disp);font-weight:600;text-transform:uppercase;font-size:clamp(18px,2vw,24px);
+  letter-spacing:.03em;color:var(--paper)}
+.lede{color:var(--steel);font-size:clamp(14px,1.35vw,17px);max-width:82ch;margin-bottom:8px}
+.lede b,.lede strong{color:var(--paper);font-weight:600}
+.accent{color:var(--signal)} .tealc{color:var(--teal)} .bluec{color:var(--blue)} .amberc{color:var(--amber)}
+.mono{font-family:var(--mono)}
+.small{font-size:12px;color:var(--faint)}
+.foot{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.04em}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:900px){.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.card{background:var(--ink2);border:1px solid var(--line);border-radius:12px;padding:20px}
+.card h3{margin-bottom:8px}
+.card p{color:var(--steel);font-size:13.5px}
+.card p b{color:var(--paper)}
+/* stats */
+.stat .n{font-family:var(--disp);font-weight:700;font-size:clamp(34px,4.6vw,60px);line-height:1;color:var(--paper)}
+.stat .n em{font-style:normal;color:var(--signal)}
+.stat .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:6px}
+.stat .s{font-size:12px;color:var(--faint);margin-top:4px}
+/* tables */
+table.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--steel);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top;color:var(--paper)}
+.tbl td.num,.tbl th.num{text-align:right;font-family:var(--mono)}
+.tbl td .sub{display:block;color:var(--faint);font-size:11.5px;margin-top:2px}
+.tbl tr:hover td{background:rgba(234,242,248,.03)}
+.tbl td b{color:var(--paper)}
+.tbl td.dim{color:var(--steel)}
+/* chips */
+.chip{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 9px;border-radius:20px;border:1px solid;white-space:nowrap}
+.chip.yes{color:var(--teal);border-color:rgba(53,196,168,.5);background:rgba(53,196,168,.1)}
+.chip.no{color:var(--risk);border-color:rgba(255,93,93,.5);background:rgba(255,93,93,.1)}
+.chip.cond{color:var(--amber);border-color:rgba(240,178,62,.5);background:rgba(240,178,62,.1)}
+.chip.hi{color:var(--risk);border-color:rgba(255,93,93,.5);background:rgba(255,93,93,.1)}
+.chip.mh{color:var(--signal);border-color:rgba(255,107,44,.5);background:rgba(255,107,44,.1)}
+.chip.med{color:var(--amber);border-color:rgba(240,178,62,.5);background:rgba(240,178,62,.1)}
+.chip.lo{color:var(--teal);border-color:rgba(53,196,168,.5);background:rgba(53,196,168,.1)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;padding:4px 10px;
+  border-radius:5px;background:var(--ink3);border:1px solid var(--line);color:var(--paper)}
+/* banners */
+.flag{border-left:3px solid var(--amber);background:rgba(240,178,62,.08);border-radius:0 10px 10px 0;
+  padding:14px 18px;color:var(--paper);font-size:13.5px}
+.flag b{color:var(--amber)}
+.quote{border-left:3px solid var(--signal);background:rgba(255,107,44,.07);border-radius:0 10px 10px 0;
+  padding:16px 20px;font-size:clamp(14px,1.5vw,18px);color:var(--paper)}
+.quote b{color:var(--signal)}
+.quote.teal{border-color:var(--teal);background:rgba(53,196,168,.07)}
+.quote.teal b{color:var(--teal)}
+/* unit tile signature */
+.utile{display:inline-flex;width:34px;height:34px;border-radius:4px;overflow:hidden;border:1px solid var(--line);flex:0 0 34px}
+.utile span{flex:1}
+.utile .exp{background:rgba(255,107,44,.85)} .utile .imp{background:rgba(53,196,168,.85)}
+.utile .off{background:rgba(234,242,248,.06)}
+/* flow diagram */
+.flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap}
+.fnode{background:var(--ink2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;flex:1;min-width:150px}
+.fnode .fn{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--signal);text-transform:uppercase}
+.fnode .ft{font-family:var(--disp);text-transform:uppercase;font-size:19px;letter-spacing:.02em;margin:4px 0 4px}
+.fnode p{font-size:12px;color:var(--steel)}
+.farrow{display:flex;align-items:center;padding:0 8px;color:var(--signal);font-size:20px;font-family:var(--mono)}
+@media(max-width:900px){.farrow{display:none}.flow{gap:10px}}
+/* bars */
+.panelrow{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.panelrow{grid-template-columns:1fr}}
+.bpanel{background:var(--ink2);border:1px solid var(--line);border-radius:12px;padding:16px 16px 12px}
+.bpanel .bh{font-family:var(--disp);text-transform:uppercase;font-size:20px;letter-spacing:.03em}
+.bpanel .bs{font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:14px;height:150px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%}
+.bar .fill{border-radius:4px 4px 0 0;min-height:4px}
+.bar .v{font-family:var(--mono);font-size:11px;color:var(--paper);margin-bottom:5px;text-align:center}
+.bar .k{font-family:var(--mono);font-size:9.5px;color:var(--faint);text-align:center;margin-top:6px;letter-spacing:.05em}
+.f500{background:linear-gradient(180deg,#3a6f92,#2b5473)} 
+.f1000{background:linear-gradient(180deg,var(--signal),#c94f1c)}
+.f2000{background:linear-gradient(180deg,var(--teal),#1f8f79)}
+/* range (dumbbell) */
+.range{margin:10px 0 16px}
+.range .rl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--steel);margin-bottom:5px}
+.range .track{position:relative;height:10px;border-radius:6px;background:rgba(234,242,248,.07)}
+.range .span{position:absolute;top:0;bottom:0;border-radius:6px;background:linear-gradient(90deg,rgba(255,107,44,.35),rgba(255,107,44,.75))}
+.range .dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);
+  background:var(--paper);border:3px solid var(--signal)}
+.range .ticks{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;color:var(--faint);margin-top:4px}
+/* kpi grid */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--ink2);border:1px solid var(--line);border-radius:9px;padding:11px 13px;
+  font-size:12.5px;color:var(--paper)}
+.kpi .kc{font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;display:block;margin-bottom:3px}
+.kpi.hl{border-color:rgba(255,107,44,.6);background:rgba(255,107,44,.09)}
+.kpi.hl .kc{color:var(--signal)}
+/* lists */
+ul.tick{list-style:none;display:grid;gap:9px}
+ul.tick li{padding-left:24px;position:relative;color:var(--steel);font-size:13.5px}
+ul.tick li b{color:var(--paper)}
+ul.tick li::before{content:"";position:absolute;left:0;top:5px;width:12px;height:12px;border-radius:3px;
+  background:linear-gradient(135deg,var(--teal) 50%,rgba(53,196,168,.25) 50%)}
+ul.tick.orange li::before{background:linear-gradient(135deg,var(--signal) 50%,rgba(255,107,44,.25) 50%)}
+ul.tick.amber li::before{background:linear-gradient(135deg,var(--amber) 50%,rgba(240,178,62,.25) 50%)}
+/* svg text */
+svg text{font-family:var(--mono)}
+/* contents overlay */
+#toc{position:fixed;inset:0;background:rgba(8,18,29,.97);z-index:70;display:none;overflow-y:auto;padding:70px 24px 40px}
+#toc.open{display:block}
+#toc .wrap{max-width:1000px;margin:0 auto;column-count:2;column-gap:40px}
+@media(max-width:800px){#toc .wrap{column-count:1}}
+#toc .sect{break-inside:avoid;margin-bottom:22px}
+#toc .sh{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--signal);text-transform:uppercase;margin-bottom:8px}
+#toc button.item{display:flex;gap:12px;width:100%;text-align:left;background:none;border:none;color:var(--paper);
+  font-family:var(--body);font-size:14px;padding:6px 8px;border-radius:6px;cursor:pointer}
+#toc button.item:hover{background:rgba(234,242,248,.07)}
+#toc button.item .no{font-family:var(--mono);color:var(--faint);font-size:11px;min-width:26px;padding-top:2px}
+#tocclose{position:fixed;top:14px;right:16px;z-index:71}
+/* title slide extras */
+.titlebg{position:absolute;inset:0;overflow:hidden;pointer-events:none;opacity:.5}
+.titlebg .stack{position:absolute;display:grid;grid-template-columns:repeat(6,34px);gap:6px}
+.keys{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px}
+.keys .k{border:1px solid var(--line);border-radius:10px;background:rgba(15,39,64,.75);padding:12px 18px}
+.keys .k .n{font-family:var(--disp);font-weight:700;font-size:30px;line-height:1;color:var(--signal)}
+.keys .k .l{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--steel);text-transform:uppercase;margin-top:4px}
+hr.sep{border:none;border-top:1px solid var(--line);margin:18px 0}
+@media (prefers-reduced-motion: reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<div id="brand"><b>BESTMODAL</b>&nbsp;·&nbsp;INVESTOR RESEARCH</div>
+<div id="topright"><button class="btn" id="tocbtn" aria-label="Open contents">CONTENTS ☰</button></div>
+<div id="bottombar">
+  <div id="sectlabel">Thesis</div>
+  <div id="navpad">
+    <button class="navbtn" id="prev" aria-label="Previous slide">←</button>
+    <div id="counter">01 / 33</div>
+    <button class="navbtn" id="next" aria-label="Next slide">→</button>
+  </div>
+</div>
+<div id="toc"><button class="btn" id="tocclose">CLOSE ✕</button><div class="wrap" id="toclist"></div></div>
+<main id="deck">
+
+<!-- ============ 01 TITLE ============ -->
+<section class="slide" data-section="Thesis" data-title="Title">
+  <div class="inner" style="position:relative">
+    <div class="titlebg">
+      <div class="stack" style="top:12%;right:6%">
+        <span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span>
+        <span class="utile"><span class="off"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="off"></span><span class="imp"></span></span>
+        <span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="off"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span>
+      </div>
+    </div>
+    <div class="eyebrow">Investor research memorandum · 20 August 2026</div>
+    <h1>BestModal</h1>
+    <h2 style="color:var(--steel);font-weight:500;margin-top:6px">Market, competitive landscape<br>and addressable opportunity</h2>
+    <p class="lede" style="margin-top:14px">A bottom-up assessment of BestModal as a <b>specialist enterprise freight-pricing platform</b> — not a generic TMS — built from BestModal's public product material, primary-source competitor information, logistics-industry associations, public data on the three management-provided reference customers, and recent strategic transactions in freight technology. Where no public data exist (base subscription price, ARR, contract values, retention), the analysis uses <b>transparent sensitivities rather than estimates presented as facts</b>.</p>
+    <div class="keys">
+      <div class="k"><div class="n">DE → EU → Global</div><div class="l">Nested market scope</div></div>
+      <div class="k"><div class="n">~15,000</div><div class="l">Base-case core accounts</div></div>
+      <div class="k"><div class="n">~90,000</div><div class="l">Country-direction units</div></div>
+      <div class="k"><div class="n">€1.08bn</div><div class="l">ARR capacity @ €1k/mo (illustrative)</div></div>
+    </div>
+    <div class="foot">EXP <span style="color:var(--signal)">■</span> / IMP <span style="color:var(--teal)">■</span> — one tile = one country, two billable directions. This unit is the deck's recurring motif because it is the core of the commercial model.</div>
+  </div>
+</section>
+
+<!-- ============ 02 BOTTOM LINE: MARKET ============ -->
+<section class="slide" data-section="Thesis" data-title="Bottom-line view: the account market">
+  <div class="inner">
+    <div class="eyebrow">02 · Bottom-line investment view</div>
+    <h2>The market clears the bar — comfortably</h2>
+    <p class="lede">A conservative, <b>forwarder/LSP-only</b> market definition — deliberately excluding a potentially large shipper/cargo-owner market — still supports a venture-scale, potentially substantial enterprise-software business.</p>
+    <div class="panelrow" style="margin-top:16px">
+      <div class="bpanel"><div class="bh">Global</div><div class="bs">FIATA-represented industry</div>
+        <div class="stat"><div class="n">~40,000</div><div class="l">Represented account universe</div>
+        <div class="n" style="font-size:34px;margin-top:12px"><em>10–20k</em></div><div class="l">Core BestModal-fit accounts</div>
+        <div class="s">Base case ≈ <b class="accent">15,000</b></div></div>
+      </div>
+      <div class="bpanel"><div class="bh">Europe</div><div class="bs">CLECAT-represented universe</div>
+        <div class="stat"><div class="n">&gt;19,000</div><div class="l">Represented companies</div>
+        <div class="n" style="font-size:34px;margin-top:12px"><em>5–10k</em></div><div class="l">Core prospects</div>
+        <div class="s">Base case ≈ <b class="accent">7,500</b></div></div>
+      </div>
+      <div class="bpanel"><div class="bh">Germany</div><div class="bs">DSLV ecosystem</div>
+        <div class="stat"><div class="n">~2,500</div><div class="l">Prominent forwarders / logistics cos.</div>
+        <div class="n" style="font-size:34px;margin-top:12px"><em>500–1,250</em></div><div class="l">Core target accounts</div>
+        <div class="s">Base case ≈ <b class="accent">800</b></div></div>
+      </div>
+    </div>
+    <div class="foot">Geographies are nested, not additive: Germany ⊂ Europe ⊂ Global. Shippers/cargo owners intentionally excluded from the core market (see Slide 25).</div>
+  </div>
+</section>
+
+<!-- ============ 03 BOTTOM LINE: MODEL MATH ============ -->
+<section class="slide" data-section="Thesis" data-title="Bottom-line view: units, not logos">
+  <div class="inner">
+    <div class="eyebrow">03 · Bottom-line investment view</div>
+    <h2>The market is bigger in units than in logos</h2>
+    <p class="lede">BestModal monetises <b>each country/import-export deployment separately</b>. The same account base therefore multiplies into far more subscription units than customer logos.</p>
+    <div class="flow" style="margin:20px 0">
+      <div class="fnode"><div class="fn">Accounts</div><div class="ft">≈15,000 logos</div><p>Base-case global core market of BestModal-fit forwarders/LSPs</p></div>
+      <div class="farrow">×</div>
+      <div class="fnode"><div class="fn">Expansion</div><div class="ft">≈6 units / logo</div><p>Average paid country-direction units per customer (base case)</p></div>
+      <div class="farrow">=</div>
+      <div class="fnode" style="border-color:rgba(255,107,44,.5)"><div class="fn">Units</div><div class="ft" style="color:var(--signal)">≈90,000 units</div><p>Country-direction subscription units globally</p></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="fn">Revenue capacity</div><div class="ft"><span class="tealc">€1.08bn</span> / <span class="bluec">€540m</span></div><p>Annual global core-market ARR at illustrative €1,000 / €500 per unit per month</p></div>
+    </div>
+    <div class="quote"><b>The critical investor question</b> is therefore less "is the market big enough?" and more: <b>can BestModal establish defensible data, calculation and integration advantages before larger freight-software platforms absorb this workflow?</b></div>
+    <div class="foot">€1,000 and €500 per country-direction unit per month are illustrative sensitivities — not BestModal's actual or disclosed pricing.</div>
+  </div>
+</section>
+
+<!-- ============ 04 WHAT BESTMODAL IS BUILDING ============ -->
+<section class="slide" data-section="Product" data-title="What BestModal is building">
+  <div class="inner">
+    <div class="eyebrow">04 · Product</div>
+    <h2>A commercial decision engine between raw tariffs and pricing decisions</h2>
+    <p class="lede">An enterprise TMS extends into shipment execution, customs, accounting, warehousing, tracking and operational workflows. BestModal's public positioning is much more concentrated: <b>ingest commercial rate information, interpret its rules, calculate the complete transport cost, compare alternatives</b>, and expose that price foundation to procurement, sales, RFQ/tender and potentially external marketplace users. It converts fragmented carrier and supplier tariffs, local charges, surcharges, transport legs and customer-specific rules into a comparable <b class="accent">all-in transport price</b> — one calculation environment spanning FCL, LCL, FTL, LTL, rail, barge and air, including BAF, CAF, PSS, THC, tolls, terminal costs, low-water surcharges, minimum charges, NAC/FAK/special rates, currencies and customer-specific logic.</p>
+    <div class="flow" style="margin:18px 0 10px">
+      <div class="fnode"><div class="fn">01</div><div class="ft">Tariff data</div><p>Import or maintain rates by mode, provider, region, customer logic; API / data-import capable</p></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="fn">02</div><div class="ft">Structured rules</div><p>Access rules, local charges, currencies, surcharges, role-based controls</p></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="fn">03</div><div class="ft">Route calculation</div><p>Complete pre-/main-/on-carriage cost construction; PTV &amp; EWS routing/toll, Map&amp;Guide emissions</p></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="fn">04</div><div class="ft">Comparison / RFQ</div><p>Route search, RFQs/tenders, fully constructed alternatives with detailed cost breakdown</p></div>
+      <div class="farrow">→</div>
+      <div class="fnode"><div class="fn">05</div><div class="ft">Commercial decision</div><p>Quoting, selective tariff sharing, marketplace publication</p></div>
+    </div>
+    <div class="foot">The "pricing layer" interpretation is the memorandum's inference from the product architecture — not wording BestModal itself uses. Integration references: PTV, EWS (road distance/tolls), Map&amp;Guide (emissions).</div>
+  </div>
+</section>
+
+<!-- ============ 05 MODAL COVERAGE ============ -->
+<section class="slide" data-section="Product" data-title="Modal coverage">
+  <div class="inner">
+    <div class="eyebrow">05 · Product</div>
+    <h2>Unusually broad modal coverage for a specialised pricing product</h2>
+    <table class="tbl" style="margin-top:8px">
+      <tr><th style="width:120px">Freight area</th><th>Public capability</th><th>Why it matters commercially</th></tr>
+      <tr><td><span class="badge">OCEAN FCL</span></td><td class="dim">Ocean tariffs plus port/local-charge logic, BAF/CAF/PSS, THC and other surcharges</td><td class="dim">Core rate-management requirement for international forwarders</td></tr>
+      <tr><td><span class="badge">OCEAN LCL</span></td><td class="dim">LCL within the same ocean pricing framework</td><td class="dim">LCL charging structures differ from FCL and increase calculation complexity</td></tr>
+      <tr><td><span class="badge">ROAD FTL</span></td><td class="dim">Road pricing incl. fuel, tolls, distance, pickup and drop-off</td><td class="dim">Enables first/last-mile and standalone trucking comparisons</td></tr>
+      <tr><td><span class="badge">ROAD LTL</span></td><td class="dim">Explicit LTL support alongside FTL</td><td class="dim">Relevant for forwarders combining international main carriage with groupage/inland legs</td></tr>
+      <tr><td><span class="badge" style="border-color:rgba(53,196,168,.6);color:var(--teal)">RAIL</span></td><td class="dim">Intermodal tariffs, terminal logic and combination legs</td><td><b class="tealc">Potentially important European differentiator</b> <span class="dim">vs ocean/air-centric rate tools</span></td></tr>
+      <tr><td><span class="badge" style="border-color:rgba(53,196,168,.6);color:var(--teal)">BARGE</span></td><td class="dim">Explicit barge pricing, terminal logic and low-water surcharge handling</td><td><b class="tealc">Comparatively distinctive</b> <span class="dim">for Rhine / Benelux / German intermodal corridors</span></td></tr>
+      <tr><td><span class="badge" style="border-color:rgba(240,178,62,.6);color:var(--amber)">AIR ⚑</span></td><td class="dim">Website presently markets air rate structures, fuel/security charges and add-ons</td><td class="dim">Strategically important to complete the international forwarding stack — <b class="amberc">see diligence flag, next slide</b></td></tr>
+    </table>
+    <div class="foot">Source: BestModal public product material, August 2026.</div>
+  </div>
+</section>
+
+<!-- ============ 06 AIR DISCREPANCY ============ -->
+<section class="slide" data-section="Product" data-title="Diligence flag: air freight">
+  <div class="inner">
+    <div class="eyebrow">06 · Product · Diligence flag</div>
+    <h2>Air freight: website and management do not yet say the same thing</h2>
+    <div class="grid2" style="margin-top:8px">
+      <div class="card"><h3 class="bluec">Website (Aug 2026)</h3><p>Describes air freight as part of the <b>designed/supported modal set</b> — air rate structures, fuel/security charges and add-ons appear in the target feature set.</p></div>
+      <div class="card"><h3 class="amberc">Management input</h3><p>States that air remains <b>the final item on the roadmap</b> — not yet at the same production maturity as the other modes.</p></div>
+    </div>
+    <p class="lede" style="margin-top:16px">For investor materials, these must not be conflated. The safest positioning today:</p>
+    <div class="quote teal"><b>BestModal's architecture and public product proposition span all major forwarding modes, but management indicates that air freight has not yet reached the same production maturity as the other modes.</b></div>
+    <p class="lede" style="margin-top:16px">The distinction matters because air-rate management is already the <b>most digitised</b> slice of the space: cargo.one has strong air foundations and has now added ocean through Cargofive, while Freightos/WebCargo operates a substantial air-pricing and booking network. Completing air is therefore important not merely to tick a modal box, but to <b>remove an obvious competitive objection in global-forwarder sales</b> — and it should be resolved before any deck describes BestModal as fully all-mode in production.</p>
+  </div>
+</section>
+
+<!-- ============ 07 FULL-CHAIN ============ -->
+<section class="slide" data-section="Product" data-title="Full-chain cost construction">
+  <div class="inner">
+    <div class="eyebrow">07 · Product · Core differentiation</div>
+    <h2>Full-chain cost construction, not isolated rate storage</h2>
+    <p class="lede">BestModal explicitly models <b>pre-carriage, main carriage and on-carriage</b> — including local charges at origin and destination — and combines the legs into one valid multimodal price. That matters because a <b>"Hamburg→Shanghai ocean rate"</b> and the <b>"actual door-to-door cost a forwarder can quote a customer"</b> are not equivalent commercial objects.</p>
+    <svg viewBox="0 0 1080 210" style="width:100%;margin:14px 0" role="img" aria-label="Door-to-door cost chain diagram">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8CA3B8"/></marker>
+      </defs>
+      <rect x="10" y="60" width="190" height="58" rx="9" fill="#0F2740" stroke="rgba(234,242,248,.18)"/>
+      <text x="105" y="84" text-anchor="middle" fill="#EAF2F8" font-size="14" style="font-family:var(--disp);letter-spacing:.05em">PRE-CARRIAGE</text>
+      <text x="105" y="103" text-anchor="middle" fill="#8CA3B8" font-size="10">truck · rail · barge legs</text>
+      <rect x="222" y="60" width="128" height="58" rx="9" fill="rgba(240,178,62,.12)" stroke="rgba(240,178,62,.5)"/>
+      <text x="286" y="84" text-anchor="middle" fill="#F0B23E" font-size="11">ORIGIN LOCAL</text>
+      <text x="286" y="101" text-anchor="middle" fill="#8CA3B8" font-size="9.5">THC · port charges</text>
+      <rect x="372" y="50" width="330" height="78" rx="9" fill="rgba(255,107,44,.14)" stroke="rgba(255,107,44,.6)"/>
+      <text x="537" y="82" text-anchor="middle" fill="#FF6B2C" font-size="16" style="font-family:var(--disp);letter-spacing:.05em">MAIN CARRIAGE</text>
+      <text x="537" y="103" text-anchor="middle" fill="#8CA3B8" font-size="10">ocean · air · rail — BAF · CAF · PSS · fuel</text>
+      <rect x="724" y="60" width="128" height="58" rx="9" fill="rgba(240,178,62,.12)" stroke="rgba(240,178,62,.5)"/>
+      <text x="788" y="84" text-anchor="middle" fill="#F0B23E" font-size="11">DEST. LOCAL</text>
+      <text x="788" y="101" text-anchor="middle" fill="#8CA3B8" font-size="9.5">terminal · tolls</text>
+      <rect x="874" y="60" width="196" height="58" rx="9" fill="#0F2740" stroke="rgba(234,242,248,.18)"/>
+      <text x="972" y="84" text-anchor="middle" fill="#EAF2F8" font-size="14" style="font-family:var(--disp);letter-spacing:.05em">ON-CARRIAGE</text>
+      <text x="972" y="103" text-anchor="middle" fill="#8CA3B8" font-size="10">last-mile delivery legs</text>
+      <path d="M15 150 H1065" stroke="#35C4A8" stroke-width="2"/>
+      <path d="M15 143 V157 M1065 143 V157" stroke="#35C4A8" stroke-width="2"/>
+      <text x="540" y="180" text-anchor="middle" fill="#35C4A8" font-size="13" letter-spacing=".15em">ONE ALL-IN, COMPARABLE DOOR-TO-DOOR PRICE</text>
+      <text x="540" y="200" text-anchor="middle" fill="#5A7288" font-size="10">low-water surcharges · minimum charges · NAC / FAK / special rates · currencies · customer-specific logic</text>
+    </svg>
+    <div class="foot">Full-chain construction is the report's assessment of BestModal's strongest conceptual differentiation vs. storing rate sheets.</div>
+  </div>
+</section>
+
+<!-- ============ 08 MARKETPLACE LAYER ============ -->
+<section class="slide" data-section="Product" data-title="Second strategic layer: marketplace">
+  <div class="inner">
+    <div class="eyebrow">08 · Product · Optionality</div>
+    <h2>The beginnings of a second strategic layer</h2>
+    <div class="grid3" style="margin-top:8px">
+      <div class="card"><h3>Selective release</h3><p>Tariff owners can selectively release rates to chosen counterparties.</p></div>
+      <div class="card"><h3>Access control</h3><p>Access can be governed by user, region or partner, with role-based controls.</p></div>
+      <div class="card"><h3>Marketplace</h3><p>BestModal describes a marketplace through which offers can be published.</p></div>
+    </div>
+    <p class="lede" style="margin-top:18px">If enough suppliers and buyers use the same tariff substrate, this could eventually create <b>data / network effects</b>. But there is <b>not enough public evidence yet</b> to regard that network effect as established.</p>
+    <div class="quote teal">Value the company principally as <b>workflow / rate-management SaaS today</b> — and treat marketplace effects as <b>upside, not thesis</b>.</div>
+  </div>
+</section>
+
+<!-- ============ 09 SERVICE INTENSITY ============ -->
+<section class="slide" data-section="Product" data-title="Watch item: service intensity">
+  <div class="inner">
+    <div class="eyebrow">09 · Product · Operational watch item</div>
+    <h2>SaaS front end — but how much tariff labour behind it?</h2>
+    <p class="lede">BestModal states that tariff maintenance can be <b>customer-operated, imported, or performed jointly with BestModal</b>. A product that looks like SaaS on the front end but requires intensive ongoing tariff operations behind the scenes has very different economics from a genuinely automated software platform. Automation levels and delivery gross margin are therefore first-order diligence items.</p>
+    <h3 style="margin:16px 0 10px">Economics metrics that become particularly important</h3>
+    <div class="kpis" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi"><span class="kc">Ops leverage</span>Tariffs maintained per FTE</div>
+      <div class="kpi"><span class="kc">Automation</span>Automatic vs. manual ingestion rate</div>
+      <div class="kpi"><span class="kc">Speed</span>Time to activate a new carrier tariff</div>
+      <div class="kpi"><span class="kc">Latency</span>Amendment processing latency</div>
+      <div class="kpi hl"><span class="kc">Economics</span>Gross margin by customer</div>
+    </div>
+    <div class="flag" style="margin-top:18px"><b>Biggest product risk (per the assessment):</b> data ingestion and maintenance could remain labour-intensive — making automation rate and delivery gross margin decisive for whether this is priced as software.</div>
+  </div>
+</section>
+
+<!-- ============ 10 EXEC ASSESSMENT ============ -->
+<section class="slide" data-section="Assessment" data-title="Executive investment assessment">
+  <div class="inner">
+    <div class="eyebrow">10 · Executive investment assessment</div>
+    <h2>Eight questions, eight verdicts</h2>
+    <table class="tbl" style="margin-top:6px">
+      <tr><th style="width:34%">Investor question</th><th style="width:110px">Verdict</th><th>Assessment</th></tr>
+      <tr><td><b>Is the pain point real and sufficiently valuable?</b></td><td><span class="chip yes">Yes</span></td><td class="dim">Multiple large vendors have built or acquired specialised rate-management capability; several now sell "eliminate spreadsheets / manual tariff handling" as a primary value proposition.</td></tr>
+      <tr><td><b>Is BestModal differentiated simply because it is multimodal?</b></td><td><span class="chip no">No</span></td><td class="dim">CargoWise, Transporeon, Freightos, Cargobase and others already claim multimodal capabilities.</td></tr>
+      <tr><td><b>Where does differentiation look strongest?</b></td><td><span class="chip yes">Depth</span></td><td class="dim">Unusually explicit about <b>rail + barge/intermodal calculation, terminal logic, low-water surcharges and complete pre-/main-/on-carriage pricing</b> in one engine.</td></tr>
+      <tr><td><b>Is there credible ICP evidence?</b></td><td><span class="chip cond">Conditional</span></td><td class="dim">Potentially strong — SGL, IFB, a. hartrodt span mid-sized to very large forwarders with real cross-border/multimodal complexity — but customer status is management-provided, not independently confirmed via public case studies.</td></tr>
+      <tr><td><b>Is the market large enough?</b></td><td><span class="chip yes">Yes</span></td><td class="dim">Bottom-up: ~2,500 prominent German companies (DSLV), &gt;19,000 in Europe (CLECAT), ~40,000 globally (FIATA).</td></tr>
+      <tr><td><b>Could the commercial model create substantial ACVs?</b></td><td><span class="chip yes">Yes</span></td><td class="dim">Country × direction pricing is a built-in land-and-expand mechanism: one global customer can become many subscription units without new logos.</td></tr>
+      <tr><td><b>Biggest product risk</b></td><td><span class="chip cond">Watch</span></td><td class="dim">Ingestion/maintenance may stay labour-intensive; tariffs can be "managed jointly with BestModal" — automation rate and delivery gross margin are key diligence items.</td></tr>
+      <tr><td><b>Biggest competitive risk</b></td><td><span class="chip hi">High</span></td><td class="dim">Incumbents can bundle pricing into broader TMS/execution platforms with more carrier connectivity, customer data and integrations — e.g. CargoWise positions rates inside a global logistics operating system and has moved to transaction-based Value Packs.</td></tr>
+    </table>
+    <div class="foot">Overall conclusion: positive on market size, positive on the underlying workflow — <b style="color:var(--amber)">conditional on moat</b>.</div>
+  </div>
+</section>
+
+<!-- ============ 11 REFERENCES ============ -->
+<section class="slide" data-section="Customers" data-title="Reference accounts">
+  <div class="inner">
+    <div class="eyebrow">11 · Customer evidence</div>
+    <h2>Three management-provided references — very different scale, same complexity</h2>
+    <div class="grid3" style="margin-top:8px">
+      <div class="card">
+        <h3>Scan Global Logistics</h3>
+        <div class="stat" style="margin:8px 0"><div class="n" style="font-size:38px">€2.526bn</div><div class="l">2025 revenue · €219m EBITDA b.s.i.</div></div>
+        <p class="mono small" style="margin-bottom:8px">&gt;5,100 EMPLOYEES · 200+ OFFICES · 6 CONTINENTS · 61 COUNTRIES (NOV 2025)</p>
+        <p><b>Implication:</b> validates the top end of the ICP — large global forwarders with country-by-country pricing organisations and material expansion potential.</p>
+      </div>
+      <div class="card">
+        <h3>IFB — Intl. Freightbridge Germany</h3>
+        <div class="stat" style="margin:8px 0"><div class="n" style="font-size:38px">Mid-sized</div><div class="l">Per Hamburg Port profile</div></div>
+        <p class="mono small" style="margin-bottom:8px">GROUP HQ HONG KONG · 38 FURTHER LOCATIONS · ASIAN &amp; EUROPEAN TRADE/PORT CENTRES · SEA &amp; AIR</p>
+        <p><b>Implication:</b> BestModal is not restricted to billion-euro enterprises — sophisticated regional/mid-market forwarders can carry sufficient tariff complexity.</p>
+      </div>
+      <div class="card">
+        <h3>a. hartrodt</h3>
+        <div class="stat" style="margin:8px 0"><div class="n" style="font-size:38px">2,000+</div><div class="l">Employees · 100+ locations</div></div>
+        <p class="mono small" style="margin-bottom:8px">&gt;65 OPERATING SUBSIDIARIES · PARTNERS IN 46 COUNTRIES · FCL/LCL · AIR · LAND · DOOR-TO-DOOR</p>
+        <p><b>Implication:</b> strong match for country-based pricing — decentralised global organisations may progressively roll the engine across national entities.</p>
+      </div>
+    </div>
+    <div class="flag" style="margin-top:16px"><b>Verification status:</b> reference/customer status should presently be presented as <b>management-provided, not independently verified</b>. Extensive public information exists on all three companies, but no public BestModal case study or customer announcement establishes deployment details.</div>
+  </div>
+</section>
+
+<!-- ============ 12 ICP ============ -->
+<section class="slide" data-section="Customers" data-title="Ideal customer profile">
+  <div class="inner">
+    <div class="eyebrow">12 · Ideal customer profile</div>
+    <h2>The economic buyer is defined by pricing complexity — not shipment volume</h2>
+    <div class="grid2" style="margin-top:8px;grid-template-columns:1.15fr .85fr">
+      <div>
+        <h3 style="margin-bottom:10px">Highest-fit organisation: an international forwarder / LSP that…</h3>
+        <ul class="tick">
+          <li>has <b>several branches / countries</b></li>
+          <li>operates <b>more than one freight mode</b></li>
+          <li>buys rates from <b>many carriers or subcontractors</b></li>
+          <li>carries substantial <b>local-charge / surcharge complexity</b></li>
+          <li>maintains <b>separate procurement and sales pricing</b></li>
+          <li>relies materially on <b>spreadsheets / email or multiple disconnected rate systems</b></li>
+          <li>needs to <b>propagate tariff logic across a geographically distributed organisation</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>That profile is common — the German backdrop (DSLV)</h3>
+        <p style="margin:8px 0 12px">The industry spans globally operating logistics groups, 3PL/4PL providers, owner-managed forwarders with fleets, inland-waterway and rail users, sea/air specialists, customs businesses and warehousing companies.</p>
+        <div class="grid2" style="gap:12px">
+          <div class="stat"><div class="n" style="font-size:34px">592,622</div><div class="l">Employees, German forwarding / logistics services (YE 2024)</div></div>
+          <div class="stat"><div class="n" style="font-size:34px">€123.1bn</div><div class="l">Industry revenue (2023)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13 COUNTRY-DIRECTION NRR ============ -->
+<section class="slide" data-section="Customers" data-title="The expansion mechanic & its KPI">
+  <div class="inner">
+    <div class="eyebrow">13 · Customer evidence · Expansion mechanic</div>
+    <h2>One logo, many expansion points</h2>
+    <p class="lede">SGL's <b>61-country</b> footprint and a. hartrodt's presence in <b>46 countries</b> show how many organisational expansion points can exist inside one global logo. But those numbers must <b>not</b> be translated directly into paid units: a company in 61 countries may initially deploy BestModal in only <b>five or ten</b>. What matters for the SaaS model is the <b>rate at which signed customers add country-direction deployments over time</b>.</p>
+    <div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:18px 0">
+      <div style="display:grid;grid-template-columns:repeat(10,34px);gap:6px">
+        <span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="exp"></span><span class="imp"></span></span><span class="utile"><span class="exp"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span>
+        <span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span><span class="utile"><span class="off"></span><span class="off"></span></span>
+      </div>
+      <div class="stat"><div class="n">7 <span style="font-size:.5em;color:var(--steel)">of 61+</span></div><div class="l">Units live at signing (illustrative) — the slope of this grid over time is the KPI</div></div>
+    </div>
+    <div class="quote"><b>Unusually useful investor KPI: country-direction net revenue retention.</b> A customer can expand ARR without adding a single new corporate logo — by activating additional national businesses or the other direction within an existing country. That expansion mechanic should eventually be visible in cohort data.</div>
+  </div>
+</section>
+
+<!-- ============ 14 THREE COMPETITOR CLASSES ============ -->
+<section class="slide" data-section="Competition" data-title="Three classes of competitor">
+  <div class="inner">
+    <div class="eyebrow">14 · Competitive landscape</div>
+    <h2>Three distinct classes of competitor</h2>
+    <div class="grid3" style="margin-top:10px">
+      <div class="card" style="border-color:rgba(255,107,44,.5)">
+        <p class="mono small" style="color:var(--signal);letter-spacing:.15em;margin-bottom:6px">CLASS 1</p>
+        <h3>Embedded logistics-OS incumbent</h3>
+        <p style="margin-top:8px">Rate management is <b>one feature</b> within a very broad forwarding / TMS environment.</p>
+        <p class="mono small" style="margin-top:12px">CARGOWISE · DESCARTES GPM · MAGAYA · TRANSPOREON</p>
+      </div>
+      <div class="card" style="border-color:rgba(53,196,168,.5)">
+        <p class="mono small" style="color:var(--teal);letter-spacing:.15em;margin-bottom:6px">CLASS 2</p>
+        <h3>Specialist digital pricing / connectivity platform</h3>
+        <p style="margin-top:8px">Carrier rate connectivity is <b>itself a core asset</b>.</p>
+        <p class="mono small" style="margin-top:12px">FREIGHTOS / WEBCARGO · CARGO.ONE + CARGOFIVE · FREIGHTIFY · QUOTISS</p>
+      </div>
+      <div class="card" style="border-color:rgba(91,155,213,.5)">
+        <p class="mono small" style="color:var(--blue);letter-spacing:.15em;margin-bottom:6px">CLASS 3</p>
+        <h3>Freight procurement / tender technology</h3>
+        <p style="margin-top:8px">Stronger on sourcing events, strategic procurement and <b>shipper workflows</b> than on being a forwarder's everyday commercial pricing engine.</p>
+        <p class="mono small" style="margin-top:12px">FREIGHTENDER · ALPEGA TENDEREASY · CARGOBASE</p>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:18px">"Multimodal rate management" is <b>no longer an uncontested white space</b> — every class is investing in it.</div>
+  </div>
+</section>
+
+<!-- ============ 15 THREAT MAP ============ -->
+<section class="slide" data-section="Competition" data-title="Threat map">
+  <div class="inner">
+    <div class="eyebrow">15 · Competitive landscape · Threat map</div>
+    <h2>Where the pressure comes from</h2>
+    <svg viewBox="0 0 780 470" style="width:100%;max-height:62vh" role="img" aria-label="Competitor threat map: workflow overlap vs competitive threat">
+      <line x1="70" y1="420" x2="740" y2="420" stroke="rgba(234,242,248,.25)"/>
+      <line x1="70" y1="40" x2="70" y2="420" stroke="rgba(234,242,248,.25)"/>
+      <line x1="70" y1="230" x2="740" y2="230" stroke="rgba(234,242,248,.08)" stroke-dasharray="4 5"/>
+      <line x1="405" y1="40" x2="405" y2="420" stroke="rgba(234,242,248,.08)" stroke-dasharray="4 5"/>
+      <text x="405" y="452" text-anchor="middle" fill="#8CA3B8" font-size="11" letter-spacing=".15em">MODAL / WORKFLOW OVERLAP WITH BESTMODAL →</text>
+      <text x="30" y="230" fill="#8CA3B8" font-size="11" letter-spacing=".15em" transform="rotate(-90 30 230)" text-anchor="middle">COMPETITIVE THREAT →</text>
+      <g font-size="11.5" fill="#EAF2F8">
+        <circle cx="697" cy="59" r="9" fill="#FF6B2C"/><text x="683" y="50" text-anchor="end">CargoWise / WiseTech</text>
+        <circle cx="664" cy="76" r="9" fill="#FF6B2C"/><text x="650" y="94" text-anchor="end">Descartes GPM (ex-Portrix)</text>
+        <circle cx="558" cy="116" r="8" fill="#FF6B2C"/><text x="558" y="102" text-anchor="middle">Magaya / Catapult</text>
+        <circle cx="611" cy="131" r="8" fill="#35C4A8"/><text x="624" y="136">Freightos / WebCargo</text>
+        <circle cx="512" cy="140" r="8" fill="#35C4A8"/><text x="498" y="145" text-anchor="end">cargo.one + Cargofive</text>
+        <path d="M512 122 l0 -16 m-5 6 l5 -6 l5 6" stroke="#35C4A8" stroke-width="2" fill="none"/><text x="524" y="112" fill="#35C4A8" font-size="9.5">rising</text>
+        <circle cx="585" cy="164" r="8" fill="#FF6B2C"/><text x="598" y="169">Transporeon / Trimble</text>
+        <circle cx="479" cy="200" r="7" fill="#35C4A8"/><text x="492" y="205">Freightify</text>
+        <circle cx="532" cy="225" r="7" fill="#5B9BD5"/><text x="545" y="230">Cargobase</text>
+        <circle cx="374" cy="253" r="7" fill="#5B9BD5"/><text x="387" y="258">Freightender</text>
+        <circle cx="308" cy="276" r="7" fill="#5B9BD5"/><text x="321" y="281">Alpega TenderEasy</text>
+        <circle cx="281" cy="314" r="7" fill="#35C4A8"/><text x="294" y="319">Quotiss</text>
+      </g>
+      <g font-size="10" fill="#5A7288">
+        <text x="735" y="435" text-anchor="end">high</text><text x="75" y="435">low</text>
+        <text x="80" y="52">very high</text><text x="80" y="414">low</text>
+      </g>
+      <g font-size="10.5">
+        <circle cx="90" cy="463" r="6" fill="#FF6B2C"/><text x="102" y="467" fill="#8CA3B8">Embedded OS incumbent</text>
+        <circle cx="300" cy="463" r="6" fill="#35C4A8"/><text x="312" y="467" fill="#8CA3B8">Specialist pricing / connectivity</text>
+        <circle cx="560" cy="463" r="6" fill="#5B9BD5"/><text x="572" y="467" fill="#8CA3B8">Procurement / tender</text>
+      </g>
+    </svg>
+    <div class="foot">Positions are qualitative renderings of the memorandum's threat assessments (very high → low-medium); detail per competitor on the next slide.</div>
+  </div>
+</section>
+
+<!-- ============ 16 COMPETITOR TABLE ============ -->
+<section class="slide" data-section="Competition" data-title="Competitor detail">
+  <div class="inner" style="justify-content:flex-start;padding-top:70px">
+    <div class="eyebrow">16 · Competitive landscape · Detail</div>
+    <h2 style="font-size:clamp(26px,3.4vw,40px)">Eleven named competitors</h2>
+    <table class="tbl" style="font-size:12px">
+      <tr><th style="width:170px">Competitor</th><th>Current proposition &amp; overlap</th><th style="width:118px">Threat</th></tr>
+      <tr><td><b>CargoWise / WiseTech</b></td><td class="dim">Rates &amp; Contracts: searchable live rate database, multimodal buy/sell comparisons, rate aggregation/normalisation, automated costing, configurable pricing rules — inside a much broader global logistics platform. Very high overlap in rate search, tariff management, pricing, quoting; platform extends into execution/compliance/operations. Especially formidable where the prospect already standardises on CargoWise — BestModal must prove a dedicated overlay beats the embedded module.</td><td><span class="chip hi">Very high</span></td></tr>
+      <tr><td><b>Descartes GPM</b> <span class="sub">former Portrix</span></td><td class="dim">Aimed specifically at forwarders; combines routing, rating, margins, capacity, schedules; Portrix described as a multimodal rate-management provider used by major LSPs. One of the closest functional matches — arguably the cleanest established direct comparator.</td><td><span class="chip hi">Very high</span></td></tr>
+      <tr><td><b>Magaya</b> <span class="sub">Rate Mgmt / Catapult</span></td><td class="dim">Centralised freight rate &amp; quote management, surcharges, margins, RFQs, API-driven integration; targets forwarders, NVOCCs, BCOs, shippers; deep ocean capability. Strong rate/quote overlap within a broader digital freight platform — particularly in ocean-centric organisations.</td><td><span class="chip hi">High</span></td></tr>
+      <tr><td><b>Freightos / WebCargo</b> <span class="sub">+ Freightos Procure (ex-Shipsta)</span></td><td class="dim">End-to-end pricing stack: air/ocean/multimodal rate management, quoting, sales; ex-Shipsta now Freightos Procure for tendering/procurement. High overlap across pricing, procurement, tendering, rate distribution; benefits from carrier connectivity and an active transaction network.</td><td><span class="chip hi">High</span></td></tr>
+      <tr><td><b>cargo.one + Cargofive</b></td><td class="dim">Acquired Cargofive 25 Feb 2026, combining its air foundation with ocean rate infrastructure: connections to the top-10 ocean carriers, millions of trade lanes, hundreds of forwarder users. Currently strongest in air + ocean rather than the full land/rail/barge stack — explicitly building an AI-native multimodal logistics operating layer.</td><td><span class="chip hi">High ↑</span></td></tr>
+      <tr><td><b>Transporeon / Trimble</b></td><td class="dim">Central management of freight rates/contracts across road, ocean, air and other modes: total-cost calculations, multi-currency/surcharge logic, approval workflows, cross-mode comparisons (e.g. ocean vs rail). Very substantial pricing overlap; more shipper/procurement-oriented — high in large enterprises, less direct in forwarder commercial pricing.</td><td><span class="chip hi">High</span></td></tr>
+      <tr><td><b>Freightify</b></td><td class="dim">Digital freight-rate technology, real-time ocean and air comparisons; public material cites 30+ LCL/FCL carriers and 90+ airlines. Strong ocean/air pricing overlap — most relevant in the digital-forwarder / mid-market segment.</td><td><span class="chip mh">Med-high</span></td></tr>
+      <tr><td><b>Cargobase</b></td><td class="dim">Shipper-oriented freight management platform comparing spot and contract rates across air, ocean, rail, road, parcel and specialist modes. Very broad modal coverage, different primary persona — rises if BestModal expands aggressively into large shipper procurement.</td><td><span class="chip mh">Med-high</span></td></tr>
+      <tr><td><b>Freightender</b></td><td class="dim">Cloud freight procurement: RFQs, mini-tenders, spot bids across air, FTL, LTL, ocean, rail, courier, incl. calculation and rate-card tools. High tender/RFQ overlap, lower day-to-day pricing-engine overlap — stronger competitor to the sourcing module than to the tariff engine.</td><td><span class="chip med">Medium</span></td></tr>
+      <tr><td><b>Alpega TenderEasy</b></td><td class="dim">Enterprise freight procurement for air, land, sea: tendering, market benchmarking, procurement workflows. Primarily procurement/tender overlap — increasing if BestModal targets shippers.</td><td><span class="chip med">Medium</span></td></tr>
+      <tr><td><b>Quotiss</b></td><td class="dim">Rate management and sales automation for smaller/mid-sized forwarders; covers sea, rail, air, inland. Rate storage/quoting overlap with simpler positioning — potentially relevant for price-sensitive smaller accounts.</td><td><span class="chip lo">Low-med</span></td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 17 POSITIONING ============ -->
+<section class="slide" data-section="Competition" data-title="What the moat is — and is not">
+  <div class="inner">
+    <div class="eyebrow">17 · Competitive landscape · Positioning</div>
+    <h2>"One system for multiple modes" is not the moat</h2>
+    <div class="grid2" style="margin-top:8px">
+      <div>
+        <h3 style="color:var(--risk);margin-bottom:10px">Already claimed by others</h3>
+        <ul class="tick orange">
+          <li><b>CargoWise</b> markets multimodal rate comparison</li>
+          <li><b>Transporeon</b> calculates across road, ocean, air &amp; other modes — and explicitly compares ocean vs rail</li>
+          <li><b>Freightos</b> markets multimodal rate management</li>
+          <li><b>Cargobase</b> covers air / ocean / rail / road</li>
+          <li><b>Freightender</b> supports multiple modes in sourcing</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="tealc" style="margin-bottom:10px">Where BestModal's public material is rarer</h3>
+        <ul class="tick">
+          <li><b>Barge tariff calculation</b> made explicit</li>
+          <li><b>Low-water surcharges</b> handled natively</li>
+          <li><b>Full inland-terminal combination logic</b></li>
+          <li><b>Complete pre-/main-/on-carriage</b> in one engine</li>
+          <li><b>TMS-neutrality:</b> coexist with CargoWise, legacy ERPs and local forwarding systems rather than replacing them — Magaya's own API-agnostic pitch proves forwarders value rate tech that avoids a back-office migration</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote" style="margin-top:16px">The investable differentiation: <b>"The freight-pricing calculation layer with unusually deep end-to-end multimodal cost logic — including European rail, barge and inland combinations — independent of the underlying TMS."</b></div>
+    <div class="foot">Public rarity does not prove technical superiority — it identifies the territory in which superiority must be demonstrated. Diligence should test whether TMS coexistence actually occurs in customers today.</div>
+  </div>
+</section>
+
+<!-- ============ 18 CONSOLIDATION ============ -->
+<section class="slide" data-section="Competition" data-title="Strategic consolidation">
+  <div class="inner">
+    <div class="eyebrow">18 · Competitive landscape · Strategic activity</div>
+    <h2>The pricing / data layer keeps getting bought</h2>
+    <div style="position:relative;margin:22px 0 6px">
+      <div style="position:absolute;left:2%;right:2%;top:14px;height:2px;background:linear-gradient(90deg,var(--blue),var(--signal))"></div>
+      <div class="grid4" style="grid-template-columns:repeat(5,1fr);gap:10px">
+        <div class="card" style="padding:14px"><p class="mono small accent">2021</p><h3 style="font-size:16px">Descartes ← Portrix</h3><p>German multimodal rate-management vendor, <b>≈ €20.7m</b></p></div>
+        <div class="card" style="padding:14px"><p class="mono small accent">2022</p><h3 style="font-size:16px">Trimble ← Transporeon</h3><p>Broader transportation-management platform, <b>€1.88bn</b></p></div>
+        <div class="card" style="padding:14px"><p class="mono small accent">Aug 2024</p><h3 style="font-size:16px">Freightos ← Shipsta</h3><p>Freight procurement — integrated as <b>Freightos Procure</b></p></div>
+        <div class="card" style="padding:14px"><p class="mono small accent">2025</p><h3 style="font-size:16px">WiseTech ← e2open</h3><p>Supply-chain SaaS, <b>$2.1bn</b> enterprise value</p></div>
+        <div class="card" style="padding:14px;border-color:rgba(255,107,44,.5)"><p class="mono small accent">Feb 2026</p><h3 style="font-size:16px">cargo.one ← Cargofive</h3><p>Air + ocean rate infrastructure, plus <b>≈ $20m</b> additional investment for its AI/multimodal strategy</p></div>
+      </div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="flag" style="border-color:var(--blue);background:rgba(91,155,213,.08)"><b style="color:var(--blue)">Not valuation comparables:</b> Portrix is older with limited disclosed detail; Transporeon and e2open are much broader businesses. The value is strategic evidence — large logistics-software companies keep buying rate-management, procurement, connectivity and data assets rather than treating the category as a temporary feature.</div>
+      <div class="card"><h3>Category activity check — Freightos Q2 2026</h3>
+        <div class="grid3" style="gap:10px;margin-top:10px">
+          <div class="stat"><div class="n" style="font-size:30px">$7.7m</div><div class="l">Q2 revenue</div></div>
+          <div class="stat"><div class="n" style="font-size:30px">$2.9m</div><div class="l">Platform rev · +19% YoY</div></div>
+          <div class="stat"><div class="n" style="font-size:30px">$422m</div><div class="l">Q2 gross booking value</div></div>
+        </div>
+        <p style="margin-top:10px">Not directly comparable (marketplace + transaction businesses) — but demonstrates continued commercial activity in digital freight pricing/booking infrastructure. Competition is becoming <b>more intense, not less</b>: winning will depend on depth, not breadth of marketing claims.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 19 SIZING METHOD ============ -->
+<section class="slide" data-section="Market sizing" data-title="Sizing method">
+  <div class="inner">
+    <div class="eyebrow">19 · Market sizing · Method</div>
+    <h2>Bottom-up accounts — not a headline TMS report</h2>
+    <p class="lede">Generic "transportation management software" market studies bundle fleet optimisation, parcel, routing, shipment execution, visibility and many functions BestModal does not primarily sell. Using such a report as TAM would make the deck <b>larger but less credible</b>. The defensible approach:</p>
+    <div class="flow" style="margin:20px 0">
+      <div class="fnode"><div class="fn">Step 1</div><div class="ft">Eligible accounts</div><p>Freight-forwarder / LSP universes anchored to industry associations</p></div>
+      <div class="farrow">×</div>
+      <div class="fnode"><div class="fn">Step 2</div><div class="ft">BestModal fit</div><p>Filter for international, multimodal &amp; organisational tariff complexity</p></div>
+      <div class="farrow">×</div>
+      <div class="fnode"><div class="fn">Step 3</div><div class="ft">Units / account</div><p>Average paid country-direction subscription units</p></div>
+      <div class="farrow">×</div>
+      <div class="fnode"><div class="fn">Step 4</div><div class="ft">Price</div><p>Annual subscription price — run as transparent sensitivities</p></div>
+    </div>
+    <p class="lede">The most useful investor narrative is not an aggressive external TAM figure — it is showing exactly how BestModal's <b>contract architecture</b> turns a plausible 15,000 global ICP accounts into roughly <b>90,000 monetisable deployment units</b>.</p>
+  </div>
+</section>
+
+<!-- ============ 20 ACCOUNT UNIVERSE ============ -->
+<section class="slide" data-section="Market sizing" data-title="The account universe">
+  <div class="inner">
+    <div class="eyebrow">20 · Market sizing · Account universe</div>
+    <h2>Association-anchored, nested universes</h2>
+    <div class="grid2" style="align-items:center">
+      <svg viewBox="0 0 460 420" style="width:100%;max-height:52vh" role="img" aria-label="Nested account universes">
+        <circle cx="200" cy="215" r="170" fill="rgba(91,155,213,.10)" stroke="#5B9BD5" stroke-width="1.5"/>
+        <circle cx="200" cy="268" r="117" fill="rgba(53,196,168,.12)" stroke="#35C4A8" stroke-width="1.5"/>
+        <circle cx="200" cy="342" r="43" fill="rgba(255,107,44,.2)" stroke="#FF6B2C" stroke-width="1.5"/>
+        <text x="200" y="80" text-anchor="middle" fill="#5B9BD5" font-size="14" letter-spacing=".1em">GLOBAL · FIATA</text>
+        <text x="200" y="100" text-anchor="middle" fill="#EAF2F8" font-size="20" font-weight="600">~40,000 firms</text>
+        <text x="200" y="117" text-anchor="middle" fill="#5A7288" font-size="10">~150 territories · 6,000+ individual members</text>
+        <text x="200" y="190" text-anchor="middle" fill="#35C4A8" font-size="13" letter-spacing=".1em">EUROPE · CLECAT</text>
+        <text x="200" y="210" text-anchor="middle" fill="#EAF2F8" font-size="18" font-weight="600">&gt;19,000 companies</text>
+        <text x="200" y="226" text-anchor="middle" fill="#5A7288" font-size="10">forwarding · logistics · customs (Mar 2026)</text>
+        <text x="200" y="336" text-anchor="middle" fill="#FF6B2C" font-size="11" letter-spacing=".08em">GERMANY · DSLV</text>
+        <text x="200" y="352" text-anchor="middle" fill="#EAF2F8" font-size="13" font-weight="600">~2,500</text>
+        <text x="200" y="366" text-anchor="middle" fill="#8CA3B8" font-size="8.5">15 regional associations</text>
+      </svg>
+      <div>
+        <ul class="tick">
+          <li><b>These are association-represented universes, not perfect censuses.</b> Some eligible companies sit outside the associations; some represented companies — customs-only, local or specialised — will have little need for BestModal. Useful TAM anchors, not exact prospect counts.</li>
+          <li><b>Plausibility check:</b> FIATA's published material notes WiseTech / CargoWise already serves <b>&gt;18,000 logistics companies across 173 countries</b>, including a large portion of the world's largest 3PLs and forwarders. Not a direct TAM count (broader product, different definitions) — but strong evidence the logistics-software buying population reaches the <b>high tens of thousands</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 21 CORE-FIT MODEL ============ -->
+<section class="slide" data-section="Market sizing" data-title="Core-fit model">
+  <div class="inner">
+    <div class="eyebrow">21 · Market sizing · Core-fit model</div>
+    <h2>From universes to billable units</h2>
+    <table class="tbl" style="margin-top:6px">
+      <tr><th>Geography</th><th class="num">Represented universe</th><th class="num">Core BestModal-fit</th><th class="num">Base case</th><th class="num">Avg. paid country-direction units</th><th class="num">Base subscription units</th></tr>
+      <tr><td><b>Germany</b></td><td class="num">~2,500</td><td class="num">500–1,250</td><td class="num accent"><b>800</b></td><td class="num">3–5 · base <b>4</b></td><td class="num"><b>3,200</b><span class="sub">range 1,500–6,250</span></td></tr>
+      <tr><td><b>Europe</b></td><td class="num">&gt;19,000</td><td class="num">~4,900–10,100</td><td class="num accent"><b>~7,500</b></td><td class="num">4–7 · base <b>5</b></td><td class="num"><b>~37,500</b><span class="sub">range 19,800–70,500</span></td></tr>
+      <tr><td><b>Global</b></td><td class="num">~40,000</td><td class="num">10,000–20,000</td><td class="num accent"><b>15,000</b></td><td class="num">5–8 · base <b>6</b></td><td class="num"><b>90,000</b><span class="sub">range 50,000–160,000</span></td></tr>
+    </table>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card"><h3>Fit-filter logic</h3><p>Fit percentages and unit assumptions are deliberately the report's own estimates, not third-party facts. The <b>low case</b> assumes only ~one-quarter of the broader European/global forwarding universe has enough organisational and multimodal pricing complexity; the <b>high case</b> reaches ~half. Germany is filtered more conservatively because DSLV's 2,500-company base already spans very different logistics specialisations.</p></div>
+      <div class="flag"><b>Nested, not additive.</b> Germany is inside Europe; Europe is inside the global number. Never sum the rows.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 22 REVENUE SENSITIVITY ============ -->
+<section class="slide" data-section="Market sizing" data-title="Revenue capacity sensitivity">
+  <div class="inner">
+    <div class="eyebrow">22 · Market sizing · Revenue capacity</div>
+    <h2>ARR capacity = 12 × S × addressable units</h2>
+    <div class="panelrow">
+      <div class="bpanel"><div class="bh">Germany</div><div class="bs">3,200 base units · scale to €80m</div>
+        <div class="bars">
+          <div class="bar"><div class="v">€19.2m</div><div class="fill f500" style="height:24%"></div><div class="k">S=€500</div></div>
+          <div class="bar"><div class="v">€38.4m</div><div class="fill f1000" style="height:48%"></div><div class="k">S=€1,000</div></div>
+          <div class="bar"><div class="v">€76.8m</div><div class="fill f2000" style="height:96%"></div><div class="k">S=€2,000</div></div>
+        </div>
+        <div class="range" style="margin-top:14px"><div class="rl"><span>@ €1,000 scenarios</span><span>€18m – €75m</span></div>
+          <div class="track"><div class="span" style="left:22.5%;right:6.25%"></div><div class="dot" style="left:48%"></div></div>
+          <div class="ticks"><span>cons. €18m</span><span>base €38m</span><span>upside €75m</span></div></div>
+      </div>
+      <div class="bpanel"><div class="bh">Europe</div><div class="bs">~37,500 base units · scale to €950m</div>
+        <div class="bars">
+          <div class="bar"><div class="v">~€225m</div><div class="fill f500" style="height:23.7%"></div><div class="k">S=€500</div></div>
+          <div class="bar"><div class="v">~€450m</div><div class="fill f1000" style="height:47.4%"></div><div class="k">S=€1,000</div></div>
+          <div class="bar"><div class="v">~€900m</div><div class="fill f2000" style="height:94.7%"></div><div class="k">S=€2,000</div></div>
+        </div>
+        <div class="range" style="margin-top:14px"><div class="rl"><span>@ €1,000 scenarios</span><span>~€237m – €846m</span></div>
+          <div class="track"><div class="span" style="left:26.3%;right:6%"></div><div class="dot" style="left:50%"></div></div>
+          <div class="ticks"><span>cons. €237m</span><span>base €450m</span><span>upside €846m</span></div></div>
+      </div>
+      <div class="bpanel" style="border-color:rgba(255,107,44,.45)"><div class="bh">Global</div><div class="bs">90,000 base units · scale to €2.3bn</div>
+        <div class="bars">
+          <div class="bar"><div class="v">€540m</div><div class="fill f500" style="height:23.5%"></div><div class="k">S=€500</div></div>
+          <div class="bar"><div class="v">€1.08bn</div><div class="fill f1000" style="height:47%"></div><div class="k">S=€1,000</div></div>
+          <div class="bar"><div class="v">€2.16bn</div><div class="fill f2000" style="height:93.9%"></div><div class="k">S=€2,000</div></div>
+        </div>
+        <div class="range" style="margin-top:14px"><div class="rl"><span>@ €1,000 scenarios</span><span>€600m – €1.92bn</span></div>
+          <div class="track"><div class="span" style="left:30%;right:4%"></div><div class="dot" style="left:54%"></div></div>
+          <div class="ticks"><span>cons. €600m</span><span>base €1.08bn</span><span>upside €1.92bn</span></div></div>
+      </div>
+    </div>
+    <div class="foot">The conclusion survives substantial pricing changes: even at only €500/unit/month, base global capacity ≈ €540m ARR; at €1,000 it crosses €1bn. S = monthly platform subscription per country-direction unit — <b>illustrative sensitivities only, not BestModal's disclosed pricing</b>.</div>
+  </div>
+</section>
+
+<!-- ============ 23 TAM SAM SOM ============ -->
+<section class="slide" data-section="Market sizing" data-title="TAM / SAM / SOM framing">
+  <div class="inner">
+    <div class="eyebrow">23 · Market sizing · Deck framing</div>
+    <h2>Three-layer market definition for the investor deck</h2>
+    <div class="grid3" style="margin-top:10px">
+      <div class="card" style="border-color:rgba(91,155,213,.5)">
+        <p class="mono small" style="color:var(--blue);letter-spacing:.15em">LAYER 1 · ACCOUNT TAM</p>
+        <div class="stat" style="margin:10px 0"><div class="n" style="font-size:40px">~40,000</div><div class="l">Firms globally (FIATA)</div></div>
+        <p>&gt;19,000 in the European CLECAT universe · ~2,500 prominent German companies (DSLV).</p>
+      </div>
+      <div class="card" style="border-color:rgba(53,196,168,.5)">
+        <p class="mono small" style="color:var(--teal);letter-spacing:.15em">LAYER 2 · CORE SERVICEABLE</p>
+        <div class="stat" style="margin:10px 0"><div class="n" style="font-size:40px">10–20k</div><div class="l">Global accounts</div></div>
+        <p>~5,000–10,000 European · 500–1,250 German accounts with sufficient multimodal, international and organisational complexity. Deliberately narrower than the association universes.</p>
+      </div>
+      <div class="card" style="border-color:rgba(255,107,44,.5)">
+        <p class="mono small" style="color:var(--signal);letter-spacing:.15em">LAYER 3 · OBTAINABLE</p>
+        <div class="stat" style="margin:10px 0"><div class="n" style="font-size:40px">100s</div><div class="l">Of logos suffice</div></div>
+        <p>A surprisingly modest customer count supports meaningful ARR, because each customer can purchase <b>multiple country-direction units</b> — quantified on the next slide.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 24 OBTAINABLE SCENARIOS ============ -->
+<section class="slide" data-section="Market sizing" data-title="Obtainable market scenarios">
+  <div class="inner">
+    <div class="eyebrow">24 · Market sizing · Obtainable market</div>
+    <h2>A few hundred right customers is already a business</h2>
+    <table class="tbl" style="margin-top:6px">
+      <tr><th>Illustrative future footprint</th><th class="num">Logos</th><th class="num">Avg. units / logo</th><th class="num">Paid units</th><th class="num">ARR formula</th><th class="num">ARR @ S = €1,000</th><th class="num">Logo penetration of 15,000 SAM</th></tr>
+      <tr><td>Early international scale</td><td class="num">100</td><td class="num">5</td><td class="num">500</td><td class="num">6,000 × S</td><td class="num"><b>€6m</b></td><td class="num">≈ 0.7%</td></tr>
+      <tr><td>Strong European / global niche</td><td class="num">250</td><td class="num">6</td><td class="num">1,500</td><td class="num">18,000 × S</td><td class="num"><b>€18m</b></td><td class="num">≈ 1.7%</td></tr>
+      <tr><td>Category-scale specialist</td><td class="num">500</td><td class="num">7</td><td class="num">3,500</td><td class="num">42,000 × S</td><td class="num"><b>€42m</b></td><td class="num">≈ 3.3%</td></tr>
+    </table>
+    <div style="margin:18px 0 6px">
+      <div class="range"><div class="rl"><span>100 logos → €6m ARR</span><span>0.7% penetration</span></div><div class="track"><div class="span" style="left:0;width:2.1%;background:var(--blue)"></div></div></div>
+      <div class="range"><div class="rl"><span>250 logos → €18m ARR</span><span>1.7% penetration</span></div><div class="track"><div class="span" style="left:0;width:5.1%;background:var(--signal)"></div></div></div>
+      <div class="range"><div class="rl"><span>500 logos → €42m ARR</span><span>3.3% penetration</span></div><div class="track"><div class="span" style="left:0;width:9.9%;background:var(--teal)"></div></div><div class="ticks"><span>0%</span><span>bar length = share of the 15,000-account base SAM (axis to 33%)</span><span>33%</span></div></div>
+    </div>
+    <div class="quote">A favourable structure for a specialist enterprise-software company: BestModal does <b>not</b> need 20% of global freight forwarders to become material. <b>1,500 paid units is only ~1.7% of base SAM — yet already €18m ARR at the €1,000 sensitivity.</b></div>
+  </div>
+</section>
+
+<!-- ============ 25 EXCLUDED UPSIDE ============ -->
+<section class="slide" data-section="Market sizing" data-title="Upside intentionally excluded">
+  <div class="inner">
+    <div class="eyebrow">25 · Market sizing · Excluded upside</div>
+    <h2>What this TAM deliberately leaves out</h2>
+    <div class="grid2" style="margin-top:8px">
+      <div class="card">
+        <h3>Shippers / cargo owners</h3>
+        <div class="stat" style="margin:10px 0"><div class="n" style="font-size:42px">~100,000</div><div class="l">Manufacturers, retailers, wholesalers &amp; other cargo owners represented by the European Shippers' Council</div></div>
+        <p>Only a fraction would have sophisticated enough freight procurement to buy BestModal — and selling to cargo owners creates heavier overlap with <b>Transporeon, Cargobase, Freightender and Alpega</b>. Excluded from the core market; if a shipper procurement use case is later proven, it becomes a <b>second growth vector</b>, not something needed to justify today's TAM.</p>
+      </div>
+      <div class="card">
+        <h3>Supply-side operators</h3>
+        <div class="stat" style="margin:10px 0"><div class="n" style="font-size:42px">Rail · barge · truck</div><div class="l">Operators as users and tariff providers</div></div>
+        <p>BestModal publicly targets these participants as potential users and tariff providers — but they are <b>not included in the base revenue TAM</b> because the commercial model for them has not been specified.</p>
+      </div>
+    </div>
+    <div class="quote teal" style="margin-top:16px"><b>BestModal can justify a large market using freight forwarders/LSPs alone. Shippers, operators and marketplace monetisation should be treated as upside — not used to manufacture the headline TAM.</b></div>
+  </div>
+</section>
+
+<!-- ============ 26 COMMERCIAL MODEL ============ -->
+<section class="slide" data-section="Commercial model" data-title="Unit mechanics">
+  <div class="inner">
+    <div class="eyebrow">26 · Commercial model</div>
+    <h2>Country × direction: the unit that builds the model</h2>
+    <div class="grid2" style="grid-template-columns:1.05fr .95fr">
+      <div>
+        <p class="lede"><b class="mono">S</b> = monthly platform subscription for <b>one country-direction unit</b> — one country, one direction (import <b>or</b> export). Contracts run for at least 12 months.</p>
+        <div class="card" style="margin-top:12px">
+          <p class="mono" style="font-size:14px;line-height:2">Customer ARR&nbsp;=&nbsp;12 × S × country-direction units<br>Market ARR capacity&nbsp;=&nbsp;12 × S × addressable units</p>
+        </div>
+        <p class="lede" style="margin-top:14px"><b>Worked example (per management's model):</b> if Scan Global Logistics used BestModal for <b>export in five countries</b> and <b>import in two</b>, it holds <b>seven billable units</b> → MRR = 7 × S, ACV = 84 × S. A larger organisation running <b>both directions in ten countries</b> holds 20 units → <b>240 × S</b> = €240,000/yr at the €1,000 sensitivity.</p>
+      </div>
+      <div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+          <span class="utile" style="width:44px;height:44px"><span class="exp"></span><span class="off"></span></span>
+          <span class="utile" style="width:44px;height:44px"><span class="exp"></span><span class="off"></span></span>
+          <span class="utile" style="width:44px;height:44px"><span class="exp"></span><span class="off"></span></span>
+          <span class="utile" style="width:44px;height:44px"><span class="exp"></span><span class="off"></span></span>
+          <span class="utile" style="width:44px;height:44px"><span class="exp"></span><span class="imp"></span></span>
+          <span class="utile" style="width:44px;height:44px"><span class="off"></span><span class="imp"></span></span>
+        </div>
+        <p class="mono small" style="margin-bottom:12px">6 COUNTRIES · 5× EXPORT <span style="color:var(--signal)">■</span> + 2× IMPORT <span style="color:var(--teal)">■</span> = 7 BILLABLE UNITS (ILLUSTRATIVE CONFIGURATION)</p>
+        <table class="tbl">
+          <tr><th>7-unit deployment</th><th class="num">S=€500</th><th class="num">S=€1,000</th><th class="num">S=€2,000</th></tr>
+          <tr><td class="dim">Monthly contract value</td><td class="num">€3,500</td><td class="num">€7,000</td><td class="num">€14,000</td></tr>
+          <tr><td class="dim">Annual contract value</td><td class="num"><b>€42,000</b></td><td class="num"><b>€84,000</b></td><td class="num"><b>€168,000</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="foot">All subscription levels shown are purely illustrative — not an estimate or disclosure of BestModal's actual pricing.</div>
+  </div>
+</section>
+
+<!-- ============ 27 SAAS PROPERTIES ============ -->
+<section class="slide" data-section="Commercial model" data-title="Four attractive SaaS properties">
+  <div class="inner">
+    <div class="eyebrow">27 · Commercial model · Strengths</div>
+    <h2>Four attractive SaaS properties</h2>
+    <div class="grid4" style="grid-template-columns:repeat(2,1fr);margin-top:8px">
+      <div class="card"><p class="mono small accent">01</p><h3>Natural land-and-expand</h3><p>Start with the German export organisation, prove value, then roll out Germany import, Benelux, France, the UK, Asia-Pacific… Incremental ARR without necessarily acquiring a new corporate logo.</p></div>
+      <div class="card"><p class="mono small accent">02</p><h3>Priced to organisational complexity, not headcount</h3><p>Advantageous for a pricing system whose value is one consistent rate foundation across procurement, sales and operations. Assumes — per management's description — that material per-seat charges do not sit on top of the country model.</p></div>
+      <div class="card"><p class="mono small accent">03</p><h3>12-month minimum contracts</h3><p>Creates baseline revenue visibility. It does not by itself prove strong retention — renewal data remains essential.</p></div>
+      <div class="card"><p class="mono small accent">04</p><h3>Global forwarders are disproportionately valuable</h3><p>SGL: &gt;200 offices across six continents. a. hartrodt: &gt;100 locations, 46-country network. Even a partial multinational rollout produces a much higher ACV than a single-country deployment.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 28 MODEL ISSUES ============ -->
+<section class="slide" data-section="Commercial model" data-title="Issues investors should test">
+  <div class="inner">
+    <div class="eyebrow">28 · Commercial model · Issues to test</div>
+    <h2>Where the country model needs stress-testing</h2>
+    <div class="grid2" style="margin-top:8px">
+      <div class="card"><h3 class="amberc">Value mapping</h3><p>A German country-direction subscription may serve a <b>€1bn national operation</b>, while another country subscription supports a tiny branch. A flat country multiplier does not always map perfectly to economic value.</p></div>
+      <div class="card"><h3 class="amberc">Perceived double charging</h3><p>Import and export as separate chargeable units is logically defensible — tariff structures and teams can differ — but procurement teams may see double charging when both directions use the same foundation. <b>Packaging and enterprise caps</b> could become relevant in very large roll-outs.</p></div>
+      <div class="card"><h3 class="amberc">Different value metrics in competition</h3><p>CargoWise's current Value Pack model charges <b>transaction fees on eligible logistics transactions</b>, moving away from seats/hosting/modules. BestModal's country pricing creates a very different purchase comparison: <b>predictability and unlimited internal usage</b> vs. costs linked to operational transaction volumes.</p></div>
+      <div class="card" style="border-color:rgba(240,178,62,.5)"><h3 class="amberc">Service intensity (the big one)</h3><p>Tariff data can be jointly managed with BestModal's team. If a <b>€50,000 ARR contract</b> requires frequent manual rate-sheet interpretation by BestModal personnel, the company should not be valued on software revenue alone without examining the associated delivery costs.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 29 UNIT ECONOMICS DASHBOARD ============ -->
+<section class="slide" data-section="Commercial model" data-title="Data-room unit-economics dashboard">
+  <div class="inner">
+    <div class="eyebrow">29 · Commercial model · Data-room dashboard</div>
+    <h2>The unit-economics dashboard a VC/PE data room needs</h2>
+    <div class="kpis" style="margin-top:8px">
+      <div class="kpi"><span class="kc">Revenue</span>ARR per logo</div>
+      <div class="kpi"><span class="kc">Revenue</span>ARR per country-direction unit</div>
+      <div class="kpi"><span class="kc">Expansion</span>Average units per logo</div>
+      <div class="kpi"><span class="kc">Expansion</span>Country-direction expansion rate</div>
+      <div class="kpi"><span class="kc">Retention</span>Gross logo retention</div>
+      <div class="kpi"><span class="kc">Retention</span>Net revenue retention</div>
+      <div class="kpi"><span class="kc">Margin</span>Gross margin incl. tariff operations</div>
+      <div class="kpi"><span class="kc">Delivery</span>Implementation cost &amp; time</div>
+      <div class="kpi"><span class="kc">Delivery</span>Tariff-maintenance hours per customer</div>
+      <div class="kpi"><span class="kc">Automation</span>% of rate updates automatically ingested</div>
+      <div class="kpi"><span class="kc">GTM</span>Sales cycle</div>
+      <div class="kpi"><span class="kc">GTM</span>CAC payback</div>
+      <div class="kpi"><span class="kc">Delivery</span>Implementation-to-go-live conversion</div>
+      <div class="kpi hl" style="grid-column:span 3"><span class="kc">★ The particularly revealing metric</span><b>NRR decomposed: price increase vs. additional countries / directions.</b> If existing customers systematically expand from one or two countries to five, ten or more, the commercial model becomes a central part of the investment thesis — not merely a billing mechanism.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 30 DILIGENCE ============ -->
+<section class="slide" data-section="Diligence & thesis" data-title="Five diligence priorities">
+  <div class="inner" style="justify-content:flex-start;padding-top:70px">
+    <div class="eyebrow">30 · Diligence agenda</div>
+    <h2 style="font-size:clamp(26px,3.4vw,40px)">Five questions for the investment committee</h2>
+    <table class="tbl" style="font-size:12.5px">
+      <tr><th style="width:210px">Priority</th><th>What to establish</th></tr>
+      <tr><td><b>1 · Product depth &amp; accuracy</b></td><td class="dim">How many tariff structures can BestModal parse and calculate today? How many FCL/LCL/FTL/LTL/rail/barge combinations are in production? What % of customer rate sheets onboard without code changes? How often does a calculation fail or need human intervention? How are minimum prices, overlapping conditions, validity periods, commodity rules, dimensional weight, port-specific charges and customer-specific exceptions handled? The website shows intent — <b>diligence needs production statistics</b>.</td></tr>
+      <tr><td><b>2 · Data &amp; integrations</b></td><td class="dim">The biggest long-term question: does BestModal become a <b>system of record for freight-pricing data</b>, or merely a better UI over customer spreadsheets? Request: live carrier/API connections, supported rate-sheet formats, time to onboard a new supplier, automated change detection, % of customer pricing refreshed without BestModal staff. CargoWise, Freightos and cargo.one potentially hold structural advantages via large carrier/connectivity ecosystems.</td></tr>
+      <tr><td><b>3 · Reference customer proof</b></td><td class="dim">Independently reference all three management-provided customers (SGL is especially meaningful at €2.526bn revenue, &gt;5,100 employees, 200+ offices). Ask: countries live; modes live; system replaced; tariffs stored; price queries/month; implementation time; TMS integration; measured ROI; and whether the paid country count has expanded since signing.</td></tr>
+      <tr><td><b>4 · The air-freight roadmap</b></td><td class="dim">Management calls air the final remaining modal development while the website already presents it in the target feature set. Resolve before describing BestModal as fully all-mode in production — urgency heightened by cargo.one/Cargofive and Freightos/WebCargo strength in digital air pricing.</td></tr>
+      <tr><td><b>5 · Competitive coexistence</b></td><td class="dim">Can BestModal win customers <b>already running CargoWise, Descartes or another TMS</b>? If yes — evidence that specialist pricing depth is a genuine category separate from the operating TMS. If it only wins spreadsheet-based organisations, incumbents could eventually close the gap. CargoWise's explicit investment in rates, automated costing and carrier connectivity makes this decisive.</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ============ 31 EXIT LOGIC ============ -->
+<section class="slide" data-section="Diligence & thesis" data-title="Strategic exit logic">
+  <div class="inner">
+    <div class="eyebrow">31 · Exit logic</div>
+    <h2>Credible strategic consolidation paths</h2>
+    <p class="lede" style="margin-top:4px">From a PE/VC perspective, the category has credible strategic exit logic:</p>
+    <ul class="tick" style="margin:14px 0;max-width:900px">
+      <li><b>Descartes</b> acquired Portrix specifically for multimodal rate management (~€20.7m, 2021)</li>
+      <li><b>Freightos</b> acquired Shipsta for freight procurement (Aug 2024 → Freightos Procure)</li>
+      <li><b>cargo.one</b> bought Cargofive to extend its rate-data infrastructure (Feb 2026, + ~$20m investment)</li>
+      <li><b>WiseTech</b> continues expanding through major acquisitions (e2open, $2.1bn EV, 2025)</li>
+      <li><b>Trimble</b> paid €1.88bn for the broader Transporeon transportation-software platform (2022)</li>
+    </ul>
+    <div class="quote teal">The acquisition history suggests that <b>strategically valuable freight-software assets are regularly consolidated</b> into larger logistics-technology suites.</div>
+  </div>
+</section>
+
+<!-- ============ 32 THESIS & BEACHHEAD ============ -->
+<section class="slide" data-section="Diligence & thesis" data-title="The strongest investment thesis">
+  <div class="inner">
+    <div class="eyebrow">32 · Investment thesis</div>
+    <h2>The strongest form of the thesis</h2>
+    <div class="quote" style="font-size:clamp(15px,1.8vw,21px)"><b>BestModal first becomes the best independent pricing engine for complex European multimodal forwarding; then uses that calculation engine to expand geographically, add air, increase carrier/data connectivity — and establish a standard pricing layer between carrier tariffs and forwarder TMS systems.</b></div>
+    <p class="lede" style="margin:14px 0 6px">The most credible investor framing — stronger than "multimodal logistics platform", which many competitors can claim:</p>
+    <div class="quote teal" style="margin-bottom:16px">A <b>specialised freight-pricing infrastructure company</b> beginning in European forwarding, using a common tariff and calculation engine to solve all-in, multimodal pricing across fragmented modes and national organisations, with a country-based land-and-expand business model.</div>
+    <h3 style="margin-bottom:10px">Why Germany is the right beachhead</h3>
+    <div class="grid3">
+      <div class="card"><h3 style="font-size:16px">Large, cross-modal home market</h3><p>The local forwarding industry is large and cross-modal, containing globally active forwarders as well as sophisticated owner-managed companies.</p></div>
+      <div class="card"><h3 style="font-size:16px">Product-market terrain</h3><p>Rail, inland-waterway and North-European port/hinterland pricing — the area where BestModal's public capability appears more detailed than many ocean/air-first competitors.</p></div>
+      <div class="card"><h3 style="font-size:16px">Nested expansion path</h3><p>Europe offers an order-of-magnitude larger account pool; the global forwarding market approximately doubles the European represented universe.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 33 CENTRAL NUMBERS & CONCLUSION ============ -->
+<section class="slide" data-section="Diligence & thesis" data-title="Central numbers & conclusion">
+  <div class="inner">
+    <div class="eyebrow">33 · Summary</div>
+    <h2>The numbers that belong in the investor presentation</h2>
+    <table class="tbl" style="margin-top:4px">
+      <tr><th>Geography</th><th class="num">Core target accounts</th><th class="num">Base case</th><th class="num">Base billable units</th><th class="num">Core ARR @ €1,000/mo</th><th class="num">@ €500/mo</th></tr>
+      <tr><td><b>Germany</b></td><td class="num">500–1,250</td><td class="num accent"><b>~800</b></td><td class="num">3,200</td><td class="num"><b>~€38m</b></td><td class="num">~€19m</td></tr>
+      <tr><td><b>Europe</b></td><td class="num">5,000–10,000</td><td class="num accent"><b>~7,500</b></td><td class="num">~37,500</td><td class="num"><b>~€450m</b></td><td class="num">~€225m</td></tr>
+      <tr><td><b>Global</b></td><td class="num">10,000–20,000</td><td class="num accent"><b>~15,000</b></td><td class="num">90,000</td><td class="num"><b>~€1.08bn</b></td><td class="num">~€540m</td></tr>
+    </table>
+    <p class="lede" style="margin:14px 0 10px">And the proof of leverage: a future <b>250-customer footprint at six units each</b> = 1,500 paid units — only <b>~1.7%</b> of the base 15,000-account global SAM — yet already <b>€18m ARR</b> at €1,000/unit; <b>500 customers at seven units</b> = <b>€42m ARR</b> at the same sensitivity.</p>
+    <div class="quote"><b>BestModal does not appear constrained by market size.</b> The global addressable customer pool and the country-expansion model are sufficient to support a large enterprise-software outcome without heroic market-share assumptions. The investment case will ultimately be decided by whether BestModal can convert its unusually deep multimodal pricing logic — particularly <b>rail, barge, inland and full-chain calculation</b> — into <b>proprietary data/integration advantages, strong gross margins and demonstrable country-by-country expansion</b> within customers, before larger freight-tech platforms eliminate that differentiation.</div>
+    <div class="foot">Geographies nested, not additive · pricing figures are illustrative sensitivities, not disclosed pricing · reference-customer status is management-provided, pending independent verification.</div>
+  </div>
+</section>
+</main>
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var idx = 0, n = slides.length;
+  var progress = document.getElementById('progress');
+  var counter = document.getElementById('counter');
+  var sect = document.getElementById('sectlabel');
+  var toc = document.getElementById('toc');
+  var toclist = document.getElementById('toclist');
+
+  function pad(x){ return (x<10?'0':'')+x; }
+  function go(i){
+    idx = Math.max(0, Math.min(n-1, i));
+    slides.forEach(function(s,k){ s.classList.toggle('active', k===idx); });
+    counter.textContent = pad(idx+1)+' / '+pad(n);
+    sect.textContent = slides[idx].dataset.section || '';
+    progress.style.width = ((idx+1)/n*100)+'%';
+    var inner = slides[idx].querySelector('.inner');
+    if(inner) inner.scrollTop = 0;
+  }
+  document.getElementById('next').addEventListener('click', function(){ go(idx+1); });
+  document.getElementById('prev').addEventListener('click', function(){ go(idx-1); });
+  document.addEventListener('keydown', function(e){
+    if(toc.classList.contains('open')){ if(e.key==='Escape'){ toc.classList.remove('open'); } return; }
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){ e.preventDefault(); go(idx+1); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ e.preventDefault(); go(idx-1); }
+    else if(e.key==='Home'){ go(0); }
+    else if(e.key==='End'){ go(n-1); }
+  });
+  var tx=null, ty=null;
+  document.addEventListener('touchstart', function(e){ tx=e.touches[0].clientX; ty=e.touches[0].clientY; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if(tx===null) return;
+    var dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5){ dx<0 ? go(idx+1) : go(idx-1); }
+    tx=ty=null;
+  }, {passive:true});
+
+  // build contents
+  var groups = {};
+  slides.forEach(function(s,k){
+    var g = s.dataset.section || 'Deck';
+    (groups[g] = groups[g] || []).push({i:k, t:s.dataset.title || ('Slide '+(k+1))});
+  });
+  Object.keys(groups).forEach(function(g){
+    var d = document.createElement('div'); d.className='sect';
+    var h = document.createElement('div'); h.className='sh'; h.textContent = g; d.appendChild(h);
+    groups[g].forEach(function(it){
+      var b = document.createElement('button'); b.className='item';
+      b.innerHTML = '<span class="no">'+pad(it.i+1)+'</span><span>'+it.t+'</span>';
+      b.addEventListener('click', function(){ toc.classList.remove('open'); go(it.i); });
+      d.appendChild(b);
+    });
+    toclist.appendChild(d);
+  });
+  document.getElementById('tocbtn').addEventListener('click', function(){ toc.classList.add('open'); });
+  document.getElementById('tocclose').addEventListener('click', function(){ toc.classList.remove('open'); });
+
+  go(0);
+})();
+</script>
+</body>
+</html>
